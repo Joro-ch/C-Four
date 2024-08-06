@@ -4,7 +4,7 @@ import React from 'react'
 
 function Footer() {
   return (
-    <div className='bg-[#333] text-white py-5 px-9 border-t-2 border-black-800 flex justify-between'>
+    <div className='bg-[#333] text-white py-5 px-9 border-t-2 border-black-800 flex justify-between flex-wrap'>
       <div className='flex flex-col items-center gap-3'>
         <Image
           src={'/C-FourIcon.webp'}

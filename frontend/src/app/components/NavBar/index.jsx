@@ -7,7 +7,7 @@ import React from 'react'
 function NavBar() {
     return (
         <nav className='bg-[#333] text-white py-5 px-9 flex border-b-2 border-black-800'>
-            <ul className='w-full flex items-center justify-between'>
+            <ul className='w-full flex items-center justify-between flex-wrap'>
                 <li className='hover:opacity-85 duration-500'>
                     <Link href={'/'} className='flex gap-5 justify-center items-center'>
                         <Image
@@ -22,7 +22,7 @@ function NavBar() {
                     </Link>
                 </li>
                 <li className='hover:opacity-85 duration-500'>
-                    <Link href={'/'} className='flex items-center gap-2'>
+                    <Link href={'/RopaDeportiva'} className='flex items-center gap-2'>
                         <FontAwesomeIcon icon={faShirt} className='w-[20px] h-[20px]' />
                         <h5 className='text-nowrap'>
                             Ropa Deportiva
@@ -30,7 +30,7 @@ function NavBar() {
                     </Link>
                 </li>
                 <li className='hover:opacity-85 duration-500'>
-                    <Link href={'/'} className='flex items-center gap-2'>
+                    <Link href={'/ProductosDeportivos'} className='flex items-center gap-2'>
                         <FontAwesomeIcon icon={faDumbbell} className='w-[20px] h-[20px]' />
                         <h5 className='text-nowrap'>
                             Productos Deportivos
@@ -38,7 +38,7 @@ function NavBar() {
                     </Link>
                 </li>
                 <li className='hover:opacity-85 duration-500'>
-                    <Link href={'/'} className='flex items-center gap-2'>
+                    <Link href={'/Carrito'} className='flex items-center gap-2'>
                         <FontAwesomeIcon icon={faCartShopping} className='w-[20px] h-[20px]' />
                         <h5 className='text-nowrap'>
                             0
