@@ -33,7 +33,7 @@ function NavBar() {
                     <Link href={'/'} className='flex items-center gap-2'>
                         <FontAwesomeIcon icon={faDumbbell} className='w-[20px] h-[20px]' />
                         <h5 className='text-nowrap'>
-                            Productos
+                            Productos Deportivos
                         </h5>
                     </Link>
                 </li>
