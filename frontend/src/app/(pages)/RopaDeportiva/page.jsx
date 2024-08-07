@@ -4,23 +4,23 @@ import React from 'react'
 const TOPICS = [{
   nombreTema: "Camisas",
   srcImagen: "/C-FourIcon.webp",
-  hrefTema: "/",
+  hrefTema: "/RopaDeportiva/Camisas",
 }, {
   nombreTema: "Pantalones",
   srcImagen: "/C-FourIcon.webp",
-  hrefTema: "/",
+  hrefTema: "/RopaDeportiva/Pantalones",
 },{
   nombreTema: "Sueters",
   srcImagen: "/C-FourIcon.webp",
-  hrefTema: "/",
+  hrefTema: "/RopaDeportiva/Sueters",
 }, {
   nombreTema: "Zapatos",
   srcImagen: "/C-FourIcon.webp",
-  hrefTema: "/",
+  hrefTema: "/RopaDeportiva/Zapatos",
 }, {
   nombreTema: "Medias",
   srcImagen: "/C-FourIcon.webp",
-  hrefTema: "/",
+  hrefTema: "/RopaDeportiva/Medias",
 }]
 
 function RopaDeportivo() {

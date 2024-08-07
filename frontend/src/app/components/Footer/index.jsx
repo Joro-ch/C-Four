@@ -18,19 +18,19 @@ function Footer() {
         <h5> Ropa Deportiva </h5>
         <hr className='my-2' />
         <ul className='flex flex-col'>
-          <Link href={'/'} className='hover:underline hover:opacity-85 duration-500'>
+          <Link href={'/RopaDeportiva/Camisas'} className='hover:underline hover:opacity-85 duration-500'>
             Camisas
           </Link>
-          <Link href={'/'} className='hover:underline hover:opacity-85 duration-500'>
+          <Link href={'/RopaDeportiva/Pantalones'} className='hover:underline hover:opacity-85 duration-500'>
             Pantalones
           </Link>
-          <Link href={'/'} className='hover:underline hover:opacity-85 duration-500'>
+          <Link href={'/RopaDeportiva/Sueters'} className='hover:underline hover:opacity-85 duration-500'>
             Sueters
           </Link>
-          <Link href={'/'} className='hover:underline hover:opacity-85 duration-500'>
+          <Link href={'/RopaDeportiva/Zapatos'} className='hover:underline hover:opacity-85 duration-500'>
             Zapatos
           </Link>
-          <Link href={'/'} className='hover:underline hover:opacity-85 duration-500'>
+          <Link href={'/RopaDeportiva/Medias'} className='hover:underline hover:opacity-85 duration-500'>
             Medias
           </Link>
         </ul>
@@ -39,16 +39,16 @@ function Footer() {
         <h5> Productos Deportivos </h5>
         <hr className='my-2' />
         <ul className='flex flex-col'>
-          <Link href={'/'} className='hover:underline hover:opacity-85 duration-500'>
+          <Link href={'/ProductosDeportivos/Botellas'} className='hover:underline hover:opacity-85 duration-500'>
             Botellas
           </Link>
-          <Link href={'/'} className='hover:underline hover:opacity-85 duration-500'>
+          <Link href={'/ProductosDeportivos/Suplementos'} className='hover:underline hover:opacity-85 duration-500'>
             Suplementos
           </Link>
-          <Link href={'/'} className='hover:underline hover:opacity-85 duration-500'>
+          <Link href={'/ProductosDeportivos/Complementos'} className='hover:underline hover:opacity-85 duration-500'>
             Complementos
           </Link>
-          <Link href={'/'} className='hover:underline hover:opacity-85 duration-500'>
+          <Link href={'/ProductosDeportivos/Equipamiento'} className='hover:underline hover:opacity-85 duration-500'>
             Equipamiento
           </Link>
         </ul>
@@ -57,7 +57,7 @@ function Footer() {
         <h5> Otro </h5>
         <hr className='my-2' />
         <ul className='flex flex-col'>
-          <Link href={'/'} className='hover:underline hover:opacity-85 duration-500'>
+          <Link href={'/SobreNosotros'} className='hover:underline hover:opacity-85 duration-500'>
             Sobre Nosotros
           </Link>
         </ul>
