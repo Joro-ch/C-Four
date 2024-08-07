@@ -2,18 +2,18 @@ import React from 'react';
 import Image from "next/image";
 import Link from "next/link";
 
-function TopicCard({ nombreProducto, hrefImagen }) {
+function TopicCard({ nombreTema, srcImagen, hrefTema }) {
     return (
-        <div className='bg-[#333] w-1/4 shadow-xl rounded hover:opacity-85'>
-            <Link href={'/'}>
+        <div className='bg-[#333] w-1/3 shadow-xl rounded hover:opacity-85'>
+            <Link href={hrefTema}>
                 <Image
-                    src={'/C-FourIcon.webp'}
+                    src={srcImagen}
                     height={1500}
                     width={1500}
                     className='w-full'
                 />
                 <h5 className='p-3 text-white text-center'>
-                    Producto
+                    {nombreTema}
                 </h5>
             </Link>
         </div>
