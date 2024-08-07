@@ -1,9 +1,10 @@
+import Filters from '@/app/components/Filters';
 import React from 'react'
 
 function Ropa() {
   return (
     <main className='grow'>
-        Ropa
+      <Filters />
     </main>
   )
 }
