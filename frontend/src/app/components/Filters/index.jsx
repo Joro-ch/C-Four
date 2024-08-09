@@ -2,7 +2,7 @@ import React from 'react'
 
 function Filters() {
     return (
-        <div className='w-[15vw] min-w-[170px] m-5 p-3 border rounded shadow'>
+        <div className='w-[13vw] min-w-[170px] m-5 p-3 border rounded shadow'>
             <h5> Buscar </h5>
             <hr className='my-2' />
             <input
