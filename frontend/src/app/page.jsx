@@ -25,7 +25,7 @@ export default function Home() {
               flexibilidad, transpirabilidad y un look que destaca. Transforma cada entrenamiento
               en una experiencia única con C-Four, donde el rendimiento se une con la moda.
             </p>
-            <Link href={'/RopaDeportiva'} className='bg-white p-3 mt-3 text-center text-black rounded-xl '>
+            <Link href={'/RopaDeportiva'} className='bg-white p-3 mt-3 text-center text-black rounded-xl hover:opacity-85'>
               Ir al Catalogo de Ropa Deportiva
             </Link>
           </div>
@@ -60,7 +60,7 @@ export default function Home() {
               lo que necesitas para superar tus límites. Con C-Four, no solo te equipas,
               te transformas en el atleta que siempre quisiste ser.
             </p>
-            <Link href={'/ProductosDeportivos'} className='bg-[#333] p-3 mt-3 text-center text-white rounded-xl '>
+            <Link href={'/ProductosDeportivos'} className='bg-[#333] p-3 mt-3 text-center text-white rounded-xl hover:opacity-85'>
               Ir al Catalogo de Productos Deportivos
             </Link>
           </div>
