@@ -28,7 +28,7 @@ function IniciarSesion() {
               className='py-2 px-3 w-full rounded'
             />
           </span>
-          <button className='bg-green-400 rounded p-1 text-white'>
+          <button className='bg-green-400 rounded p-1 text-white hover:bg-green-500'>
             Iniciar Sesión
           </button>
           <Link href={'/Registrarse'} className='text-center text-gray-400 hover:text-white'>
