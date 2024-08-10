@@ -1,4 +1,4 @@
-import { faCartShopping, faDumbbell, faShirt } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faDumbbell, faShirt, faSignIn, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -43,6 +43,12 @@ function NavBar() {
                         <h5 className='text-nowrap'>
                             0
                         </h5>
+                    </Link>
+                </li>
+                <li className='hover:opacity-85 duration-500'>
+                    <Link href={'/IniciarSesion'} className='flex items-center gap-2'>
+                        <FontAwesomeIcon icon={faSignIn} className='w-[20px] h-[20px]' />
+                        Iniciar Sesión
                     </Link>
                 </li>
             </ul>

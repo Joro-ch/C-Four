@@ -47,7 +47,7 @@ export default function Home() {
               className='h-[70vh]'
             />
           </div>
-          <div className='flex flex-col w-[500px]'>
+          <div className='flex flex-col w-[500px] text-black'>
             <h5 className='text-4xl'>
               Equípate para la Excelencia con C-Four
             </h5>
