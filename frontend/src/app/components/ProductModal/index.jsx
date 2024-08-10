@@ -3,14 +3,16 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faStar, faXmark } from '@fortawesome/free-solid-svg-icons';
 import useIsBrowser from '@/app/hooks/useIsBrowser';
 import MessageModal from '../MessageModal';
 
-const MESSAGE_MODAL_TITLE = 'Añadir Producto al Carrito'
-const MESSAGE_MODAL_MESSAGE = '¿Está seguro que desea añadir el producto al carrito?';
+const ADD_PRODUCT_MODAL_TITLE = 'Añadir Producto al Carrito';
+const ADD_PRODUCT_MODAL_BODY = '¿Está seguro que desea añadir el producto al carrito?';
+const ERASE_PRODUCT_MODAL_TITLE = 'Eliminar Producto del Carrito';
+const ERASE_PRODUCT_MODAL_BODY = '¿Está seguro que desea eliminar el producto del carrito?';
 
-function ProductModal({ showModal, setShowModal }) {
+function ProductModal({ showModal, setShowModal, esDeCarrito }) {
     const { isBrowser } = useIsBrowser();
     const [showMessageModal, setShowMessageModal] = useState(false);
 
@@ -51,10 +53,20 @@ function ProductModal({ showModal, setShowModal }) {
                             <FontAwesomeIcon icon={faStar} />
                         </button>
                         <button
-                            className='bg-green-400 text-xl rounded p-4 hover:opacity-85 w-[1/2]'
+                            className='text-xl hover:opacity-85 w-[1/2]'
                             onClick={() => setShowMessageModal(true)}
                         >
-                            <FontAwesomeIcon icon={faCartShopping} /> Comprar
+                            {esDeCarrito ? (
+                                <div className='bg-red-400 rounded p-4 flex items-center gap-2'>
+                                    <FontAwesomeIcon icon={faXmark}/>
+                                    Eliminar
+                                </div>
+                            ) : (
+                                <div className='bg-green-400 rounded p-4 flex items-center gap-2'>
+                                    <FontAwesomeIcon icon={faCartShopping}  />
+                                    Comprar
+                                </div>
+                            )}
                         </button>
                     </div>
                 </div>
@@ -62,8 +74,16 @@ function ProductModal({ showModal, setShowModal }) {
             <MessageModal
                 showModal={showMessageModal}
                 setShowModal={setShowMessageModal}
-                modalTitulo={MESSAGE_MODAL_TITLE}
-                modalMensaje={MESSAGE_MODAL_MESSAGE}
+                modalTitulo={esDeCarrito ? (
+                    ERASE_PRODUCT_MODAL_TITLE
+                ) : (
+                    ADD_PRODUCT_MODAL_TITLE
+                )}
+                modalMensaje={esDeCarrito ? (
+                    ERASE_PRODUCT_MODAL_BODY
+                ) : (
+                    ADD_PRODUCT_MODAL_BODY
+                )}
                 accionAceptar={() => { }}
             />
         </>

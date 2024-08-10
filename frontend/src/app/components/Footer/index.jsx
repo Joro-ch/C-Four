@@ -60,6 +60,9 @@ function Footer() {
           <Link href={'/SobreNosotros'} className='hover:underline hover:opacity-85 duration-500'>
             Sobre Nosotros
           </Link>
+          <Link href={'/Empresas'} className='hover:underline hover:opacity-85 duration-500'>
+            Empresas
+          </Link>
         </ul>
       </div>
     </div>

@@ -4,12 +4,14 @@ import Image from 'next/image';
 import ProductModal from '../ProductModal';
 import MessageModal from '../MessageModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faXmark } from '@fortawesome/free-solid-svg-icons';
 
-const MESSAGE_MODAL_TITLE = 'Añadir Producto al Carrito'
-const MESSAGE_MODAL_MESSAGE = '¿Está seguro que desea añadir el producto al carrito?';
+const ADD_PRODUCT_MODAL_TITLE = 'Añadir Producto al Carrito';
+const ADD_PRODUCT_MODAL_BODY = '¿Está seguro que desea añadir el producto al carrito?';
+const ERASE_PRODUCT_MODAL_TITLE = 'Eliminar Producto del Carrito';
+const ERASE_PRODUCT_MODAL_BODY = '¿Está seguro que desea eliminar el producto del carrito?';
 
-function ProductCard({ nombreProducto, precioProducto, marcaProducto, srcImagen }) {
+function ProductCard({ nombreProducto, precioProducto, marcaProducto, srcImagen, esDeCarrito = false }) {
     const [showProductModal, setShowProductModal] = useState(false);
     const [showMessageModal, setShowMessageModal] = useState(false);
 
@@ -32,20 +34,33 @@ function ProductCard({ nombreProducto, precioProducto, marcaProducto, srcImagen 
                         {nombreProducto} - {marcaProducto}
                     </h5>
                 </div>
-                <button className='text-green-400' onClick={() => setShowMessageModal(true)}>
-                    <FontAwesomeIcon icon={faCartShopping} className='w-[20px]' />
+                <button onClick={() => setShowMessageModal(true)}>
+                    {esDeCarrito ? (
+                        <FontAwesomeIcon icon={faXmark} className='w-[20px] text-red-400' />
+                    ) : (
+                        <FontAwesomeIcon icon={faCartShopping} className='w-[20px] text-green-400' />
+                    )}
+
                 </button>
             </div>
-            <ProductModal showModal={showProductModal} setShowModal={setShowProductModal} />
+            <ProductModal showModal={showProductModal} setShowModal={setShowProductModal} esDeCarrito={esDeCarrito} />
             <MessageModal
                 showModal={showMessageModal}
                 setShowModal={setShowMessageModal}
-                modalTitulo={MESSAGE_MODAL_TITLE}
-                modalMensaje={MESSAGE_MODAL_MESSAGE}
-                accionAceptar={() => {}}
+                modalTitulo={esDeCarrito ? (
+                    ERASE_PRODUCT_MODAL_TITLE
+                ) : (
+                    ADD_PRODUCT_MODAL_TITLE
+                )}
+                modalMensaje={esDeCarrito ? (
+                    ERASE_PRODUCT_MODAL_BODY
+                ) : (
+                    ADD_PRODUCT_MODAL_BODY
+                )}
+                accionAceptar={() => { }}
             />
         </div>
     )
 }
 
-export default ProductCard
+export default ProductCard;
