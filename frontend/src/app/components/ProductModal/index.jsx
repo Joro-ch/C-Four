@@ -1,34 +1,26 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { useEffect, useState } from "react";
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faStar } from '@fortawesome/free-solid-svg-icons';
+import useIsBrowser from '@/app/hooks/useIsBrowser';
+import MessageModal from '../MessageModal';
+
+const MESSAGE_MODAL_TITLE = 'Añadir Producto al Carrito'
+const MESSAGE_MODAL_MESSAGE = '¿Está seguro que desea añadir el producto al carrito?';
 
 function ProductModal({ showModal, setShowModal }) {
-    const [isBrowser, setIsBrowser] = useState(false);
+    const { isBrowser } = useIsBrowser();
+    const [showMessageModal, setShowMessageModal] = useState(false);
 
-    useEffect(() => {
-        setIsBrowser(true)
-    }, []);
-
-    useEffect(() => {
-        if (showModal) {
-            document.body.className += ' overflow-hidden';
-        }
-        return () => {
-            document.body.className = 'h-screen';
-        }
-    }, [showModal]);
-
-    const onClickOutSide = () => setShowModal(!showModal);
+    const onClose = () => setShowModal(!showModal);
 
     const MODAL = showModal ? (
         <>
             <button
                 className='fixed top-0 left-0 bg-[#333] w-full h-full opacity-15'
-                onClick={onClickOutSide}
+                onClick={onClose}
             />
             <div className='flex flex-col fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-[90vh] w-[60vw] bg-[#333] shadow rounded'>
                 <div className='h-[80%]'>
@@ -40,7 +32,7 @@ function ProductModal({ showModal, setShowModal }) {
                     />
                     <button
                         className='fixed top-0 right-0 my-4 mx-5 text-xl shadow rounded-full w-[30px] h-[30px]'
-                        onClick={onClickOutSide}
+                        onClick={onClose}
                     >
                         X
                     </button>
@@ -56,14 +48,24 @@ function ProductModal({ showModal, setShowModal }) {
                     </div>
                     <div className='flex gap-5'>
                         <button className='bg-white text-xl rounded p-4 hover:opacity-85 text-[#333] '>
-                            <FontAwesomeIcon icon={faStar} /> 
+                            <FontAwesomeIcon icon={faStar} />
                         </button>
-                        <button className='bg-green-400 text-xl rounded p-4 hover:opacity-85 w-[1/2]'>
-                            <FontAwesomeIcon icon={faCartShopping} /> Comprar 
+                        <button
+                            className='bg-green-400 text-xl rounded p-4 hover:opacity-85 w-[1/2]'
+                            onClick={() => setShowMessageModal(true)}
+                        >
+                            <FontAwesomeIcon icon={faCartShopping} /> Comprar
                         </button>
                     </div>
                 </div>
             </div>
+            <MessageModal
+                showModal={showMessageModal}
+                setShowModal={setShowMessageModal}
+                modalTitulo={MESSAGE_MODAL_TITLE}
+                modalMensaje={MESSAGE_MODAL_MESSAGE}
+                accionAceptar={() => { }}
+            />
         </>
     ) : null;
 
