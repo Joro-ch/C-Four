@@ -1,8 +1,8 @@
 'use client';
-import { SERVICE_URL } from '@/app/constants/global';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import { SERVICE_URL } from '@/app/constants/global';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 function Registrase() {

@@ -1,29 +1,38 @@
 'use client';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { SERVICE_URL } from '@/app/constants/global';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { userContext } from '@/app/context/userContext';
 
 function IniciarSesion() {
+  const { setUsuario } = useContext(userContext);
+
   const router = useRouter();
-  const [usuario, setUsuario] = useState({
+  const [nuevoUsuario, setNuevoUsuario] = useState({
     nombreUsuario: '',
+    correoUsuario: '',
     passwordUsuario: '',
   });
 
   const onLogIn = async (e) => {
     e.preventDefault();
-    if (checkValidUser() && await logInRequest())
-      router.push('/')
+    if (checkValidUser()) {
+      const usuarioInfo = await logInRequest();
+      if (usuarioInfo) {
+        setUsuario(usuarioInfo)
+        router.push('/')
+      }
+    }
   }
 
   const checkValidUser = () => {
-    if (usuario.nombreUsuario === '') {
+    if (nuevoUsuario.nombreUsuario === '') {
       toast.error('¡Error!', { description: '¡El campo nombre de usuario no puede estar vacío!' });
       return false;
     }
-    else if (usuario.passwordUsuario === '') {
+    else if (nuevoUsuario.passwordUsuario === '') {
       toast.error('¡Error!', { description: '¡El campo contraseña no puede estar vacío!' });
       return false;
     }
@@ -36,16 +45,16 @@ function IniciarSesion() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(usuario)
+      body: JSON.stringify(nuevoUsuario)
     });
 
+    const result = await response.json();
     if (!response.ok) {
-      const result = await response.json();
       toast.error('¡Error!', { description: `¡${result.error}!` })
-      return false;
+      return null;
     }
 
-    return true;
+    return result.usuario;
   }
 
   return (
@@ -61,7 +70,7 @@ function IniciarSesion() {
               Nombre de Usuario
             </h5>
             <input
-              onChange={(e) => setUsuario({ ...usuario, nombreUsuario: e.target.value })}
+              onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, nombreUsuario: e.target.value })}
               placeholder='Nombre de Usuario'
               className='py-2 px-3 w-full rounded'
             />
@@ -71,7 +80,7 @@ function IniciarSesion() {
               Contraseña
             </h5>
             <input
-              onChange={(e) => setUsuario({ ...usuario, passwordUsuario: e.target.value })}
+              onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, passwordUsuario: e.target.value })}
               placeholder='Contraseña'
               className='py-2 px-3 w-full rounded'
             />

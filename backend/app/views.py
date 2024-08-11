@@ -54,6 +54,7 @@ class LoginView(APIView):
 
         if passwordUsuario == usuario.passwordUsuario:
             # Aquí podrías generar un token o simplemente devolver una respuesta de éxito
-            return Response({"mensaje": "Autenticación exitosa"}, status=status.HTTP_200_OK)
+            usuario_serializer = UsuarioSerializer(usuario)
+            return Response({"mensaje": "Autenticación exitosa", "usuario": usuario_serializer.data}, status=status.HTTP_200_OK)
         else:
             return Response({"error": "Contraseña incorrecta"}, status=status.HTTP_401_UNAUTHORIZED)
