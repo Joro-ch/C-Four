@@ -12,5 +12,6 @@ router.register(r'carritoUsuario', views.CarritoUsuarioViewSet)
 router.register(r'productosMarca', views.ProductosMarcaViewSet)
 
 urlpatterns=[
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('iniciarSesion/', views.LoginView.as_view(), name='login'),
 ]
