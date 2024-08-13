@@ -3,41 +3,49 @@ import UsuarioInfoCard from '@/app/components/UsuarioInfoCard';
 import React from 'react';
 
 const PRODUCTOS = [{
+  idProducto: 1,
   nombreProducto: 'Producto',
   precioProducto: 7000,
   marcaProducto: 'Marca',
   srcImagen: '/C-FourIcon.webp',
 }, {
+  idProducto: 2,
   nombreProducto: 'Producto',
   precioProducto: 8000,
   marcaProducto: 'Marca',
   srcImagen: '/C-FourIcon.webp',
 }, {
+  idProducto: 3,
   nombreProducto: 'Producto',
   precioProducto: 8000,
   marcaProducto: 'Marca',
   srcImagen: '/C-FourIcon.webp',
 }, {
+  idProducto: 4,
   nombreProducto: 'Producto',
   precioProducto: 8000,
   marcaProducto: 'Marca',
   srcImagen: '/C-FourIcon.webp',
 }, {
+  idProducto: 5,
   nombreProducto: 'Producto',
   precioProducto: 7000,
   marcaProducto: 'Marca',
   srcImagen: '/C-FourIcon.webp',
 }, {
+  idProducto: 6,
   nombreProducto: 'Producto',
   precioProducto: 8000,
   marcaProducto: 'Marca',
   srcImagen: '/C-FourIcon.webp',
 }, {
+  idProducto: 7,
   nombreProducto: 'Producto',
   precioProducto: 8000,
   marcaProducto: 'Marca',
   srcImagen: '/C-FourIcon.webp',
 }, {
+  idProducto: 8,
   nombreProducto: 'Producto',
   precioProducto: 8000,
   marcaProducto: 'Marca',
@@ -57,11 +65,7 @@ function CuentaUsuario() {
           {PRODUCTOS.map((producto, index) =>
             <ProductCard
               key={index}
-              nombreProducto={producto.nombreProducto}
-              precioProducto={producto.precioProducto}
-              marcaProducto={producto.marcaProducto}
-              srcImagen={producto.srcImagen}
-              esDeCarrito={true}
+              producto={producto}
             />
           )}
         </div>

@@ -47,7 +47,7 @@ function NavBar() {
                             <Link href={'/Carrito'} className='flex items-center gap-2'>
                                 <FontAwesomeIcon icon={faCartShopping} className='w-[20px] h-[20px]' />
                                 <h5 className='text-nowrap'>
-                                    0
+                                    {usuario.listadoCarrito.length}
                                 </h5>
                             </Link>
                         </li>

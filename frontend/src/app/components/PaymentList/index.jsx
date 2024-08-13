@@ -2,61 +2,19 @@
 import React, { useEffect, useState } from 'react';
 import MessageModal from '../MessageModal';
 
-const PRODUCTOS = [{
-    nombreProducto: 'Producto',
-    precioProducto: 7000,
-    marcaProducto: 'Marca',
-    srcImagen: '/C-FourIcon.webp',
-}, {
-    nombreProducto: 'Producto',
-    precioProducto: 8000,
-    marcaProducto: 'Marca',
-    srcImagen: '/C-FourIcon.webp',
-}, {
-    nombreProducto: 'Producto',
-    precioProducto: 8000,
-    marcaProducto: 'Marca',
-    srcImagen: '/C-FourIcon.webp',
-}, {
-    nombreProducto: 'Producto',
-    precioProducto: 8000,
-    marcaProducto: 'Marca',
-    srcImagen: '/C-FourIcon.webp',
-}, {
-    nombreProducto: 'Producto',
-    precioProducto: 7000,
-    marcaProducto: 'Marca',
-    srcImagen: '/C-FourIcon.webp',
-}, {
-    nombreProducto: 'Producto',
-    precioProducto: 8000,
-    marcaProducto: 'Marca',
-    srcImagen: '/C-FourIcon.webp',
-}, {
-    nombreProducto: 'Producto',
-    precioProducto: 8000,
-    marcaProducto: 'Marca',
-    srcImagen: '/C-FourIcon.webp',
-}, {
-    nombreProducto: 'Producto',
-    precioProducto: 8000,
-    marcaProducto: 'Marca',
-    srcImagen: '/C-FourIcon.webp',
-}]
-
 const MESSAGE_MODAL_TITLE = 'Realizar la Compra';
 const MESSAGE_MODAL_BODY = '¿Está seguro que desea proceder con la compra de los articulos seleccionados?';
 
-function PaymentList() {
+function PaymentList({ listadoProductos }) {
     const [totalPayment, setTotalPayment] = useState(0);
     const [showMessageModal, setShowMessageModal] = useState(false);
 
     useEffect(() => {
-        const total = PRODUCTOS.reduce((accumulator, currentProduct) => {
+        const total = listadoProductos.reduce((accumulator, currentProduct) => {
             return accumulator + currentProduct.precioProducto;
         }, 0);
         setTotalPayment(total);
-    }, [PRODUCTOS]);
+    }, [listadoProductos]);
 
     return (
         <div className='shadow min-w-[300px] w-[25vw] p-5'>
@@ -64,14 +22,20 @@ function PaymentList() {
                 Lista de Compras
             </h5>
             <hr className='my-3' />
-            <div className='flex flex-col gap-3'>
-                {PRODUCTOS.map((producto, index) =>
-                    <div className='flex justify-between' key={index}>
-                        <h5> {producto.nombreProducto} </h5>
-                        <h5> ₡{producto.precioProducto} </h5>
-                    </div>
-                )}
-            </div>
+            {listadoProductos.length > 0 ? (
+                <div className='flex flex-col gap-3 min-h-[40vh]'>
+                    {listadoProductos.map((producto, index) =>
+                        <div className='flex justify-between' key={index}>
+                            <h5> {producto.nombreProducto} </h5>
+                            <h5> ₡{producto.precioProducto} </h5>
+                        </div>
+                    )}
+                </div>
+            ) : (
+                <div className='flex justify-center items-center bg-gray-100 p-5 text-center h-[40vh]'>
+                    Todavía no hay productos en el carrito
+                </div>
+            )}
             <hr className='my-3' />
             <div className='flex justify-between'>
                 <button

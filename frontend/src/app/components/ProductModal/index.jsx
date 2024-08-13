@@ -1,18 +1,26 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Image from 'next/image';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping, faStar, faXmark } from '@fortawesome/free-solid-svg-icons';
 import useIsBrowser from '@/app/hooks/useIsBrowser';
 import MessageModal from '../MessageModal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartShopping, faStar, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { userContext } from '@/app/context/userContext';
 
 const ADD_PRODUCT_MODAL_TITLE = 'Añadir Producto al Carrito';
 const ADD_PRODUCT_MODAL_BODY = '¿Está seguro que desea añadir el producto al carrito?';
 const ERASE_PRODUCT_MODAL_TITLE = 'Eliminar Producto del Carrito';
 const ERASE_PRODUCT_MODAL_BODY = '¿Está seguro que desea eliminar el producto del carrito?';
 
-function ProductModal({ showModal, setShowModal, esDeCarrito }) {
+function ProductModal({ 
+    producto, 
+    showModal, 
+    setShowModal, 
+    esDeCarrito,
+    alAgregarProductosAlCarrito,
+    alElliminarProductosDelCarrito,
+}) {
     const { isBrowser } = useIsBrowser();
     const [showMessageModal, setShowMessageModal] = useState(false);
 
@@ -42,16 +50,13 @@ function ProductModal({ showModal, setShowModal, esDeCarrito }) {
                 <div className='flex justify-between flex-wrap items-center text-white h-full px-10'>
                     <div>
                         <h5 className='text-3xl'>
-                            ₡7000
+                            ₡{producto.precioProducto}
                         </h5>
                         <h5 className='text-xl'>
-                            Producto - Marca
+                            {producto.nombreProducto} - {producto.marcaProducto}
                         </h5>
                     </div>
                     <div className='flex gap-5'>
-                        <button className='bg-white text-xl rounded p-4 hover:opacity-85 text-[#333] '>
-                            <FontAwesomeIcon icon={faStar} />
-                        </button>
                         <button
                             className='text-xl hover:opacity-85 w-[1/2]'
                             onClick={() => setShowMessageModal(true)}
@@ -84,7 +89,11 @@ function ProductModal({ showModal, setShowModal, esDeCarrito }) {
                 ) : (
                     ADD_PRODUCT_MODAL_BODY
                 )}
-                accionAceptar={() => { }}
+                accionAceptar={esDeCarrito ? (
+                    () => alElliminarProductosDelCarrito()
+                ) : (
+                    () => alAgregarProductosAlCarrito()
+                )}
             />
         </>
     ) : null;

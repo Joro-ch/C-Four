@@ -1,61 +1,69 @@
-import Filters from '@/app/components/Filters';
+'use client';
+import ProductsFilters from '@/app/components/ProductsFilters';
 import ProductCard from '@/app/components/ProductCard';
-import React from 'react'
+import React, { useState } from 'react'
 
 const PRODUCTOS = [{
-  nombreProducto: 'Producto',
+  idProducto: 1,
+  nombreProducto: 'Producto 1',
   precioProducto: 7000,
-  marcaProducto: 'Marca',
+  marcaProducto: 'Marca 1',
   srcImagen: '/C-FourIcon.webp',
 }, {
-  nombreProducto: 'Producto',
+  idProducto: 2,
+  nombreProducto: 'Producto 2',
   precioProducto: 8000,
-  marcaProducto: 'Marca',
+  marcaProducto: 'Marca 1',
   srcImagen: '/C-FourIcon.webp',
 }, {
-  nombreProducto: 'Producto',
+  idProducto: 3,
+  nombreProducto: 'Producto 3',
   precioProducto: 8000,
-  marcaProducto: 'Marca',
+  marcaProducto: 'Marca 1',
   srcImagen: '/C-FourIcon.webp',
 }, {
-  nombreProducto: 'Producto',
+  idProducto: 4,
+  nombreProducto: 'Producto 4',
   precioProducto: 8000,
-  marcaProducto: 'Marca',
+  marcaProducto: 'Marca 2',
   srcImagen: '/C-FourIcon.webp',
 }, {
-  nombreProducto: 'Producto',
+  idProducto: 5,
+  nombreProducto: 'Producto 5',
   precioProducto: 7000,
-  marcaProducto: 'Marca',
+  marcaProducto: 'Marca 2',
   srcImagen: '/C-FourIcon.webp',
 }, {
-  nombreProducto: 'Producto',
+  idProducto: 6,
+  nombreProducto: 'Producto 6',
   precioProducto: 8000,
-  marcaProducto: 'Marca',
+  marcaProducto: 'Marca 2',
   srcImagen: '/C-FourIcon.webp',
 }, {
-  nombreProducto: 'Producto',
+  idProducto: 7,
+  nombreProducto: 'Producto 7',
   precioProducto: 8000,
-  marcaProducto: 'Marca',
+  marcaProducto: 'Marca 3',
   srcImagen: '/C-FourIcon.webp',
 }, {
-  nombreProducto: 'Producto',
+  idProducto: 8,
+  nombreProducto: 'Producto 8',
   precioProducto: 8000,
-  marcaProducto: 'Marca',
+  marcaProducto: 'Marca 3',
   srcImagen: '/C-FourIcon.webp',
 }]
 
 function Ropa() {
+  const [listadoProductos, setListadoProuctos] = useState(PRODUCTOS);
+
   return (
     <main className='grow flex'>
-      <Filters />
+      <ProductsFilters listadoProductos={listadoProductos} setListadoProuctos={setListadoProuctos} />
       <div className='flex flex-wrap gap-4 justify-between py-4 pr-3'>
-        {PRODUCTOS.map((producto, index) =>
+        {listadoProductos.map((producto, index) =>
           <ProductCard
             key={index}
-            nombreProducto={producto.nombreProducto}
-            precioProducto={producto.precioProducto}
-            marcaProducto={producto.marcaProducto}
-            srcImagen={producto.srcImagen}
+            producto={producto}
           />
         )}
       </div>

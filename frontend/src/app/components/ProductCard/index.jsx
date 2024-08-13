@@ -1,25 +1,42 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Image from 'next/image';
 import ProductModal from '../ProductModal';
 import MessageModal from '../MessageModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { userContext } from '@/app/context/userContext';
+import { toast } from 'sonner';
 
 const ADD_PRODUCT_MODAL_TITLE = 'Añadir Producto al Carrito';
 const ADD_PRODUCT_MODAL_BODY = '¿Está seguro que desea añadir el producto al carrito?';
 const ERASE_PRODUCT_MODAL_TITLE = 'Eliminar Producto del Carrito';
 const ERASE_PRODUCT_MODAL_BODY = '¿Está seguro que desea eliminar el producto del carrito?';
 
-function ProductCard({ nombreProducto, precioProducto, marcaProducto, srcImagen, esDeCarrito = false }) {
+function ProductCard({ producto, esDeCarrito = false }) {
+    const { agregarProductoListadoCarrito, eliminarProductoListadoCarrito } = useContext(userContext);
     const [showProductModal, setShowProductModal] = useState(false);
     const [showMessageModal, setShowMessageModal] = useState(false);
+
+    const alAgregarProductosAlCarrito = () => {
+        agregarProductoListadoCarrito(producto);
+        setShowProductModal(false);
+        setShowMessageModal(false);
+        toast.success('¡Exito!', { description: '¡Se ha agregado correctamente el producto al carrito!' })
+    }
+
+    const alElliminarProductosDelCarrito = () => {
+        eliminarProductoListadoCarrito(producto.idProducto);
+        setShowProductModal(false);
+        setShowMessageModal(false);
+        toast.success('¡Exito!', { description: '¡Se ha eliminado correctamente el producto del carrito!' })
+    }
 
     return (
         <div className='bg-[#333] min-w-[260px] w-[15vw] rounded shadow-xl'>
             <button className='hover:opacity-90' onClick={() => setShowProductModal(true)}>
                 <Image
-                    src={srcImagen}
+                    src={producto.srcImagen}
                     width={1500}
                     height={1500}
                     className='w-full'
@@ -28,10 +45,10 @@ function ProductCard({ nombreProducto, precioProducto, marcaProducto, srcImagen,
             <div className='flex justify-between p-5'>
                 <div className='text-white'>
                     <h5>
-                        ₡{precioProducto}
+                        ₡{producto.precioProducto}
                     </h5>
                     <h5 className='text-xs'>
-                        {nombreProducto} - {marcaProducto}
+                        {producto.nombreProducto} - {producto.marcaProducto}
                     </h5>
                 </div>
                 <button onClick={() => setShowMessageModal(true)}>
@@ -43,7 +60,14 @@ function ProductCard({ nombreProducto, precioProducto, marcaProducto, srcImagen,
 
                 </button>
             </div>
-            <ProductModal showModal={showProductModal} setShowModal={setShowProductModal} esDeCarrito={esDeCarrito} />
+            <ProductModal
+                producto={producto}
+                showModal={showProductModal}
+                setShowModal={setShowProductModal}
+                esDeCarrito={esDeCarrito}
+                alAgregarProductosAlCarrito={alAgregarProductosAlCarrito}
+                alElliminarProductosDelCarrito={alElliminarProductosDelCarrito}
+            />
             <MessageModal
                 showModal={showMessageModal}
                 setShowModal={setShowMessageModal}
@@ -57,7 +81,11 @@ function ProductCard({ nombreProducto, precioProducto, marcaProducto, srcImagen,
                 ) : (
                     ADD_PRODUCT_MODAL_BODY
                 )}
-                accionAceptar={() => { }}
+                accionAceptar={esDeCarrito ? (
+                    () => alElliminarProductosDelCarrito()
+                ) : (
+                    () => alAgregarProductosAlCarrito()
+                )}
             />
         </div>
     )

@@ -1,6 +1,25 @@
-import React from 'react'
+'use client';
+import React, { useEffect, useState } from 'react';
 
-function Filters() {
+function ProductsFilters({ listadoProductos, setListadoProuctos }) {
+    const [listadoDeMarcasUnicas, setListadoDeMarcasUnicas] = useState([]);
+
+    useEffect(() => {
+        if (Array.isArray(listadoProductos)) {
+            setListadoDeMarcasUnicas([
+                ...new Set(listadoProductos.map(producto => producto.marcaProducto))
+            ]);
+        }
+    }, [listadoProductos]);
+
+    const onCheckMarca = (e) => {
+        if (e.target.checked) {
+            setListadoProuctos(listadoProductos.filter(
+                producto => producto.marcaProducto === e.target.value
+            ));
+        }
+    }
+
     return (
         <div className='w-[13vw] min-w-[170px] m-5 p-3 border rounded shadow'>
             <h5> Buscar </h5>
@@ -33,21 +52,15 @@ function Filters() {
             </h5>
             <hr className='my-2' />
             <ul>
-                <li className='flex gap-2'>
-                    <input type='checkbox' />
-                    Marca 1
-                </li>
-                <li className='flex gap-2'>
-                    <input type='checkbox' />
-                    Marca 2
-                </li>
-                <li className='flex gap-2'>
-                    <input type='checkbox' />
-                    Marca 3
-                </li>
+                {listadoDeMarcasUnicas.map((marca, index) =>
+                    <li className='flex gap-2' key={index}>
+                        <input type='checkbox' value={marca} onChange={onCheckMarca} />
+                        {marca}
+                    </li>
+                )}
             </ul>
         </div>
     )
 }
 
-export default Filters
+export default ProductsFilters

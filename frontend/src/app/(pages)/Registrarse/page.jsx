@@ -1,12 +1,14 @@
 'use client';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { SERVICE_URL } from '@/app/constants/global';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { userContext } from '@/app/context/userContext';
 
 function Registrase() {
     const router = useRouter();
+    const { setUsuario } = useContext(userContext);
     const [nuevoUsuario, setNuevoUsuario] = useState({
         nombreUsuario: '',
         correoUsuario: '',
@@ -16,7 +18,8 @@ function Registrase() {
     const onSingUp = async (e) => {
         e.preventDefault();
         if (checkValidUser() && await singUpRequest())
-            router.push('/')
+            setUsuario(nuevoUsuario);
+            router.push('/');
     }
 
     const isValidEmail = (email) => {

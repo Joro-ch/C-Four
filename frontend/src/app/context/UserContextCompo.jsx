@@ -10,6 +10,7 @@ function UserContextCompo({ children }) {
             nombreUsuario: '',
             correoUsuario: '',
             passwordUsuario: '',
+            listadoCarrito: [],
         };
     });
 
@@ -18,11 +19,34 @@ function UserContextCompo({ children }) {
         localStorage.setItem('usuario', JSON.stringify(usuario));
     }, [usuario]);
 
+    useEffect(() => {
+        if (Array.isArray(usuario.listadoCarrito)) console.log(usuario.listadoCarrito)
+    }, [usuario.listadoCarrito]);
+
+    const agregarProductoListadoCarrito = (producto) => {
+        setUsuario({ 
+            ...usuario, 
+            listadoCarrito: Array.isArray(usuario.listadoCarrito) 
+                ? [...usuario.listadoCarrito, producto] 
+                : [producto] 
+        });
+    };
+
+    const eliminarProductoListadoCarrito = (idProducto) => {
+        const nuevoListado = usuario.listadoCarrito.filter((producto) => producto.idProducto != idProducto);
+        setUsuario({
+            ...usuario,
+            listadoCarrito: nuevoListado
+        });
+    }
+
     return (
         <userContext.Provider
             value={{
                 usuario,
                 setUsuario,
+                agregarProductoListadoCarrito,
+                eliminarProductoListadoCarrito,
             }}
         >
             {children}
