@@ -14,22 +14,32 @@ const ERASE_PRODUCT_MODAL_TITLE = 'Eliminar Producto del Carrito';
 const ERASE_PRODUCT_MODAL_BODY = '¿Está seguro que desea eliminar el producto del carrito?';
 
 function ProductCard({ producto, esDeCarrito = false }) {
-    const { agregarProductoListadoCarrito, eliminarProductoListadoCarrito } = useContext(userContext);
+    const { usuario, agregarProductoListadoCarrito, eliminarProductoListadoCarrito } = useContext(userContext);
     const [showProductModal, setShowProductModal] = useState(false);
     const [showMessageModal, setShowMessageModal] = useState(false);
 
     const alAgregarProductosAlCarrito = () => {
-        agregarProductoListadoCarrito(producto);
         setShowProductModal(false);
         setShowMessageModal(false);
-        toast.success('¡Exito!', { description: '¡Se ha agregado correctamente el producto al carrito!' })
+        if (usuario.nombreUsuario === '') {
+            toast.error('¡Error!', { description: '¡Inicie Sesión o Registrese primero!' });
+        }
+        else {
+            agregarProductoListadoCarrito(producto);
+            toast.success('¡Exito!', { description: '¡Se ha agregado correctamente el producto al carrito!' })
+        }
     }
 
     const alElliminarProductosDelCarrito = () => {
-        eliminarProductoListadoCarrito(producto.idProducto);
         setShowProductModal(false);
         setShowMessageModal(false);
-        toast.success('¡Exito!', { description: '¡Se ha eliminado correctamente el producto del carrito!' })
+        if (usuario.nombreUsuario === '') {
+            toast.error('¡Error!', { description: '¡Inicie Sesión o Registrese primero!' })
+        }
+        else {
+            eliminarProductoListadoCarrito(producto.idProducto);
+            toast.success('¡Exito!', { description: '¡Se ha eliminado correctamente el producto del carrito!' })
+        }
     }
 
     return (

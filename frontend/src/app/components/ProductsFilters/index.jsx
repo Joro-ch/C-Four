@@ -1,7 +1,9 @@
 'use client';
+import { faArrowRotateBack } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 
-function ProductsFilters({ listadoProductos, setListadoProuctos }) {
+function ProductsFilters({ listadoProductos, listadoMostrado, setListadoMostrado }) {
     const [listadoDeMarcasUnicas, setListadoDeMarcasUnicas] = useState([]);
 
     useEffect(() => {
@@ -14,20 +16,20 @@ function ProductsFilters({ listadoProductos, setListadoProuctos }) {
 
     const onCheckMarca = (e) => {
         if (e.target.checked) {
-            setListadoProuctos(listadoProductos.filter(
+            setListadoMostrado(listadoProductos.filter(
                 producto => producto.marcaProducto === e.target.value
             ));
         }
     }
 
     return (
-        <div className='w-[13vw] min-w-[170px] m-5 p-3 border rounded shadow'>
+        <div className='w-[13vw] min-w-[200px] m-5 p-3 border rounded shadow'>
             <h5> Buscar </h5>
             <hr className='my-2' />
             <input
                 type='search'
                 className='py-2 px-3 w-full border border-[#333] rounded'
-                placeholder='Buscar'
+                placeholder='Nombre Producto'
             />
             <h5 className='mt-2'>
                 Precio
@@ -51,16 +53,23 @@ function ProductsFilters({ listadoProductos, setListadoProuctos }) {
                 Marca
             </h5>
             <hr className='my-2' />
-            <ul>
+            <form>
                 {listadoDeMarcasUnicas.map((marca, index) =>
-                    <li className='flex gap-2' key={index}>
-                        <input type='checkbox' value={marca} onChange={onCheckMarca} />
+                    <div className='flex gap-2' key={index}>
+                        <input type='radio' value={marca} id={marca} name='marcaProducto' onChange={onCheckMarca} />
                         {marca}
-                    </li>
+                    </div>
                 )}
-            </ul>
+            </form>
+            <hr className='my-2' />
+            <button
+                className='bg-green-400 p-1 rounded text-white w-full hover:bg-green-500'
+                onClick={() => setListadoMostrado(listadoProductos)}
+            >
+                <FontAwesomeIcon icon={faArrowRotateBack} />
+            </button>
         </div>
     )
 }
 
-export default ProductsFilters
+export default ProductsFilters;

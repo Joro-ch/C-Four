@@ -61,7 +61,7 @@ function Carrito() {
     <main className='grow p-5 flex gap-5'>
       <PaymentList listadoProductos={usuario.listadoCarrito} />
       <div className='flex flex-wrap gap-4 justify-between'>
-        {usuario.listadoCarrito.map((producto, index) =>
+        {usuario.listadoCarrito && usuario.listadoCarrito.map((producto, index) =>
           <ProductCard
             key={index}
             producto={producto}

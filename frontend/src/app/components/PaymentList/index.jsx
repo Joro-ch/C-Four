@@ -10,9 +10,9 @@ function PaymentList({ listadoProductos }) {
     const [showMessageModal, setShowMessageModal] = useState(false);
 
     useEffect(() => {
-        const total = listadoProductos.reduce((accumulator, currentProduct) => {
+        const total = listadoProductos ? listadoProductos.reduce((accumulator, currentProduct) => {
             return accumulator + currentProduct.precioProducto;
-        }, 0);
+        }, 0) : 0;
         setTotalPayment(total);
     }, [listadoProductos]);
 
@@ -22,7 +22,7 @@ function PaymentList({ listadoProductos }) {
                 Lista de Compras
             </h5>
             <hr className='my-3' />
-            {listadoProductos.length > 0 ? (
+            {listadoProductos && listadoProductos.length > 0 ? (
                 <div className='flex flex-col gap-3 min-h-[40vh]'>
                     {listadoProductos.map((producto, index) =>
                         <div className='flex justify-between' key={index}>

@@ -54,13 +54,18 @@ const PRODUCTOS = [{
 }]
 
 function Ropa() {
-  const [listadoProductos, setListadoProuctos] = useState(PRODUCTOS);
+  const [listadoProductos, setListadoProductos] = useState(PRODUCTOS);
+  const [listadoMostrado, setListadoMostrado] = useState(PRODUCTOS);
 
   return (
     <main className='grow flex'>
-      <ProductsFilters listadoProductos={listadoProductos} setListadoProuctos={setListadoProuctos} />
+      <ProductsFilters
+        listadoProductos={listadoProductos}
+        listadoMostrado={listadoMostrado}
+        setListadoMostrado={setListadoMostrado} 
+      />
       <div className='flex flex-wrap gap-4 justify-between py-4 pr-3'>
-        {listadoProductos.map((producto, index) =>
+        {listadoMostrado.map((producto, index) =>
           <ProductCard
             key={index}
             producto={producto}
