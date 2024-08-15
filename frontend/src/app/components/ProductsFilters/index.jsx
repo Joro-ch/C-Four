@@ -5,12 +5,21 @@ import React, { useEffect, useState } from 'react';
 
 function ProductsFilters({ listadoProductos, listadoMostrado, setListadoMostrado }) {
     const [listadoDeMarcasUnicas, setListadoDeMarcasUnicas] = useState([]);
+    const [umbralesPrecios, setUmbralesPrecios] = useState([]);
+    const [nombreProductoBuscado, setNombreProductoBuscado] = useState('');
 
     useEffect(() => {
         if (Array.isArray(listadoProductos)) {
             setListadoDeMarcasUnicas([
                 ...new Set(listadoProductos.map(producto => producto.marcaProducto))
             ]);
+            const listadoPrecios = listadoProductos.map(
+                producto => producto.precioProducto
+            );
+            const u1 = listadoPrecios[Math.floor(listadoPrecios.length * 0.25)];
+            const u2 = listadoPrecios[Math.floor(listadoPrecios.length * 0.50)];
+            const u3 = listadoPrecios[Math.floor(listadoPrecios.length * 0.75)];
+            setUmbralesPrecios([u1, u2, u3]);
         }
     }, [listadoProductos]);
 
@@ -18,6 +27,22 @@ function ProductsFilters({ listadoProductos, listadoMostrado, setListadoMostrado
         if (e.target.checked) {
             setListadoMostrado(listadoProductos.filter(
                 producto => producto.marcaProducto === e.target.value
+            ));
+        }
+    }
+
+    const onCheckPrecio = (e) => {
+        if (e.target.checked) {
+            setListadoMostrado(listadoProductos.filter(
+                producto => producto.precioProducto <= e.target.value
+            ));
+        }
+    }
+
+    const buscarMarca = () => {
+        if (Array.isArray(listadoProductos)) {
+            setListadoMostrado(listadoProductos.filter(
+                producto => producto.nombreProducto === nombreProductoBuscado
             ));
         }
     }
@@ -30,25 +55,26 @@ function ProductsFilters({ listadoProductos, listadoMostrado, setListadoMostrado
                 type='search'
                 className='py-2 px-3 w-full border border-[#333] rounded'
                 placeholder='Nombre Producto'
+                onChange={(e) => setNombreProductoBuscado(e.target.value)}
             />
+            <button
+                className='shadow w-full py-1 bg-[#333] text-white rounded mt-1 hover:opacity-85'
+                onClick={buscarMarca}
+            >
+                Buscar
+            </button>
             <h5 className='mt-2'>
                 Precio
             </h5>
             <hr className='my-2' />
-            <ul>
-                <li className='flex gap-2'>
-                    <input type='checkbox' />
-                    {"< ₡3000"}
-                </li>
-                <li className='flex gap-2'>
-                    <input type='checkbox' />
-                    {"₡3000 < ₡7000"}
-                </li>
-                <li className='flex gap-2'>
-                    <input type='checkbox' />
-                    {"> ₡7000"}
-                </li>
-            </ul>
+            <form>
+                {umbralesPrecios.map((umbral, index) =>
+                    <div className='flex gap-2' key={index}>
+                        <input type='radio' value={umbral} id={umbral} name='precioProducto' onChange={onCheckPrecio} />
+                        {"< ₡" + umbral}
+                    </div>
+                )}
+            </form>
             <h5 className='mt-2'>
                 Marca
             </h5>
