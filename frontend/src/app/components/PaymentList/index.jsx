@@ -1,11 +1,14 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import MessageModal from '../MessageModal';
+import { userContext } from '@/app/context/userContext';
+import { toast } from 'sonner';
 
 const MESSAGE_MODAL_TITLE = 'Realizar la Compra';
 const MESSAGE_MODAL_BODY = '¿Está seguro que desea proceder con la compra de los articulos seleccionados?';
 
 function PaymentList({ listadoProductos }) {
+    const { comprarProducosDelCarrito } = useContext(userContext);
     const [totalPayment, setTotalPayment] = useState(0);
     const [showMessageModal, setShowMessageModal] = useState(false);
 
@@ -15,6 +18,12 @@ function PaymentList({ listadoProductos }) {
         }, 0) : 0;
         setTotalPayment(total);
     }, [listadoProductos]);
+
+    const alComprarProductos = () => {
+        comprarProducosDelCarrito();
+        setShowMessageModal(false);
+        toast.success('¡Exito!', { description: '¡Se compraron los productos correctamente!' })
+    }
 
     return (
         <div className='shadow min-w-[300px] w-[25vw] p-5'>
@@ -52,7 +61,7 @@ function PaymentList({ listadoProductos }) {
                 setShowModal={setShowMessageModal}
                 modalTitulo={MESSAGE_MODAL_TITLE}
                 modalMensaje={MESSAGE_MODAL_BODY}
-                accionAceptar={() => { }}
+                accionAceptar={alComprarProductos}
             />
         </div>
     )

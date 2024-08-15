@@ -11,6 +11,7 @@ function UserContextCompo({ children }) {
             correoUsuario: '',
             passwordUsuario: '',
             listadoCarrito: [],
+            listadoProductosComprados: [],
         };
     });
 
@@ -22,6 +23,10 @@ function UserContextCompo({ children }) {
     useEffect(() => {
         if (Array.isArray(usuario.listadoCarrito)) console.log(usuario.listadoCarrito)
     }, [usuario.listadoCarrito]);
+
+    useEffect(() => {
+        if (Array.isArray(usuario.listadoProductosComprados)) console.log(usuario.listadoProductosComprados)
+    }, [usuario.listadoProductosComprados]);
 
     const agregarProductoListadoCarrito = (producto) => {
         setUsuario({ 
@@ -40,6 +45,24 @@ function UserContextCompo({ children }) {
         });
     }
 
+    const comprarProducosDelCarrito = () => {
+        setUsuario({ 
+            ...usuario, 
+            listadoProductosComprados: Array.isArray(usuario.listadoProductosComprados) 
+                ? [...usuario.listadoProductosComprados, ...usuario.listadoCarrito]
+                : [...usuario.listadoCarrito],
+            listadoCarrito: []
+        });
+    };
+
+    const eliminarProductoDelHistorial = (idProducto) => {
+        const nuevoListado = usuario.listadoProductosComprados.filter((producto) => producto.idProducto != idProducto);
+        setUsuario({
+            ...usuario,
+            listadoProductosComprados: nuevoListado
+        });
+    }
+
     return (
         <userContext.Provider
             value={{
@@ -47,6 +70,8 @@ function UserContextCompo({ children }) {
                 setUsuario,
                 agregarProductoListadoCarrito,
                 eliminarProductoListadoCarrito,
+                comprarProducosDelCarrito,
+                eliminarProductoDelHistorial
             }}
         >
             {children}
