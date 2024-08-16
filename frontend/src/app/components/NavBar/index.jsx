@@ -3,11 +3,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useContext } from 'react'
 import { userContext } from '@/app/context/userContext';
+import { empresaContext } from '@/app/context/empresaContext';
 import { faCartShopping, faDumbbell, faShirt, faSignIn } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function NavBar() {
     const { usuario } = useContext(userContext);
+    const { empresa } = useContext(empresaContext);
 
     return (
         <nav className='bg-[#333] text-white py-5 px-9 flex border-b-2 border-black-800'>
@@ -59,6 +61,14 @@ function NavBar() {
                             </Link>
                         </li>
                     </>
+                ) : empresa.nombreMarca != '' ? (
+                    <li className='hover:opacity-85 duration-500'>
+                        <Link href={'/Empresas/AdministrarMarca'} className='flex items-center gap-2'>
+                            <h5 className='text-nowrap bg-white text-black rounded-full w-[25px] h-[25px] text-center'>
+                                {empresa.nombreMarca[0]}
+                            </h5>
+                        </Link>
+                    </li>
                 ) : (
                     <li className='hover:opacity-85 duration-500'>
                         <Link href={'/IniciarSesion'} className='flex items-center gap-2'>

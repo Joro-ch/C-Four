@@ -1,7 +1,110 @@
+'use client';
 import Image from 'next/image';
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import { SERVICE_URL } from '@/app/constants/global';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { empresaContext } from '@/app/context/empresaContext';
 
 function Empresas() {
+  const router = useRouter();
+  const { setEmpresa } = useContext(empresaContext);
+  const [nuevaEmpresaFormData, setNuevaEmpresaFormData] = useState({
+    nombreMarca: '',
+    correoMarca: '',
+    passwordMarca: '',
+  });
+  const [empresaFormData, setEmpresaFormData] = useState({
+    nombreMarca: '',
+    passwordMarca: '',
+  })
+
+  const alRegistrarEmpresa = (e) => {
+    e.preventDefault();
+    if (revisarValidezNuevaEmpresa() && registrarMarcaRequest()) {
+      setEmpresa(nuevaEmpresaFormData);
+      toast.success('¡Exito!', { description: '¡Se ha registrado correctamente la empresa!' });
+      router.push('/Empresas/AdministrarMarca');
+    }
+  }
+
+  const revisarValidezNuevaEmpresa = () => {
+    if (nuevaEmpresaFormData.nombreMarca === '') {
+      toast.error('¡Error!', { description: '¡El campo nombre de marca no puede estar vacío!' });
+      return false;
+    }
+    else if (nuevaEmpresaFormData.correoMarca === '') {
+      toast.error('¡Error!', { description: '¡El campo correo no puede estar vacío!' });
+      return false;
+    }
+    else if (nuevaEmpresaFormData.passwordMarca === '') {
+      toast.error('¡Error!', { description: '¡El campo contraseña no puede estar vacío!' });
+      return false;
+    }
+    return true;
+  }
+
+  const registrarMarcaRequest = async () => {
+    const response = await fetch(`${SERVICE_URL}/empresas/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(nuevaEmpresaFormData)
+    });
+
+    const result = await response.json();
+    if (!response.ok) {
+      toast.error('¡Error!', { description: `¡${result.error}!` });
+      return false;
+    }
+
+    return true;
+  }
+
+  const alIniciarSesion = async (e) => {
+    e.preventDefault();
+    
+    if (revisarValidezEmpresa()) {
+      const infoEmpresa = await iniciarSesionRequest();
+      if (infoEmpresa) {
+        toast.success('¡Exito!', { description: '¡Ha iniciado sesion correctamente!' });
+        setEmpresa(infoEmpresa);
+        router.push('/Empresas/AdministrarMarca');
+      }
+    }
+  }
+
+  const revisarValidezEmpresa = () => {
+    if (empresaFormData.nombreMarca === '') {
+      toast.error('¡Error!', { description: '¡El campo nombre de marca no puede estar vacío!' });
+      return false;
+    }
+    else if (empresaFormData.passwordMarca === '') {
+      toast.error('¡Error!', { description: '¡El campo contraseña no puede estar vacío!' });
+      return false;
+    }
+    return true;
+  }
+
+  const iniciarSesionRequest = async () => {
+    const response = await fetch(`${SERVICE_URL}/iniciarSesionEmpresa/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(empresaFormData)
+    });
+
+    const result = await response.json();
+    if (!response.ok) {
+      toast.error('¡Error!', { description: `¡${result.error}!` });
+      return null;
+    }
+
+    return result.empresa;
+  }
+
   return (
     <main className='grow'>
       <article>
@@ -25,8 +128,9 @@ function Empresas() {
                     Nombre de la Marca
                   </h5>
                   <input
-                    placeholder='Nombre de Usuario'
+                    placeholder='Nombre de la Marca'
                     className='py-2 px-3 w-full rounded text-black'
+                    onChange={(e) => setNuevaEmpresaFormData({ ...nuevaEmpresaFormData, nombreMarca: e.target.value })}
                   />
                 </span>
                 <span className='flex flex-col gap-2'>
@@ -36,6 +140,7 @@ function Empresas() {
                   <input
                     placeholder='Correo'
                     className='py-2 px-3 w-full rounded'
+                    onChange={(e) => setNuevaEmpresaFormData({ ...nuevaEmpresaFormData, correoMarca: e.target.value })}
                   />
                 </span>
                 <span className='flex flex-col gap-2'>
@@ -45,9 +150,13 @@ function Empresas() {
                   <input
                     placeholder='Contraseña'
                     className='py-2 px-3 w-full rounded'
+                    onChange={(e) => setNuevaEmpresaFormData({ ...nuevaEmpresaFormData, passwordMarca: e.target.value })}
                   />
                 </span>
-                <button className='bg-green-400 rounded p-1 text-white hover:bg-green-500'>
+                <button
+                  className='bg-green-400 rounded p-1 text-white hover:bg-green-500'
+                  onClick={alRegistrarEmpresa}
+                >
                   Registrar
                 </button>
               </div>
@@ -83,8 +192,9 @@ function Empresas() {
                     Nombre de la Marca
                   </h5>
                   <input
-                    placeholder='Nombre de Usuario'
+                    placeholder='Nombre de la Marca'
                     className='py-2 px-3 w-full rounded bg-[#333] text-white'
+                    onChange={(e) => setEmpresaFormData({ ...empresaFormData, nombreMarca: e.target.value })}
                   />
                 </span>
                 <span className='flex flex-col gap-2'>
@@ -94,9 +204,13 @@ function Empresas() {
                   <input
                     placeholder='Contraseña'
                     className='py-2 px-3 w-full rounded bg-[#333] text-white'
+                    onChange={(e) => setEmpresaFormData({ ...empresaFormData, passwordMarca: e.target.value })}
                   />
                 </span>
-                <button className='bg-green-400 rounded p-1 text-white hover:bg-green-500'>
+                <button
+                  className='bg-green-400 rounded p-1 text-white hover:bg-green-500'
+                  onClick={alIniciarSesion}
+                >
                   Iniciar Sesión
                 </button>
               </div>

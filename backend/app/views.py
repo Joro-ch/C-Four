@@ -2,9 +2,9 @@ from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Usuario, Empresa, TipoProducto, Producto, CarritoUsuario, ProductosMarca
-from .serializer import UsuarioSerializer, EmpresaSerializer, TipoProductoSerializer, ProductoSerializer
-from .serializer import CarritoUsuarioSerializer, ProductosMarcaSerializer
+from .models import Usuario, Empresa, Producto, HistorialCompraUsuario, ProductosMarca
+from .serializer import UsuarioSerializer, EmpresaSerializer, ProductoSerializer
+from .serializer import HistorialCompraUsuarioSerializer, ProductosMarcaSerializer
 
 # Create your views here.
 
@@ -18,19 +18,14 @@ class EmpresaViewSet(viewsets.ModelViewSet):
     serializer_class = EmpresaSerializer
 
 
-class TipoProductoViewSet(viewsets.ModelViewSet):
-    queryset = TipoProducto.objects.all()
-    serializer_class = TipoProductoSerializer
-
-
 class ProductoViewSet(viewsets.ModelViewSet):
     queryset = Producto.objects.all()
     serializer_class = ProductoSerializer
 
 
-class CarritoUsuarioViewSet(viewsets.ModelViewSet):
-    queryset = CarritoUsuario.objects.all()
-    serializer_class = CarritoUsuarioSerializer
+class HistorialCompraUsuarioViewSet(viewsets.ModelViewSet):
+    queryset = HistorialCompraUsuario.objects.all()
+    serializer_class = HistorialCompraUsuarioSerializer
 
 
 class ProductosMarcaViewSet(viewsets.ModelViewSet):
@@ -39,7 +34,7 @@ class ProductosMarcaViewSet(viewsets.ModelViewSet):
 
 # ---------------------------------------------------------------------
 
-class LoginView(APIView):
+class LoginUsuarioView(APIView):
     def post(self, request):
         nombreUsuario = request.data.get("nombreUsuario")
         passwordUsuario = request.data.get("passwordUsuario")
@@ -56,5 +51,25 @@ class LoginView(APIView):
             # Aquí podrías generar un token o simplemente devolver una respuesta de éxito
             usuario_serializer = UsuarioSerializer(usuario)
             return Response({"mensaje": "Autenticación exitosa", "usuario": usuario_serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "Contraseña incorrecta"}, status=status.HTTP_401_UNAUTHORIZED)
+        
+class LoginEmpresaView(APIView):
+    def post(self, request):
+        nombreMarca = request.data.get("nombreMarca")
+        passwordMarca = request.data.get("passwordMarca")
+
+        if not nombreMarca or not passwordMarca:
+            return Response({"error": "Faltan campos obligatorios (nombreMarca o passwordMarca)."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            empresa = Empresa.objects.get(nombreMarca=nombreMarca)
+        except Empresa.DoesNotExist:
+            return Response({"error": "Empresa no encontrada"}, status=status.HTTP_404_NOT_FOUND)
+
+        if passwordMarca == empresa.passwordMarca:
+            # Aquí podrías generar un token o simplemente devolver una respuesta de éxito
+            empresa_serializer = EmpresaSerializer(empresa)
+            return Response({"mensaje": "Autenticación exitosa", "empresa": empresa_serializer.data}, status=status.HTTP_200_OK)
         else:
             return Response({"error": "Contraseña incorrecta"}, status=status.HTTP_401_UNAUTHORIZED)

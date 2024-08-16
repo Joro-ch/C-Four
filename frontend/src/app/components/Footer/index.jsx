@@ -1,8 +1,11 @@
+import { empresaContext } from '@/app/context/empresaContext';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react'
+import React, { useContext } from 'react'
 
 function Footer() {
+  const { empresa } = useContext(empresaContext);
+
   return (
     <div className='bg-[#333] text-white py-5 px-9 border-t-2 border-black-800 flex justify-between flex-wrap'>
       <div className='flex flex-col items-center gap-3'>
@@ -12,7 +15,7 @@ function Footer() {
           height={1500}
           className='w-[150px] h-[150px] rounded-full'
         />
-        C-Four 
+        C-Four
       </div>
       <div>
         <h5> Ropa Deportiva </h5>
@@ -60,9 +63,11 @@ function Footer() {
           <Link href={'/SobreNosotros'} className='hover:underline hover:opacity-85 duration-500'>
             Sobre Nosotros
           </Link>
-          <Link href={'/Empresas'} className='hover:underline hover:opacity-85 duration-500'>
-            Empresas
-          </Link>
+          {empresa.nombreMarca == '' && (
+            <Link href={'/Empresas'} className='hover:underline hover:opacity-85 duration-500'>
+              Empresas
+            </Link>
+          )}
         </ul>
       </div>
     </div>
