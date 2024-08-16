@@ -11,7 +11,7 @@ export default function Home() {
           </h1>
           <p> Tienda #1 en la venta de productos deportivos! </p>
         </section>
-        <section className='bg-[#333] flex flex-wrap-reverse gap-5 py-7 px-10 text-white justify-between'>
+        <section className='bg-[#333] flex flex-wrap-reverse gap-5 py-7 px-5 text-white justify-around'>
           <div className='flex flex-col w-[500px]'>
             <h5 className='text-4xl'>
               Descubre tu Mejor Versión con C-Four
@@ -29,7 +29,7 @@ export default function Home() {
               Ir al Catalogo de Ropa Deportiva
             </Link>
           </div>
-          <div className='w-[700px] shadow'>
+          <div className='min-w-[400px] max-w-[50vw] shadow'>
             <Image
               src={'/C-FourIcon.webp'}
               width={1500}
@@ -38,8 +38,8 @@ export default function Home() {
             />
           </div>
         </section>
-        <section className='flex flex-wrap gap-5 py-7 px-10 text-white justify-between text-black'>
-          <div className='w-[700px] shadow'>
+        <section className='flex flex-wrap gap-5 py-7 px-5 text-white justify-around'>
+          <div className='min-w-[400px] max-w-[50vw] shadow'>
             <Image
               src={'/C-FourIcon.webp'}
               width={1500}

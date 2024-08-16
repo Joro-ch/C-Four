@@ -1,6 +1,5 @@
 import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react'
+import React from 'react';
 
 function Empresas() {
   return (
@@ -13,9 +12,9 @@ function Empresas() {
           </h1>
           <p> Vende tus productos con la tienda #1! </p>
         </section>
-        <section className='bg-[#333] flex flex-wrap-reverse gap-5 py-7 px-10 text-white justify-between'>
+        <section className='bg-[#333] flex flex-wrap-reverse gap-5 py-7 px-5 justify-around'>
           <div className='flex flex-col w-[500px]'>
-            <h5 className='text-4xl'>
+            <h5 className='text-4xl text-white'>
               Registra tu Empresa en C-Four
             </h5>
             <hr className='my-3' />
@@ -27,7 +26,7 @@ function Empresas() {
                   </h5>
                   <input
                     placeholder='Nombre de Usuario'
-                    className='py-2 px-3 w-full rounded'
+                    className='py-2 px-3 w-full rounded text-black'
                   />
                 </span>
                 <span className='flex flex-col gap-2'>
@@ -54,7 +53,7 @@ function Empresas() {
               </div>
             </form>
           </div>
-          <div className='w-[700px] shadow'>
+          <div className='min-w-[400px] max-w-[50vw] shadow'>
             <Image
               src={'/C-FourIcon.webp'}
               width={1500}
@@ -63,8 +62,8 @@ function Empresas() {
             />
           </div>
         </section>
-        <section className='flex flex-wrap gap-5 py-7 px-10 text-white justify-between text-black'>
-          <div className='w-[700px] shadow'>
+        <section className='flex flex-wrap gap-5 py-7 px-5 justify-around'>
+          <div className='min-w-[400px] max-w-[50vw] shadow'>
             <Image
               src={'/C-FourIcon.webp'}
               width={1500}
@@ -72,7 +71,7 @@ function Empresas() {
               className='h-[70vh]'
             />
           </div>
-          <div className='flex flex-col w-[500px] text-black'>
+          <div className='flex flex-col w-[500px]'>
             <h5 className='text-4xl'>
               Administrar Mi Marca
             </h5>
@@ -85,7 +84,7 @@ function Empresas() {
                   </h5>
                   <input
                     placeholder='Nombre de Usuario'
-                    className='py-2 px-3 w-full rounded bg-[#333]'
+                    className='py-2 px-3 w-full rounded bg-[#333] text-white'
                   />
                 </span>
                 <span className='flex flex-col gap-2'>
@@ -94,7 +93,7 @@ function Empresas() {
                   </h5>
                   <input
                     placeholder='Contraseña'
-                    className='py-2 px-3 w-full rounded bg-[#333]'
+                    className='py-2 px-3 w-full rounded bg-[#333] text-white'
                   />
                 </span>
                 <button className='bg-green-400 rounded p-1 text-white hover:bg-green-500'>

@@ -7,7 +7,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { userContext } from '@/app/context/userContext';
 import { toast } from 'sonner';
-import { AGREGAR_PRODUCTO_CARRITO_MODAL_CUERPO, AGREGAR_PRODUCTO_CARRITO_MODAL_TITULO, ELIMINAR_PRODUCTO_HISTORIAL_MODAL_CUERPO, ELIMINAR_PRODUCTO_HISTORIAL_MODAL_TITULO, ELIMINAR_PRODUCTO_MODAL_CUERPO, ELIMINAR_PRODUCTO_MODAL_TITULO } from '@/app/constants/mensajes';
+import { AGREGAR_PRODUCTO_CARRITO_MODAL_CUERPO, 
+    AGREGAR_PRODUCTO_CARRITO_MODAL_TITULO, 
+    ELIMINAR_PRODUCTO_HISTORIAL_MODAL_CUERPO, 
+    ELIMINAR_PRODUCTO_HISTORIAL_MODAL_TITULO, 
+    ELIMINAR_PRODUCTO_MODAL_CUERPO, 
+    ELIMINAR_PRODUCTO_MODAL_TITULO 
+} from '@/app/constants/mensajes';
 
 function ProductCard({ producto, tipoDeCartaProducto }) {
     const {
@@ -56,7 +62,7 @@ function ProductCard({ producto, tipoDeCartaProducto }) {
     }
 
     return (
-        <div className='bg-[#333] min-w-[260px] w-[15vw] rounded shadow-xl'>
+        <div className='bg-[#333] min-w-[260px] w-[15vw] max-h-[350px] rounded shadow-xl'>
             <button className='hover:opacity-90' onClick={() => setShowProductModal(true)}>
                 <Image
                     src={producto.srcImagen}
