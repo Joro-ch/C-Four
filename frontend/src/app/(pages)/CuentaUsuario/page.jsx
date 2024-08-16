@@ -20,6 +20,7 @@ function CuentaUsuario() {
             <ProductCard
               key={index}
               producto={producto}
+              tipoDeCartaProducto={'historial'}
             />
           )}
         </div>

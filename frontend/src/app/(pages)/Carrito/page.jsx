@@ -65,7 +65,7 @@ function Carrito() {
           <ProductCard
             key={index}
             producto={producto}
-            esDeCarrito={true}
+            tipoDeCartaProducto={'carrito'}
           />
         )}
       </div>

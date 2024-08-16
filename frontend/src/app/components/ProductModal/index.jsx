@@ -1,25 +1,21 @@
 "use client";
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import Image from 'next/image';
 import useIsBrowser from '@/app/hooks/useIsBrowser';
 import MessageModal from '../MessageModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping, faStar, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { userContext } from '@/app/context/userContext';
+import { faCartShopping, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { AGREGAR_PRODUCTO_CARRITO_MODAL_CUERPO, AGREGAR_PRODUCTO_CARRITO_MODAL_TITULO, ELIMINAR_PRODUCTO_HISTORIAL_MODAL_CUERPO, ELIMINAR_PRODUCTO_HISTORIAL_MODAL_TITULO, ELIMINAR_PRODUCTO_MODAL_CUERPO, ELIMINAR_PRODUCTO_MODAL_TITULO } from '@/app/constants/mensajes';
 
-const ADD_PRODUCT_MODAL_TITLE = 'Añadir Producto al Carrito';
-const ADD_PRODUCT_MODAL_BODY = '¿Está seguro que desea añadir el producto al carrito?';
-const ERASE_PRODUCT_MODAL_TITLE = 'Eliminar Producto del Carrito';
-const ERASE_PRODUCT_MODAL_BODY = '¿Está seguro que desea eliminar el producto del carrito?';
-
-function ProductModal({ 
-    producto, 
-    showModal, 
-    setShowModal, 
-    esDeCarrito,
+function ProductModal({
+    producto,
+    showModal,
+    setShowModal,
+    tipoDeCartaProducto,
     alAgregarProductosAlCarrito,
     alElliminarProductosDelCarrito,
+    alElliminarProductosDelHistorial,
 }) {
     const { isBrowser } = useIsBrowser();
     const [showMessageModal, setShowMessageModal] = useState(false);
@@ -61,14 +57,14 @@ function ProductModal({
                             className='text-xl hover:opacity-85 w-[1/2]'
                             onClick={() => setShowMessageModal(true)}
                         >
-                            {esDeCarrito ? (
+                            {tipoDeCartaProducto === 'carrito' || tipoDeCartaProducto === 'historial' ? (
                                 <div className='bg-red-400 rounded p-4 flex items-center gap-2'>
-                                    <FontAwesomeIcon icon={faXmark}/>
+                                    <FontAwesomeIcon icon={faXmark} />
                                     Eliminar
                                 </div>
                             ) : (
                                 <div className='bg-green-400 rounded p-4 flex items-center gap-2'>
-                                    <FontAwesomeIcon icon={faCartShopping}  />
+                                    <FontAwesomeIcon icon={faCartShopping} />
                                     Comprar
                                 </div>
                             )}
@@ -79,18 +75,24 @@ function ProductModal({
             <MessageModal
                 showModal={showMessageModal}
                 setShowModal={setShowMessageModal}
-                modalTitulo={esDeCarrito ? (
-                    ERASE_PRODUCT_MODAL_TITLE
+                modalTitulo={tipoDeCartaProducto === 'carrrito' ? (
+                    ELIMINAR_PRODUCTO_MODAL_TITULO
+                ) : tipoDeCartaProducto === 'historial' ? (
+                    ELIMINAR_PRODUCTO_HISTORIAL_MODAL_TITULO
                 ) : (
-                    ADD_PRODUCT_MODAL_TITLE
+                    AGREGAR_PRODUCTO_CARRITO_MODAL_TITULO
                 )}
-                modalMensaje={esDeCarrito ? (
-                    ERASE_PRODUCT_MODAL_BODY
+                modalMensaje={tipoDeCartaProducto === 'carrrito' ? (
+                    ELIMINAR_PRODUCTO_MODAL_CUERPO
+                ) : tipoDeCartaProducto === 'historial' ? (
+                    ELIMINAR_PRODUCTO_HISTORIAL_MODAL_CUERPO
                 ) : (
-                    ADD_PRODUCT_MODAL_BODY
+                    AGREGAR_PRODUCTO_CARRITO_MODAL_CUERPO
                 )}
-                accionAceptar={esDeCarrito ? (
+                accionAceptar={tipoDeCartaProducto === 'carrito' ? (
                     () => alElliminarProductosDelCarrito()
+                ) : tipoDeCartaProducto === 'historial' ? (
+                    () => alElliminarProductosDelHistorial()
                 ) : (
                     () => alAgregarProductosAlCarrito()
                 )}

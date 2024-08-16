@@ -7,14 +7,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { userContext } from '@/app/context/userContext';
 import { toast } from 'sonner';
+import { AGREGAR_PRODUCTO_CARRITO_MODAL_CUERPO, AGREGAR_PRODUCTO_CARRITO_MODAL_TITULO, ELIMINAR_PRODUCTO_HISTORIAL_MODAL_CUERPO, ELIMINAR_PRODUCTO_HISTORIAL_MODAL_TITULO, ELIMINAR_PRODUCTO_MODAL_CUERPO, ELIMINAR_PRODUCTO_MODAL_TITULO } from '@/app/constants/mensajes';
 
-const ADD_PRODUCT_MODAL_TITLE = 'Añadir Producto al Carrito';
-const ADD_PRODUCT_MODAL_BODY = '¿Está seguro que desea añadir el producto al carrito?';
-const ERASE_PRODUCT_MODAL_TITLE = 'Eliminar Producto del Carrito';
-const ERASE_PRODUCT_MODAL_BODY = '¿Está seguro que desea eliminar el producto del carrito?';
-
-function ProductCard({ producto, esDeCarrito = false }) {
-    const { usuario, agregarProductoListadoCarrito, eliminarProductoListadoCarrito } = useContext(userContext);
+function ProductCard({ producto, tipoDeCartaProducto }) {
+    const {
+        usuario,
+        agregarProductoListadoCarrito,
+        eliminarProductoListadoCarrito,
+        eliminarProductoDelHistorial
+    } = useContext(userContext);
     const [showProductModal, setShowProductModal] = useState(false);
     const [showMessageModal, setShowMessageModal] = useState(false);
 
@@ -42,6 +43,18 @@ function ProductCard({ producto, esDeCarrito = false }) {
         }
     }
 
+    const alElliminarProductosDelHistorial = () => {
+        setShowProductModal(false);
+        setShowMessageModal(false);
+        if (usuario.nombreUsuario === '') {
+            toast.error('¡Error!', { description: '¡Inicie Sesión o Registrese primero!' })
+        }
+        else {
+            eliminarProductoDelHistorial(producto.idProducto);
+            toast.success('¡Exito!', { description: '¡Se ha eliminado correctamente el producto del historial!' })
+        }
+    }
+
     return (
         <div className='bg-[#333] min-w-[260px] w-[15vw] rounded shadow-xl'>
             <button className='hover:opacity-90' onClick={() => setShowProductModal(true)}>
@@ -62,7 +75,7 @@ function ProductCard({ producto, esDeCarrito = false }) {
                     </h5>
                 </div>
                 <button onClick={() => setShowMessageModal(true)}>
-                    {esDeCarrito ? (
+                    {tipoDeCartaProducto === 'carrito' || tipoDeCartaProducto === 'historial' ? (
                         <FontAwesomeIcon icon={faXmark} className='w-[20px] text-red-400' />
                     ) : (
                         <FontAwesomeIcon icon={faCartShopping} className='w-[20px] text-green-400' />
@@ -74,25 +87,32 @@ function ProductCard({ producto, esDeCarrito = false }) {
                 producto={producto}
                 showModal={showProductModal}
                 setShowModal={setShowProductModal}
-                esDeCarrito={esDeCarrito}
+                tipoDeCartaProducto={tipoDeCartaProducto}
                 alAgregarProductosAlCarrito={alAgregarProductosAlCarrito}
                 alElliminarProductosDelCarrito={alElliminarProductosDelCarrito}
+                alElliminarProductosDelHistorial={alElliminarProductosDelHistorial}
             />
             <MessageModal
                 showModal={showMessageModal}
                 setShowModal={setShowMessageModal}
-                modalTitulo={esDeCarrito ? (
-                    ERASE_PRODUCT_MODAL_TITLE
+                modalTitulo={tipoDeCartaProducto === 'carrrito' ? (
+                    ELIMINAR_PRODUCTO_MODAL_TITULO
+                ) : tipoDeCartaProducto === 'historial' ? (
+                    ELIMINAR_PRODUCTO_HISTORIAL_MODAL_TITULO
                 ) : (
-                    ADD_PRODUCT_MODAL_TITLE
+                    AGREGAR_PRODUCTO_CARRITO_MODAL_TITULO
                 )}
-                modalMensaje={esDeCarrito ? (
-                    ERASE_PRODUCT_MODAL_BODY
+                modalMensaje={tipoDeCartaProducto === 'carrrito' ? (
+                    ELIMINAR_PRODUCTO_MODAL_CUERPO
+                ) : tipoDeCartaProducto === 'historial' ? (
+                    ELIMINAR_PRODUCTO_HISTORIAL_MODAL_CUERPO
                 ) : (
-                    ADD_PRODUCT_MODAL_BODY
+                    AGREGAR_PRODUCTO_CARRITO_MODAL_CUERPO
                 )}
-                accionAceptar={esDeCarrito ? (
+                accionAceptar={tipoDeCartaProducto === 'carrito' ? (
                     () => alElliminarProductosDelCarrito()
+                ) : tipoDeCartaProducto === 'historial' ? (
+                    () => alElliminarProductosDelHistorial()
                 ) : (
                     () => alAgregarProductosAlCarrito()
                 )}
