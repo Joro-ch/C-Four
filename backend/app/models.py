@@ -44,7 +44,7 @@ class Producto(models.Model):
     precioProducto = models.DecimalField(max_digits=10, decimal_places=2)
     cantidadDisponible = models.IntegerField()
     nombreMarca = models.ForeignKey(Empresa, on_delete=models.CASCADE)
-    productoImagen = models.CharField(max_length=255)
+    productoImagen = models.TextField()
 
 
 class HistorialCompraUsuario(models.Model):
