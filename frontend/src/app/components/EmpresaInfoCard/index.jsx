@@ -1,11 +1,18 @@
 'use client';
+import { SERVICE_URL } from '@/app/constants/global';
 import { empresaContext } from '@/app/context/empresaContext';
 import { useRouter } from 'next/navigation';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
+import { toast } from 'sonner';
 
 function EmpresaInfoCard() {
     const router = useRouter();
     const { empresa, setEmpresa } = useContext(empresaContext);
+    const [passwordFormData, setPasswordFormData] = useState({
+        nombreMarca: empresa.nombreMarca,
+        passwordActual: '',
+        passwordNueva: '',
+    });
 
     const onLogOut = () => {
         setEmpresa({
@@ -14,6 +21,46 @@ function EmpresaInfoCard() {
             passwordMarca: '',
         })
         router.push('/');
+    }
+
+    const alCambiarPassword = async () => {
+        if (revisarPasswordsData() && await cambiarPasswordRequest()) {
+            toast.success('¡Exito!', { description: '¡Contraseña cambiada correctamente!' });
+            setPasswordFormData({
+                nombreMarca: empresa.nombreMarca,
+                passwordActual: '',
+                passwordNueva: '',
+            });
+        }
+    }
+
+    const revisarPasswordsData = () => {
+        if (passwordFormData.passwordActual === '') {
+            toast.error('¡Error!', { description: '¡Por favor, ingrese la contraseña actual!' });
+            return false;
+        }
+        else if (passwordFormData.passwordNueva === '') {
+            toast.error('¡Error!', { description: '¡Por favor, ingrese la contraseña nueva!' });
+            return false;
+        }
+        return true;
+    }
+
+    const cambiarPasswordRequest = async () => {
+        const response = await fetch(`${SERVICE_URL}/cambiarPassword/empresa/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(passwordFormData)
+        });
+
+        const result = await response.json();
+        if (!response.ok) {
+            toast.error('¡Error!', { description: `¡${result.error}!` });
+            return false;
+        }
+        return true;
     }
 
     return (
@@ -50,6 +97,11 @@ function EmpresaInfoCard() {
                         className='bg-[#333] px-5 py-2 text-white'
                         placeholder='Constraseña Actual'
                         type='password'
+                        onChange={(e) => setPasswordFormData({
+                            ...passwordFormData,
+                            passwordActual: e.target.value
+                        })}
+                        value={passwordFormData.passwordActual}
                     />
                 </span>
                 <span className='flex flex-col gap-2'>
@@ -58,9 +110,17 @@ function EmpresaInfoCard() {
                         className='bg-[#333] px-5 py-2 text-white'
                         placeholder='Constraseña Nueva'
                         type='password'
+                        onChange={(e) => setPasswordFormData({
+                            ...passwordFormData,
+                            passwordNueva: e.target.value
+                        })}
+                        value={passwordFormData.passwordNueva}
                     />
                 </span>
-                <button className='bg-green-400 rounded text-white py-2 hover:bg-green-500'>
+                <button
+                    className='bg-green-400 rounded text-white py-2 hover:bg-green-500'
+                    onClick={alCambiarPassword}
+                >
                     Cambiar Contraseña
                 </button>
                 <hr className='my-1' />

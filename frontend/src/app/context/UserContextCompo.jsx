@@ -20,14 +20,6 @@ function UserContextCompo({ children }) {
         localStorage.setItem('usuario', JSON.stringify(usuario));
     }, [usuario]);
 
-    useEffect(() => {
-        if (Array.isArray(usuario.listadoCarrito)) console.log(usuario.listadoCarrito)
-    }, [usuario.listadoCarrito]);
-
-    useEffect(() => {
-        if (Array.isArray(usuario.listadoProductosComprados)) console.log(usuario.listadoProductosComprados)
-    }, [usuario.listadoProductosComprados]);
-
     const agregarProductoListadoCarrito = (producto) => {
         setUsuario({ 
             ...usuario, 
