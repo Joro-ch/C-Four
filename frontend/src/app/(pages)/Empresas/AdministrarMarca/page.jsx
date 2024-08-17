@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 function AdministrarMarca() {
   const { empresa } = useContext(empresaContext);
   const [listadoProductos, setListadoProductos] = useState([]);
+  const [listadoProductosMostrados, setListadoProductosMostrados] = useState(listadoProductos);
 
   useEffect(() => {
     restablecerListadoProductos();
@@ -39,6 +40,16 @@ function AdministrarMarca() {
     if (empresa.nombreMarca !== '') {
       const nuevoListadoProductos = await obtenerListadoProductosRequest();
       setListadoProductos(nuevoListadoProductos);
+      setListadoProductosMostrados(nuevoListadoProductos);
+    }
+  }
+
+  const buscarProducto = (nombreProducto) => {
+    setListadoProductosMostrados(listadoProductos.filter(
+      producto => producto.nombreProducto === nombreProducto
+    ));
+    if (listadoProductos.length > 0) {
+      toast.success('¡Exito!', { description: '¡Se ha filtrado correctamente!' });
     }
   }
 
@@ -46,9 +57,13 @@ function AdministrarMarca() {
     <main className='grow p-5 flex gap-5'>
       <EmpresaInfoCard />
       <div className='flex flex-col gap-2 w-full'>
-        <ToolBar agregarProductoAlListado={agregarProductoAlListado} />
+        <ToolBar
+          agregarProductoAlListado={agregarProductoAlListado}
+          restablecerListadoProductos={restablecerListadoProductos}
+          buscarProducto={buscarProducto}
+        />
         <ProductsList
-          listadoProductos={listadoProductos}
+          listadoProductos={listadoProductosMostrados}
           restablecerListadoProductos={restablecerListadoProductos}
         />
       </div>
