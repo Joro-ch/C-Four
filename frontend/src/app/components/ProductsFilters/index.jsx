@@ -3,7 +3,7 @@ import { faArrowRotateBack } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 
-function ProductsFilters({ listadoProductos, listadoMostrado, setListadoMostrado }) {
+function ProductsFilters({ listadoProductos, setListadoMostrado }) {
     const [listadoDeMarcasUnicas, setListadoDeMarcasUnicas] = useState([]);
     const [umbralesPrecios, setUmbralesPrecios] = useState([]);
     const [nombreProductoBuscado, setNombreProductoBuscado] = useState('');
@@ -11,7 +11,7 @@ function ProductsFilters({ listadoProductos, listadoMostrado, setListadoMostrado
     useEffect(() => {
         if (Array.isArray(listadoProductos)) {
             setListadoDeMarcasUnicas([
-                ...new Set(listadoProductos.map(producto => producto.marcaProducto))
+                ...new Set(listadoProductos.map(producto => producto.nombreMarca))
             ]);
             const listadoPrecios = listadoProductos.map(
                 producto => producto.precioProducto
@@ -26,7 +26,7 @@ function ProductsFilters({ listadoProductos, listadoMostrado, setListadoMostrado
     const onCheckMarca = (e) => {
         if (e.target.checked) {
             setListadoMostrado(listadoProductos.filter(
-                producto => producto.marcaProducto === e.target.value
+                producto => producto.nombreMarca === e.target.value
             ));
         }
     }

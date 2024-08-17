@@ -1,77 +1,75 @@
 'use client';
 import ProductsFilters from '@/app/components/ProductsFilters';
 import ProductCard from '@/app/components/ProductCard';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { SERVICE_URL } from '@/app/constants/global';
+import { toast } from 'sonner';
+import Link from 'next/link';
 
-const PRODUCTOS = [{
-  idProducto: 1,
-  nombreProducto: 'Producto 1',
-  precioProducto: 1000,
-  marcaProducto: 'Marca 1',
-  srcImagen: '/C-FourIcon.webp',
-}, {
-  idProducto: 2,
-  nombreProducto: 'Producto 2',
-  precioProducto: 2000,
-  marcaProducto: 'Marca 1',
-  srcImagen: '/C-FourIcon.webp',
-}, {
-  idProducto: 3,
-  nombreProducto: 'Producto 3',
-  precioProducto: 3000,
-  marcaProducto: 'Marca 1',
-  srcImagen: '/C-FourIcon.webp',
-}, {
-  idProducto: 4,
-  nombreProducto: 'Producto 4',
-  precioProducto: 4000,
-  marcaProducto: 'Marca 2',
-  srcImagen: '/C-FourIcon.webp',
-}, {
-  idProducto: 5,
-  nombreProducto: 'Producto 5',
-  precioProducto: 5000,
-  marcaProducto: 'Marca 2',
-  srcImagen: '/C-FourIcon.webp',
-}, {
-  idProducto: 6,
-  nombreProducto: 'Producto 6',
-  precioProducto: 6000,
-  marcaProducto: 'Marca 2',
-  srcImagen: '/C-FourIcon.webp',
-}, {
-  idProducto: 7,
-  nombreProducto: 'Producto 7',
-  precioProducto: 7000,
-  marcaProducto: 'Marca 3',
-  srcImagen: '/C-FourIcon.webp',
-}, {
-  idProducto: 8,
-  nombreProducto: 'Producto 8',
-  precioProducto: 8000,
-  marcaProducto: 'Marca 3',
-  srcImagen: '/C-FourIcon.webp',
-}]
+function Ropa({ params }) {
+  const [listadoProductos, setListadoProductos] = useState([]);
+  const [listadoMostrado, setListadoMostrado] = useState([]);
 
-function Ropa() {
-  const [listadoProductos, setListadoProductos] = useState(PRODUCTOS);
-  const [listadoMostrado, setListadoMostrado] = useState(PRODUCTOS);
+  useEffect(() => {
+    const getProductos = async () => {
+      const listado = await obtenerListadoProductosRequest();
+      setListadoProductos(listado);
+      setListadoMostrado(listado);
+    }
+
+    getProductos();
+  }, [params]);
+
+  const obtenerListadoProductosRequest = async () => {
+    const response = await fetch(`${SERVICE_URL}/productos/tipo/${params.ropa}/`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const result = await response.json();
+    if (!response.ok) {
+      toast.error('¡Error!', { description: `¡${result.error}!` });
+      return [];
+    }
+    return result;
+  }
 
   return (
     <main className='grow flex'>
-      <ProductsFilters
-        listadoProductos={listadoProductos}
-        listadoMostrado={listadoMostrado}
-        setListadoMostrado={setListadoMostrado} 
-      />
-      <div className='flex flex-wrap gap-4 justify-between py-4 pr-3'>
-        {listadoMostrado.map((producto, index) =>
-          <ProductCard
-            key={index}
-            producto={producto}
+      {listadoProductos.length > 0 ? (
+        <>
+          <ProductsFilters
+            listadoProductos={listadoProductos}
+            setListadoMostrado={setListadoMostrado}
           />
-        )}
-      </div>
+          <div className='flex flex-wrap gap-4 justify-between py-4 pr-3'>
+            {listadoMostrado.map((producto, index) =>
+              <ProductCard
+                key={index}
+                producto={producto}
+              />
+            )}
+          </div>
+        </>
+      ) : (
+        <div className='flex flex-col gap-5 justify-center items-center bg-gray-100 w-full h-[70vh]'>
+          No hay productos de este tipo.
+          <Link
+            href={'/RopaDeportiva'}
+            className='bg-green-400 py-1 px-2 rounded text-white hover:bg-green-500'
+          >
+            Ir al catálogo de Ropa Deportiva
+          </Link>
+          <Link
+            href={'/ProductosDeportivos'}
+            className='bg-green-400 py-1 px-2 rounded text-white hover:bg-green-500'
+          >
+            Ir al catálogo de Productos Deportivos
+          </Link>
+        </div>
+      )}
     </main>
   )
 }

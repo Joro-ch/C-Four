@@ -64,7 +64,6 @@ function Empresas() {
 
   const alIniciarSesion = async (e) => {
     e.preventDefault();
-    
     if (revisarValidezEmpresa()) {
       const infoEmpresa = await iniciarSesionRequest();
       if (infoEmpresa) {
@@ -88,7 +87,7 @@ function Empresas() {
   }
 
   const iniciarSesionRequest = async () => {
-    const response = await fetch(`${SERVICE_URL}/iniciarSesionEmpresa/`, {
+    const response = await fetch(`${SERVICE_URL}/iniciarSesion/empresa/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

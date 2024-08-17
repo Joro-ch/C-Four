@@ -21,8 +21,9 @@ function IniciarSesion() {
     if (checkValidUser()) {
       const usuarioInfo = await logInRequest();
       if (usuarioInfo) {
-        setUsuario(usuarioInfo)
-        router.push('/')
+        setUsuario(usuarioInfo);
+        toast.success('¡Exito!', { description: '¡Ha iniciado sesion correctamente!' });
+        router.push('/');
       }
     }
   }
@@ -40,7 +41,7 @@ function IniciarSesion() {
   }
 
   const logInRequest = async () => {
-    const response = await fetch(`${SERVICE_URL}/iniciarSesion/`, {
+    const response = await fetch(`${SERVICE_URL}/iniciarSesion/usuario/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -83,6 +84,7 @@ function IniciarSesion() {
               onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, passwordUsuario: e.target.value })}
               placeholder='Contraseña'
               className='py-2 px-3 w-full rounded'
+              type='password'
             />
           </span>
           <button

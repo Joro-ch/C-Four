@@ -74,14 +74,6 @@ class LoginEmpresaView(APIView):
         else:
             return Response({"error": "Contraseña incorrecta"}, status=status.HTTP_401_UNAUTHORIZED)
         
-    
-class ProductosPorMarcaView(generics.ListAPIView):
-    serializer_class = ProductoSerializer
-
-    def get_queryset(self):
-        nombre_marca = self.kwargs['nombreMarca']
-        return Producto.objects.filter(nombreMarca__nombreMarca=nombre_marca)
-
 
 class CambiarPasswordUsuarioView(APIView):
     def post(self, request):
@@ -131,3 +123,19 @@ class CambiarPasswordEmpresaView(APIView):
             return Response({"mensaje": "Contraseña actualizada exitosamente"}, status=status.HTTP_200_OK)
         else:
             return Response({"error": "Contraseña actual incorrecta"}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class ProductosPorMarcaView(generics.ListAPIView):
+    serializer_class = ProductoSerializer
+
+    def get_queryset(self):
+        nombre_marca = self.kwargs['nombreMarca']
+        return Producto.objects.filter(nombreMarca__nombreMarca=nombre_marca)
+
+
+class ProductosPorTipoView(generics.ListAPIView):
+    serializer_class = ProductoSerializer
+
+    def get_queryset(self):
+        tipoProducto = self.kwargs['tipoProducto']
+        return Producto.objects.filter(tipoProducto=tipoProducto)

@@ -63,21 +63,21 @@ function ProductCard({ producto, tipoDeCartaProducto }) {
 
     return (
         <div className='bg-[#333] min-w-[260px] w-[15vw] max-h-[350px] rounded shadow-xl'>
-            <button className='hover:opacity-90' onClick={() => setShowProductModal(true)}>
+            <button className='hover:opacity-90 h-[70%] overflow-hidden' onClick={() => setShowProductModal(true)}>
                 <Image
-                    src={producto.srcImagen}
+                    src={producto.productoImagen}
                     width={1500}
                     height={1500}
-                    className='w-full'
+                    className='w-full rounded-t'
                 />
             </button>
-            <div className='flex justify-between p-5'>
+            <div className='flex justify-between p-5 '>
                 <div className='text-white'>
                     <h5>
                         ₡{producto.precioProducto}
                     </h5>
                     <h5 className='text-xs'>
-                        {producto.nombreProducto} - {producto.marcaProducto}
+                        {producto.nombreProducto} - {producto.nombreMarca}
                     </h5>
                 </div>
                 <button onClick={() => setShowMessageModal(true)}>
