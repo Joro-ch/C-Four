@@ -2,9 +2,10 @@ from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Usuario, Empresa, Producto, HistorialCompraUsuario, ProductosMarca
+from rest_framework import generics
+from .models import Usuario, Empresa, Producto, HistorialCompraUsuario
 from .serializer import UsuarioSerializer, EmpresaSerializer, ProductoSerializer
-from .serializer import HistorialCompraUsuarioSerializer, ProductosMarcaSerializer
+from .serializer import HistorialCompraUsuarioSerializer
 
 # Create your views here.
 
@@ -28,11 +29,8 @@ class HistorialCompraUsuarioViewSet(viewsets.ModelViewSet):
     serializer_class = HistorialCompraUsuarioSerializer
 
 
-class ProductosMarcaViewSet(viewsets.ModelViewSet):
-    queryset = ProductosMarca.objects.all()
-    serializer_class = ProductosMarcaSerializer
-
 # ---------------------------------------------------------------------
+
 
 class LoginUsuarioView(APIView):
     def post(self, request):
@@ -73,3 +71,10 @@ class LoginEmpresaView(APIView):
             return Response({"mensaje": "Autenticación exitosa", "empresa": empresa_serializer.data}, status=status.HTTP_200_OK)
         else:
             return Response({"error": "Contraseña incorrecta"}, status=status.HTTP_401_UNAUTHORIZED)
+        
+class ProductosPorMarcaView(generics.ListAPIView):
+    serializer_class = ProductoSerializer
+
+    def get_queryset(self):
+        nombre_marca = self.kwargs['nombreMarca']
+        return Producto.objects.filter(nombreMarca__nombreMarca=nombre_marca)

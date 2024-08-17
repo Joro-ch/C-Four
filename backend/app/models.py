@@ -50,8 +50,3 @@ class Producto(models.Model):
 class HistorialCompraUsuario(models.Model):
     nombreUsuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     idProducto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-
-
-class ProductosMarca(models.Model):
-    nombreMarca = models.ForeignKey(Empresa, on_delete=models.CASCADE)
-    idProducto = models.ForeignKey(Producto, on_delete=models.CASCADE)

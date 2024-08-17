@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import AddProductModal from '../AddProductModal';
 
-function ToolBar() {
+function ToolBar({ agregarProductoAlListado }) {
     const [showAddProductModal, setShowAddProductModal] = useState(false);
 
     return (
@@ -13,7 +13,11 @@ function ToolBar() {
             >
                 Añadir Producto
             </button>
-            <AddProductModal showModal={showAddProductModal} setShowModal={setShowAddProductModal} />
+            <AddProductModal
+                showModal={showAddProductModal}
+                setShowModal={setShowAddProductModal}
+                agregarProductoAlListado={agregarProductoAlListado}
+            />
             <input
                 type='search'
                 placeholder='Buscar Producto'
