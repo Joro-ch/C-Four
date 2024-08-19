@@ -20,7 +20,7 @@ function Producto({ params }) {
   }, [params]);
 
   const obtenerListadoProductosRequest = async () => {
-    const response = await fetch(`${SERVICE_URL}/productos/tipo/${params.ropa}/`, {
+    const response = await fetch(`${SERVICE_URL}/productos/tipo/${params.producto}/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

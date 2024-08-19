@@ -130,6 +130,7 @@ function Empresas() {
                     placeholder='Nombre de la Marca'
                     className='py-2 px-3 w-full rounded text-black'
                     onChange={(e) => setNuevaEmpresaFormData({ ...nuevaEmpresaFormData, nombreMarca: e.target.value })}
+                    name='nombreMarca'
                   />
                 </span>
                 <span className='flex flex-col gap-2'>
@@ -140,6 +141,7 @@ function Empresas() {
                     placeholder='Correo'
                     className='py-2 px-3 w-full rounded'
                     onChange={(e) => setNuevaEmpresaFormData({ ...nuevaEmpresaFormData, correoMarca: e.target.value })}
+                    name='correoEmpresa'
                   />
                 </span>
                 <span className='flex flex-col gap-2'>
@@ -150,6 +152,7 @@ function Empresas() {
                     placeholder='Contraseña'
                     className='py-2 px-3 w-full rounded'
                     onChange={(e) => setNuevaEmpresaFormData({ ...nuevaEmpresaFormData, passwordMarca: e.target.value })}
+                    name='passwordEmpresa'
                   />
                 </span>
                 <button
@@ -167,6 +170,8 @@ function Empresas() {
               width={1500}
               height={1500}
               className='h-[70vh]'
+              alt=''
+              priority={true}
             />
           </div>
         </section>
@@ -177,6 +182,8 @@ function Empresas() {
               width={1500}
               height={1500}
               className='h-[70vh]'
+              alt=''
+              priority={true}
             />
           </div>
           <div className='flex flex-col w-[500px]'>
@@ -194,6 +201,8 @@ function Empresas() {
                     placeholder='Nombre de la Marca'
                     className='py-2 px-3 w-full rounded bg-[#333] text-white'
                     onChange={(e) => setEmpresaFormData({ ...empresaFormData, nombreMarca: e.target.value })}
+                    name='nombreMarca'
+                    autoComplete='username'
                   />
                 </span>
                 <span className='flex flex-col gap-2'>
@@ -204,6 +213,9 @@ function Empresas() {
                     placeholder='Contraseña'
                     className='py-2 px-3 w-full rounded bg-[#333] text-white'
                     onChange={(e) => setEmpresaFormData({ ...empresaFormData, passwordMarca: e.target.value })}
+                    type='password'
+                    name='passwordMarca'
+                    autoComplete='new-password'
                   />
                 </span>
                 <button

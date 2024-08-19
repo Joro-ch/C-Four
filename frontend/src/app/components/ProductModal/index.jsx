@@ -35,6 +35,8 @@ function ProductModal({
                         width={1500}
                         height={1500}
                         className='h-full rounded-t shadow'
+                        alt=''
+                        priority={true}
                     />
                     <button
                         className='fixed top-0 right-0 my-4 mx-5 text-xl shadow rounded-full w-[30px] h-[30px] bg-white'

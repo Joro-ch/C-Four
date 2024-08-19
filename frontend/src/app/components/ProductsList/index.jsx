@@ -41,6 +41,8 @@ function ProductsList({ listadoProductos, restablecerListadoProductos }) {
                                 width={1500}
                                 height={1500}
                                 className='w-[30px] h-[30px] rounded-full mx-auto'
+                                alt=''
+                                priority={true}
                             />
                         </td>
                         <td className='p-2 text-center'>

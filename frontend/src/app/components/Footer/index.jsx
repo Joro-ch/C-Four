@@ -14,6 +14,8 @@ function Footer() {
           width={1500}
           height={1500}
           className='w-[150px] h-[150px] rounded-full'
+          alt=''
+          priority={true}
         />
         C-Four
       </div>

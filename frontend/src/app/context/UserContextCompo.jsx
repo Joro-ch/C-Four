@@ -5,17 +5,20 @@ import { SERVICE_URL } from "../constants/global";
 import { toast } from "sonner";
 
 function UserContextCompo({ children }) {
-    const [usuario, setUsuario] = useState(() => {
-        // Intenta obtener el usuario almacenado en localStorage al cargar el componente
-        const usuarioGuardado = localStorage.getItem('usuario');
-        return usuarioGuardado ? JSON.parse(usuarioGuardado) : {
-            nombreUsuario: '',
-            correoUsuario: '',
-            passwordUsuario: '',
-            listadoCarrito: [],
-            listadoProductosComprados: [],
-        };
+    const [usuario, setUsuario] = useState({
+        nombreUsuario: '',
+        correoUsuario: '',
+        passwordUsuario: '',
+        listadoCarrito: [],
+        listadoProductosComprados: [],
     });
+
+    useEffect(() => {
+        const usuarioGuardado = localStorage.getItem('usuario');
+        if (usuarioGuardado) {
+            setUsuario(JSON.parse(usuarioGuardado));
+        }
+    }, []);
 
     useEffect(() => {
         // Guarda el usuario en localStorage cada vez que cambie

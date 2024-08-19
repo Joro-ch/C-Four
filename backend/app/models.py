@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.core.exceptions import ValidationError
 
 class Usuario(models.Model):
     nombreUsuario = models.CharField(
@@ -50,3 +50,10 @@ class Producto(models.Model):
 class HistorialCompraUsuario(models.Model):
     nombreUsuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     idProducto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        producto = self.idProducto
+        if producto.cantidadDisponible > 0:
+            super().save(*args, **kwargs)
+        else:
+            raise ValidationError(f"El producto {producto.nombreProducto} no tiene stock disponible.")

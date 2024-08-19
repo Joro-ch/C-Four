@@ -76,6 +76,7 @@ function EmpresaInfoCard() {
                         className='bg-[#333] px-5 py-2 text-white'
                         value={empresa.nombreMarca}
                         placeholder='Nombre de Usuario'
+                        name='nombreUsuario'
                         disabled
                     />
                 </span>
@@ -86,6 +87,7 @@ function EmpresaInfoCard() {
                         value={empresa.correoMarca}
                         placeholder='Correo'
                         type='email'
+                        name='correoUsuario'
                         disabled
                     />
                 </span>
@@ -102,6 +104,7 @@ function EmpresaInfoCard() {
                             passwordActual: e.target.value
                         })}
                         value={passwordFormData.passwordActual}
+                        name='passwordActual'
                     />
                 </span>
                 <span className='flex flex-col gap-2'>
@@ -115,6 +118,7 @@ function EmpresaInfoCard() {
                             passwordNueva: e.target.value
                         })}
                         value={passwordFormData.passwordNueva}
+                        name='passwordNueva'
                     />
                 </span>
                 <button

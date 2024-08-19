@@ -74,6 +74,7 @@ function IniciarSesion() {
               onChange={(e) => setNuevoUsuario({ ...nuevoUsuario, nombreUsuario: e.target.value })}
               placeholder='Nombre de Usuario'
               className='py-2 px-3 w-full rounded'
+              name='nombreUsuario'
             />
           </span>
           <span className='flex flex-col gap-2'>
@@ -85,6 +86,7 @@ function IniciarSesion() {
               placeholder='Contraseña'
               className='py-2 px-3 w-full rounded'
               type='password'
+              name='passwordUsuario'
             />
           </span>
           <button

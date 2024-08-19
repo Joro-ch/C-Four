@@ -77,6 +77,7 @@ function UsuarioInfoCard() {
                         className='bg-[#333] px-5 py-2 text-white'
                         value={usuario.nombreUsuario}
                         placeholder='Nombre de Usuario'
+                        name='nombreUsuario'
                         disabled
                     />
                 </span>
@@ -87,43 +88,50 @@ function UsuarioInfoCard() {
                         value={usuario.correoUsuario}
                         placeholder='Correo'
                         type='email'
+                        name='correoUsuario'
                         disabled
                     />
                 </span>
-                <h5> Cambio de Contraseña </h5>
-                <hr className='my-1' />
-                <span className='flex flex-col gap-2'>
-                    <h5> Constraseña Actual </h5>
-                    <input
-                        className='bg-[#333] px-5 py-2 text-white'
-                        placeholder='Constraseña Actual'
-                        type='password'
-                        onChange={(e) => setPasswordFormData({
-                            ...passwordFormData,
-                            passwordActual: e.target.value
-                        })}
-                        value={passwordFormData.passwordActual}
-                    />
-                </span>
-                <span className='flex flex-col gap-2'>
-                    <h5> Constraseña Nueva </h5>
-                    <input
-                        className='bg-[#333] px-5 py-2 text-white'
-                        placeholder='Constraseña Nueva'
-                        type='password'
-                        onChange={(e) => setPasswordFormData({
-                            ...passwordFormData,
-                            passwordNueva: e.target.value
-                        })}
-                        value={passwordFormData.passwordNueva}
-                    />
-                </span>
-                <button
-                    className='bg-green-400 rounded text-white py-2 hover:bg-green-500'
-                    onClick={alCambiarPassword}
-                >
-                    Cambiar Contraseña
-                </button>
+                <form className='flex flex-col gap-2'>
+                    <h5> Cambio de Contraseña </h5>
+                    <hr className='my-1' />
+                    <span className='flex flex-col gap-2'>
+                        <h5> Constraseña Actual </h5>
+                        <input
+                            className='bg-[#333] px-5 py-2 text-white'
+                            placeholder='Constraseña Actual'
+                            type='password'
+                            onChange={(e) => setPasswordFormData({
+                                ...passwordFormData,
+                                passwordActual: e.target.value
+                            })}
+                            value={passwordFormData.passwordActual}
+                            autoComplete='current-password'
+                            name='passwordActual'
+                        />
+                    </span>
+                    <span className='flex flex-col gap-2'>
+                        <h5> Constraseña Nueva </h5>
+                        <input
+                            className='bg-[#333] px-5 py-2 text-white'
+                            placeholder='Constraseña Nueva'
+                            type='password'
+                            onChange={(e) => setPasswordFormData({
+                                ...passwordFormData,
+                                passwordNueva: e.target.value
+                            })}
+                            value={passwordFormData.passwordNueva}
+                            autoComplete='new-password'
+                            name='passwordNueva'
+                        />
+                    </span>
+                    <button
+                        className='bg-green-400 rounded text-white py-2 hover:bg-green-500'
+                        onClick={alCambiarPassword}
+                    >
+                        Cambiar Contraseña
+                    </button>
+                </form>
                 <hr className='my-1' />
                 <button
                     className='bg-red-400 rounded text-white py-2 hover:bg-red-500'

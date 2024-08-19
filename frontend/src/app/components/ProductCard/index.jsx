@@ -37,6 +37,9 @@ function ProductCard({
         if (usuario.nombreUsuario === '') {
             toast.error('¡Error!', { description: '¡Inicie Sesión o Registrese primero!' });
         }
+        else if (producto.cantidadDisponible === 0) {
+            toast.error('¡Error!', { description: `¡No hay más de este producto disponible!` });
+        }
         else {
             agregarProductoListadoCarrito(producto);
             toast.success('¡Exito!', { description: '¡Se ha agregado correctamente el producto al carrito!' })
@@ -93,6 +96,8 @@ function ProductCard({
                     width={1500}
                     height={1500}
                     className='w-full rounded-t'
+                    alt=''
+                    priority={true}
                 />
             </button>
             <div className='flex justify-between p-5 '>

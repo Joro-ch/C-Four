@@ -31,8 +31,10 @@ function CuentaUsuario() {
   }
 
   const restablecerListadoProductos = async () => {
-    const listado = await obtenerListadoCompraUsuarioRequest();
-    setListadoCompraUsuario(listado);
+    if (usuario.nombreUsuario != '') {
+      const listado = await obtenerListadoCompraUsuarioRequest();
+      setListadoCompraUsuario(listado);
+    }
   }
 
   return (

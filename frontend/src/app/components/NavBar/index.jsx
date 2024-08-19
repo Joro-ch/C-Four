@@ -21,6 +21,8 @@ function NavBar() {
                             width={1500}
                             height={1500}
                             className='w-[40px] h-[40px] rounded-full'
+                            alt=''
+                            priority={true}
                         />
                         <h5 className='text-xl'>
                             C-Four

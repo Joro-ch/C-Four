@@ -11,6 +11,8 @@ function TopicCard({ nombreTema, srcImagen, hrefTema }) {
                     height={1500}
                     width={1500}
                     className='w-full'
+                    alt=''
+                    priority={true}
                 />
                 <h5 className='p-3 text-white text-center'>
                     {nombreTema}

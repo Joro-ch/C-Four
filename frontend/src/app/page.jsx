@@ -35,6 +35,8 @@ export default function Home() {
               width={1500}
               height={1500}
               className='h-[70vh]'
+              alt=''
+              priority={true}
             />
           </div>
         </section>
@@ -45,6 +47,8 @@ export default function Home() {
               width={1500}
               height={1500}
               className='h-[70vh]'
+              alt=''
+              priority={true}
             />
           </div>
           <div className='flex flex-col w-[500px] text-black'>

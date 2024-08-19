@@ -26,6 +26,7 @@ function ToolBar({ restablecerListadoProductos, buscarProducto }) {
                 placeholder='Buscar Producto'
                 className='shadow w-full px-3 py-1 rounded'
                 onChange={(e) => setNombreProducto(e.target.value)}
+                name='buscarProducto'
             />
             <button
                 className='bg-[#333] text-white py-1 px-2 rounded hover:opacity-85'

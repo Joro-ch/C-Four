@@ -55,6 +55,7 @@ function ProductsFilters({ listadoProductos, setListadoMostrado }) {
                 type='search'
                 className='py-2 px-3 w-full border border-[#333] rounded'
                 placeholder='Nombre Producto'
+                name='nombreProducto'
                 onChange={(e) => setNombreProductoBuscado(e.target.value)}
             />
             <button
@@ -70,7 +71,13 @@ function ProductsFilters({ listadoProductos, setListadoMostrado }) {
             <form>
                 {umbralesPrecios.map((umbral, index) =>
                     <div className='flex gap-2' key={index}>
-                        <input type='radio' value={umbral} id={umbral} name='precioProducto' onChange={onCheckPrecio} />
+                        <input
+                            type='radio'
+                            value={umbral}
+                            id={umbral + index}
+                            name='precioProducto'
+                            onChange={onCheckPrecio}
+                        />
                         {"< ₡" + umbral}
                     </div>
                 )}

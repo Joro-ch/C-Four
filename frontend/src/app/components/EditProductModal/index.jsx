@@ -201,6 +201,7 @@ function EditProductModal({ showModal, setShowModal, infoProducto, restablecerLi
                                 style={{ maxWidth: '100%', height: 'auto' }}
                                 width={1500}
                                 height={1500}
+                                priority={true}
                             />
                         </div>
                     )}
