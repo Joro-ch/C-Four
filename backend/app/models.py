@@ -41,7 +41,7 @@ class Producto(models.Model):
     idProducto = models.AutoField(primary_key=True)
     nombreProducto = models.CharField(max_length=255)
     tipoProducto = models.CharField(max_length=255)
-    precioProducto = models.DecimalField(max_digits=10, decimal_places=2)
+    precioProducto = models.IntegerField()
     cantidadDisponible = models.IntegerField()
     nombreMarca = models.ForeignKey(Empresa, on_delete=models.CASCADE)
     productoImagen = models.TextField()

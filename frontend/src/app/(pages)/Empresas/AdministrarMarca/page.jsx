@@ -32,10 +32,6 @@ function AdministrarMarca() {
     return result;
   }
 
-  const agregarProductoAlListado = (nuevoProducto) => {
-    setListadoProductos([...listadoProductos, nuevoProducto]);
-  }
-
   const restablecerListadoProductos = async () => {
     if (empresa.nombreMarca !== '') {
       const nuevoListadoProductos = await obtenerListadoProductosRequest();
@@ -58,7 +54,6 @@ function AdministrarMarca() {
       <EmpresaInfoCard />
       <div className='flex flex-col gap-2 w-full'>
         <ToolBar
-          agregarProductoAlListado={agregarProductoAlListado}
           restablecerListadoProductos={restablecerListadoProductos}
           buscarProducto={buscarProducto}
         />

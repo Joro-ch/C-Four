@@ -17,4 +17,7 @@ urlpatterns=[
     path('cambiarPassword/empresa/', views.CambiarPasswordEmpresaView.as_view(), name='password'),
     path('productos/marca/<str:nombreMarca>/', views.ProductosPorMarcaView.as_view(), name='productos_por_marca'),
     path('productos/tipo/<str:tipoProducto>/', views.ProductosPorTipoView.as_view(), name='productos_por_tipo'),
+    path('historialCompraUsuario/usuario/<str:nombreUsuario>/', 
+         views.HistorialCompraPorUsuarioView.as_view(), 
+         name='historial_compra_por_usuario'),
 ]

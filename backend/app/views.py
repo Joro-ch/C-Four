@@ -139,3 +139,11 @@ class ProductosPorTipoView(generics.ListAPIView):
     def get_queryset(self):
         tipoProducto = self.kwargs['tipoProducto']
         return Producto.objects.filter(tipoProducto=tipoProducto)
+    
+    
+class HistorialCompraPorUsuarioView(generics.ListAPIView):
+    serializer_class = HistorialCompraUsuarioSerializer
+
+    def get_queryset(self):
+        nombreUsuario = self.kwargs['nombreUsuario']
+        return HistorialCompraUsuario.objects.filter(nombreUsuario=nombreUsuario)

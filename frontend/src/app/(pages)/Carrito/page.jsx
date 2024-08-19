@@ -1,59 +1,9 @@
 'use client';
 import PaymentList from '@/app/components/PaymentList';
 import ProductCard from '@/app/components/ProductCard';
-import { userContext } from '@/app/context/userContext';
 import Link from 'next/link';
 import React, { useContext } from 'react';
-
-const PRODUCTOS = [{
-  idProducto: 1,
-  nombreProducto: 'Producto',
-  precioProducto: 7000,
-  marcaProducto: 'Marca',
-  srcImagen: '/C-FourIcon.webp',
-}, {
-  idProducto: 2,
-  nombreProducto: 'Producto',
-  precioProducto: 8000,
-  marcaProducto: 'Marca',
-  srcImagen: '/C-FourIcon.webp',
-}, {
-  idProducto: 3,
-  nombreProducto: 'Producto',
-  precioProducto: 8000,
-  marcaProducto: 'Marca',
-  srcImagen: '/C-FourIcon.webp',
-}, {
-  idProducto: 4,
-  nombreProducto: 'Producto',
-  precioProducto: 8000,
-  marcaProducto: 'Marca',
-  srcImagen: '/C-FourIcon.webp',
-}, {
-  idProducto: 5,
-  nombreProducto: 'Producto',
-  precioProducto: 7000,
-  marcaProducto: 'Marca',
-  srcImagen: '/C-FourIcon.webp',
-}, {
-  idProducto: 6,
-  nombreProducto: 'Producto',
-  precioProducto: 8000,
-  marcaProducto: 'Marca',
-  srcImagen: '/C-FourIcon.webp',
-}, {
-  idProducto: 7,
-  nombreProducto: 'Producto',
-  precioProducto: 8000,
-  marcaProducto: 'Marca',
-  srcImagen: '/C-FourIcon.webp',
-}, {
-  idProducto: 8,
-  nombreProducto: 'Producto',
-  precioProducto: 8000,
-  marcaProducto: 'Marca',
-  srcImagen: '/C-FourIcon.webp',
-}]
+import { userContext } from '@/app/context/userContext';
 
 function Carrito() {
   const { usuario } = useContext(userContext);

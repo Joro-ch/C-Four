@@ -78,6 +78,30 @@ function EditProductModal({ showModal, setShowModal, infoProducto, restablecerLi
         return true;
     }
 
+    const alEliminarProducto = async (e) => {
+        e.preventDefault();
+        if (await eliminarProductoRequest()) {
+            toast.success('¡Exito!', { description: '¡Producto eliminado correctamente!' });
+            setShowModal(false);
+            restablecerListadoProductos();
+        }
+    }
+
+    const eliminarProductoRequest = async () => {
+        const response = await fetch(`${SERVICE_URL}/productos/${infoProducto.idProducto}/`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            toast.error('¡Error!', { description: `¡No se ha podido eliminar el producto!` });
+            return false;
+        }
+        return true;
+    }
+
     const MODAL = showModal ? (
         <div className='flex flex-col fixed top-0 left-1/2 transform -translate-x-1/2 min-w-[400px] w-[40vw] bg-[#333] shadow rounded-xl mt-5'>
             <div className='p-5 text-xl text-white flex justify-between'>
@@ -187,6 +211,12 @@ function EditProductModal({ showModal, setShowModal, infoProducto, restablecerLi
                         onClick={() => setShowModal(!showModal)}
                     >
                         Cancelar
+                    </button>
+                    <button
+                        className='bg-red-400 py-1 px-2 shadow rounded hover:opacity-85'
+                        onClick={alEliminarProducto}
+                    >
+                        Eliminar
                     </button>
                     <button
                         className='bg-green-400 py-1 px-2 shadow rounded hover:opacity-85'

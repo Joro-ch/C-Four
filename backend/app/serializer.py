@@ -21,6 +21,9 @@ class ProductoSerializer(serializers.ModelSerializer):
 
 
 class HistorialCompraUsuarioSerializer(serializers.ModelSerializer):
+    idProducto = serializers.PrimaryKeyRelatedField(queryset=Producto.objects.all())
+    producto = ProductoSerializer(source='idProducto', read_only=True)
+
     class Meta:
         model = HistorialCompraUsuario
-        fields = '__all__'
+        fields = ['id', 'nombreUsuario', 'idProducto', 'producto']

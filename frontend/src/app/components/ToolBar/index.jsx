@@ -4,7 +4,7 @@ import AddProductModal from '../AddProductModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeftRotate } from '@fortawesome/free-solid-svg-icons';
 
-function ToolBar({ agregarProductoAlListado, restablecerListadoProductos, buscarProducto }) {
+function ToolBar({ restablecerListadoProductos, buscarProducto }) {
     const [nombreProducto, setNombreProducto] = useState('');
     const [showAddProductModal, setShowAddProductModal] = useState(false);
 
@@ -19,7 +19,7 @@ function ToolBar({ agregarProductoAlListado, restablecerListadoProductos, buscar
             <AddProductModal
                 showModal={showAddProductModal}
                 setShowModal={setShowAddProductModal}
-                agregarProductoAlListado={agregarProductoAlListado}
+                restablecerListadoProductos={restablecerListadoProductos}
             />
             <input
                 type='search'

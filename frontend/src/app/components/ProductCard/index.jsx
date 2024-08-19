@@ -7,20 +7,26 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { userContext } from '@/app/context/userContext';
 import { toast } from 'sonner';
-import { AGREGAR_PRODUCTO_CARRITO_MODAL_CUERPO, 
-    AGREGAR_PRODUCTO_CARRITO_MODAL_TITULO, 
-    ELIMINAR_PRODUCTO_HISTORIAL_MODAL_CUERPO, 
-    ELIMINAR_PRODUCTO_HISTORIAL_MODAL_TITULO, 
-    ELIMINAR_PRODUCTO_MODAL_CUERPO, 
-    ELIMINAR_PRODUCTO_MODAL_TITULO 
+import {
+    AGREGAR_PRODUCTO_CARRITO_MODAL_CUERPO,
+    AGREGAR_PRODUCTO_CARRITO_MODAL_TITULO,
+    ELIMINAR_PRODUCTO_HISTORIAL_MODAL_CUERPO,
+    ELIMINAR_PRODUCTO_HISTORIAL_MODAL_TITULO,
+    ELIMINAR_PRODUCTO_MODAL_CUERPO,
+    ELIMINAR_PRODUCTO_MODAL_TITULO
 } from '@/app/constants/mensajes';
+import { SERVICE_URL } from '@/app/constants/global';
 
-function ProductCard({ producto, tipoDeCartaProducto }) {
+function ProductCard({
+    producto,
+    tipoDeCartaProducto,
+    compraId = 0,
+    restablecerListadoProductos
+}) {
     const {
         usuario,
         agregarProductoListadoCarrito,
         eliminarProductoListadoCarrito,
-        eliminarProductoDelHistorial
     } = useContext(userContext);
     const [showProductModal, setShowProductModal] = useState(false);
     const [showMessageModal, setShowMessageModal] = useState(false);
@@ -49,16 +55,34 @@ function ProductCard({ producto, tipoDeCartaProducto }) {
         }
     }
 
-    const alElliminarProductosDelHistorial = () => {
+    const alElliminarProductosDelHistorial = async () => {
         setShowProductModal(false);
         setShowMessageModal(false);
         if (usuario.nombreUsuario === '') {
             toast.error('¡Error!', { description: '¡Inicie Sesión o Registrese primero!' })
+            return
         }
-        else {
-            eliminarProductoDelHistorial(producto.idProducto);
-            toast.success('¡Exito!', { description: '¡Se ha eliminado correctamente el producto del historial!' })
+        if (await eliminarProductoHistorialRequest()) {
+            restablecerListadoProductos();
+            toast.success('¡Exito!', {
+                description: '¡Se ha eliminado correctamente el producto del historial!'
+            });
         }
+    }
+
+    const eliminarProductoHistorialRequest = async () => {
+        const response = await fetch(`${SERVICE_URL}/historialCompraUsuario/${compraId}/`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            toast.error('¡Error!', { description: `¡No se pudo eliminar el producto del historial!` });
+            return false;
+        }
+        return true;
     }
 
     return (

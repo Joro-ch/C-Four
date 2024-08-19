@@ -1,12 +1,39 @@
 'use client';
 import ProductCard from '@/app/components/ProductCard';
 import UsuarioInfoCard from '@/app/components/UsuarioInfoCard';
+import { SERVICE_URL } from '@/app/constants/global';
 import { userContext } from '@/app/context/userContext';
 import Link from 'next/link';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 function CuentaUsuario() {
   const { usuario } = useContext(userContext);
+  const [listadoCompraUsuario, setListadoCompraUsuario] = useState([]);
+
+  useEffect(() => {
+    restablecerListadoProductos();
+  }, [usuario]);
+
+  const obtenerListadoCompraUsuarioRequest = async () => {
+    const response = await fetch(`${SERVICE_URL}/historialCompraUsuario/usuario/${usuario.nombreUsuario}/`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const result = await response.json();
+    if (!response.ok) {
+      toast.error('¡Error!', { description: `¡${result.error}!` });
+      return [];
+    }
+    return result;
+  }
+
+  const restablecerListadoProductos = async () => {
+    const listado = await obtenerListadoCompraUsuarioRequest();
+    setListadoCompraUsuario(listado);
+  }
 
   return (
     <main className='grow p-5 flex gap-5'>
@@ -17,13 +44,15 @@ function CuentaUsuario() {
         </h5>
         <hr className='my-3' />
         <div className='flex flex-wrap gap-4 justify-between'>
-          {usuario.listadoProductosComprados && usuario.listadoProductosComprados.length > 0 ? (
+          {listadoCompraUsuario && listadoCompraUsuario.length > 0 ? (
             <>
-              {usuario.listadoProductosComprados.map((producto, index) =>
+              {listadoCompraUsuario.map((compra, index) =>
                 <ProductCard
                   key={index}
-                  producto={producto}
+                  producto={compra.producto}
                   tipoDeCartaProducto={'historial'}
+                  compraId={compra.id}
+                  restablecerListadoProductos={restablecerListadoProductos}
                 />
               )}
             </>

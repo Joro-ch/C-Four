@@ -9,7 +9,7 @@ import { SERVICE_URL } from '@/app/constants/global';
 
 const SELECT_DEFAULT_VALUE = 'Seleccionar Tipo';
 
-function AddProductModal({ showModal, setShowModal, agregarProductoAlListado }) {
+function AddProductModal({ showModal, setShowModal, restablecerListadoProductos }) {
     const { isBrowser } = useIsBrowser();
     const { empresa } = useContext(empresaContext);
     const [nuevoProductoFormData, setNuevoProductoFormData] = useState({
@@ -42,10 +42,10 @@ function AddProductModal({ showModal, setShowModal, agregarProductoAlListado }) 
         if (revisarProductoNuevo() && await agregarProductoRequest()) {
             toast.success('¡Exito!', { description: '¡Producto añadido correctamente!' });
             setShowModal(false);
-            agregarProductoAlListado(nuevoProductoFormData);
+            restablecerListadoProductos();
             setNuevoProductoFormData({ ...nuevoProductoFormData, productoImagen: '' });
         }
-    }
+    };
 
     const revisarProductoNuevo = () => {
         if (nuevoProductoFormData.nombreProducto === '') {
