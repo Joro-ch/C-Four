@@ -109,6 +109,7 @@ function AddProductModal({ showModal, setShowModal, restablecerListadoProductos 
                                 ...nuevoProductoFormData,
                                 nombreProducto: e.target.value
                             })}
+                            name='nombreProducto'
                         />
                     </span>
                     <span className='flex flex-col gap-2'>
@@ -148,6 +149,7 @@ function AddProductModal({ showModal, setShowModal, restablecerListadoProductos 
                                 cantidadDisponible: e.target.value
                             })}
                             type='number'
+                            name='cantidadDisponible'
                         />
                     </span>
                     <span className='flex flex-col gap-2'>
@@ -162,6 +164,7 @@ function AddProductModal({ showModal, setShowModal, restablecerListadoProductos 
                                 precioProducto: e.target.value
                             })}
                             type='number'
+                            name='precioProducto'
                         />
                     </span>
                     <span className='flex flex-col gap-2'>
@@ -173,6 +176,7 @@ function AddProductModal({ showModal, setShowModal, restablecerListadoProductos 
                             placeholder='₡ Precio'
                             className='py-2 px-3 w-full rounded bg-[#333] text-white'
                             onChange={handleImageChange}
+                            name='productoImagen'
                         />
                     </span>
                     {nuevoProductoFormData.productoImagen && (

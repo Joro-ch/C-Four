@@ -8,18 +8,21 @@ function EmpresaContextCompo({ children }) {
         correoMarca: '',
         passwordMarca: '',
     });
+    const [cargado, setCargado] = useState(false); // Nueva bandera para saber si los datos han sido cargados
 
     useEffect(() => {
         const empresaGuardada = localStorage.getItem('empresa');
         if (empresaGuardada) {
             setEmpresa(JSON.parse(empresaGuardada));
         }
+        setCargado(true); // Indicamos que los datos han sido cargados
     }, []);
 
     useEffect(() => {
-        // Guarda la empresa en localStorage cada vez que cambie
-        localStorage.setItem('empresa', JSON.stringify(empresa));
-    }, [empresa]);
+        if (cargado) { // Solo guarda si ya se ha cargado el usuario desde localStorage
+            localStorage.setItem('empresa', JSON.stringify(empresa));
+        }
+    }, [empresa, cargado]);
 
     return (
         <empresaContext.Provider

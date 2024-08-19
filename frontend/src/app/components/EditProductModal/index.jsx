@@ -124,6 +124,7 @@ function EditProductModal({ showModal, setShowModal, infoProducto, restablecerLi
                                 nombreProducto: e.target.value
                             })}
                             defaultValue={nuevoProductoFormData.nombreProducto}
+                            name='nombreProducto'
                         />
                     </span>
                     <span className='flex flex-col gap-2'>
@@ -164,6 +165,7 @@ function EditProductModal({ showModal, setShowModal, infoProducto, restablecerLi
                                 cantidadDisponible: e.target.value
                             })}
                             defaultValue={nuevoProductoFormData.cantidadDisponible}
+                            name='cantidadDisponible'
                         />
                     </span>
                     <span className='flex flex-col gap-2'>
@@ -178,6 +180,7 @@ function EditProductModal({ showModal, setShowModal, infoProducto, restablecerLi
                                 precioProducto: e.target.value
                             })}
                             defaultValue={nuevoProductoFormData.precioProducto}
+                            name='precioProducto'
                         />
                     </span>
                     <span className='flex flex-col gap-2'>
@@ -189,6 +192,7 @@ function EditProductModal({ showModal, setShowModal, infoProducto, restablecerLi
                             placeholder='₡ Precio'
                             className='py-2 px-3 w-full rounded bg-[#333] text-white'
                             onChange={handleImageChange}
+                            name='productoImagen'
                         />
                     </span>
                     {nuevoProductoFormData.productoImagen && (

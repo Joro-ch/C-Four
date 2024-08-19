@@ -12,18 +12,21 @@ function UserContextCompo({ children }) {
         listadoCarrito: [],
         listadoProductosComprados: [],
     });
+    const [cargado, setCargado] = useState(false); // Nueva bandera para saber si los datos han sido cargados
 
     useEffect(() => {
         const usuarioGuardado = localStorage.getItem('usuario');
         if (usuarioGuardado) {
             setUsuario(JSON.parse(usuarioGuardado));
         }
+        setCargado(true); // Indicamos que los datos han sido cargados
     }, []);
 
     useEffect(() => {
-        // Guarda el usuario en localStorage cada vez que cambie
-        localStorage.setItem('usuario', JSON.stringify(usuario));
-    }, [usuario]);
+        if (cargado) { // Solo guarda si ya se ha cargado el usuario desde localStorage
+            localStorage.setItem('usuario', JSON.stringify(usuario));
+        }
+    }, [usuario, cargado]);
 
     const agregarProductoListadoCarrito = (producto) => {
         setUsuario({ 
