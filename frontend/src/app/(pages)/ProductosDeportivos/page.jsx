@@ -3,19 +3,19 @@ import React from 'react';
 
 const TOPICS = [{
   nombreTema: "Botellas",
-  srcImagen: "/C-FourIcon.webp",
+  srcImagen: "/images/Botellas.webp",
   hrefTema: "/ProductosDeportivos/Botellas",
 }, {
   nombreTema: "Suplementos",
-  srcImagen: "/C-FourIcon.webp",
+  srcImagen: "/images/Suplementos.webp",
   hrefTema: "/ProductosDeportivos/Suplementos",
 },{
-  nombreTema: "Complementos",
-  srcImagen: "/C-FourIcon.webp",
+  nombreTema: "Bolsos",
+  srcImagen: "/images/Bolsos.webp",
   hrefTema: "/ProductosDeportivos/Complementos",
 }, {
   nombreTema: "Equipamiento",
-  srcImagen: "/C-FourIcon.webp",
+  srcImagen: "/images/EquipamientoDeportivo.webp",
   hrefTema: "/ProductosDeportivos/Equipamiento",
 }]
 

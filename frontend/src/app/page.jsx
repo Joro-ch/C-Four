@@ -31,10 +31,10 @@ export default function Home() {
           </div>
           <div className='min-w-[400px] max-w-[50vw] shadow'>
             <Image
-              src={'/C-FourIcon.webp'}
+              src={'/images/RopaDeportiva.webp'}
               width={1500}
               height={1500}
-              className='h-[70vh]'
+              className='h-[70vh] object-cover'
               alt=''
               priority={true}
             />
@@ -43,10 +43,10 @@ export default function Home() {
         <section className='flex flex-wrap gap-5 py-7 px-5 text-white justify-around'>
           <div className='min-w-[400px] max-w-[50vw] shadow'>
             <Image
-              src={'/C-FourIcon.webp'}
+              src={'/images/ProductosDeportivos.webp'}
               width={1500}
               height={1500}
-              className='h-[70vh]'
+              className='h-[70vh] object-cover'
               alt=''
               priority={true}
             />

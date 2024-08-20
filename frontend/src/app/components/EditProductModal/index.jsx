@@ -1,9 +1,9 @@
-import { SERVICE_URL } from '@/app/constants/global';
-import { TIPOS_PRODUCTOS } from '@/app/constants/productos';
-import useIsBrowser from '@/app/hooks/useIsBrowser';
-import Image from 'next/image';
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import useIsBrowser from '@/app/hooks/useIsBrowser';
+import Image from 'next/image';
+import { SERVICE_URL } from '@/app/constants/global';
+import { TIPOS_PRODUCTOS } from '@/app/constants/productos';
 import { toast } from 'sonner';
 
 const SELECT_DEFAULT_VALUE = 'Seleccionar Tipo';
@@ -133,7 +133,7 @@ function EditProductModal({ showModal, setShowModal, infoProducto, restablecerLi
                         </h5>
                         <select
                             name="productos"
-                            id="productos"
+                            id={`${infoProducto.nombreProducto}Tipo`}
                             className='py-2 px-3 w-full rounded bg-[#333] text-white'
                             onChange={(e) => setNuevoProductoFormData({
                                 ...nuevoProductoFormData,

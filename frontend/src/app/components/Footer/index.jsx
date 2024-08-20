@@ -23,20 +23,23 @@ function Footer() {
         <h5> Ropa Deportiva </h5>
         <hr className='my-2' />
         <ul className='flex flex-col'>
-          <Link href={'/RopaDeportiva/Camisas'} className='hover:underline hover:opacity-85 duration-500'>
-            Camisas
+          <Link href={'/RopaDeportiva/Camisetas'} className='hover:underline hover:opacity-85 duration-500'>
+            Camisetas
+          </Link>
+          <Link href={'/RopaDeportiva/Suéters'} className='hover:underline hover:opacity-85 duration-500'>
+            Suéters
           </Link>
           <Link href={'/RopaDeportiva/Pantalones'} className='hover:underline hover:opacity-85 duration-500'>
             Pantalones
           </Link>
-          <Link href={'/RopaDeportiva/Sueters'} className='hover:underline hover:opacity-85 duration-500'>
-            Sueters
+          <Link href={'/RopaDeportiva/Pantalones'} className='hover:underline hover:opacity-85 duration-500'>
+            Pantalonetas
           </Link>
           <Link href={'/RopaDeportiva/Zapatos'} className='hover:underline hover:opacity-85 duration-500'>
             Zapatos
           </Link>
-          <Link href={'/RopaDeportiva/Medias'} className='hover:underline hover:opacity-85 duration-500'>
-            Medias
+          <Link href={'/RopaDeportiva/Calcetines'} className='hover:underline hover:opacity-85 duration-500'>
+            Calcetines
           </Link>
         </ul>
       </div>
@@ -50,8 +53,8 @@ function Footer() {
           <Link href={'/ProductosDeportivos/Suplementos'} className='hover:underline hover:opacity-85 duration-500'>
             Suplementos
           </Link>
-          <Link href={'/ProductosDeportivos/Complementos'} className='hover:underline hover:opacity-85 duration-500'>
-            Complementos
+          <Link href={'/ProductosDeportivos/Bolsos'} className='hover:underline hover:opacity-85 duration-500'>
+            Bolsos
           </Link>
           <Link href={'/ProductosDeportivos/Equipamiento'} className='hover:underline hover:opacity-85 duration-500'>
             Equipamiento

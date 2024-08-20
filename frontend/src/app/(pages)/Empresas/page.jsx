@@ -166,7 +166,7 @@ function Empresas() {
           </div>
           <div className='min-w-[400px] max-w-[50vw] shadow'>
             <Image
-              src={'/C-FourIcon.webp'}
+              src={'/images/RopaDeportivaEmpresas.webp'}
               width={1500}
               height={1500}
               className='h-[70vh]'
@@ -178,7 +178,7 @@ function Empresas() {
         <section className='flex flex-wrap gap-5 py-7 px-5 justify-around'>
           <div className='min-w-[400px] max-w-[50vw] shadow'>
             <Image
-              src={'/C-FourIcon.webp'}
+              src={'/images/EquipamientoDeportivoEmpresas.webp'}
               width={1500}
               height={1500}
               className='h-[70vh]'
