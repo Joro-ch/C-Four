@@ -17,7 +17,7 @@ function NavBar() {
                 <li className='hover:opacity-85 duration-500'>
                     <Link href={'/'} className='flex gap-5 justify-center items-center'>
                         <Image
-                            src={'/C-FourIcon.webp'}
+                            src={'/images/C-FourIcon.webp'}
                             width={1500}
                             height={1500}
                             className='w-[40px] h-[40px] rounded-full'

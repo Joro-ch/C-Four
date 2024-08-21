@@ -10,7 +10,7 @@ function Footer() {
     <div className='bg-[#333] text-white py-5 px-9 border-t-2 border-black-800 flex justify-between flex-wrap'>
       <div className='flex flex-col items-center gap-3'>
         <Image
-          src={'/C-FourIcon.webp'}
+          src={'/images/C-FourIcon.webp'}
           width={1500}
           height={1500}
           className='w-[150px] h-[150px] rounded-full'
