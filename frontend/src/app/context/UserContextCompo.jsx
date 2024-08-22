@@ -10,48 +10,23 @@ function UserContextCompo({ children }) {
         correoUsuario: '',
         passwordUsuario: '',
         listadoCarrito: [],
-        listadoProductosComprados: [],
     });
-    const [cargado, setCargado] = useState(false); // Nueva bandera para saber si los datos han sido cargados
+    const [cargado, setCargado] = useState(false); 
 
     useEffect(() => {
         const usuarioGuardado = localStorage.getItem('usuario');
         if (usuarioGuardado) {
             setUsuario(JSON.parse(usuarioGuardado));
         }
-        setCargado(true); // Indicamos que los datos han sido cargados
+        setCargado(true); 
     }, []);
 
     useEffect(() => {
-        if (cargado) { // Solo guarda si ya se ha cargado el usuario desde localStorage
+        if (cargado) { 
             localStorage.setItem('usuario', JSON.stringify(usuario));
         }
     }, [usuario, cargado]);
 
-    const agregarProductoListadoCarrito = (producto) => {
-        setUsuario({ 
-            ...usuario, 
-            listadoCarrito: Array.isArray(usuario.listadoCarrito) 
-                ? [...usuario.listadoCarrito, producto] 
-                : [producto] 
-        });
-    };
-
-    const eliminarProductoListadoCarrito = (idProducto) => {
-        // Encontrar el índice del primer producto que coincida con el idProducto
-        const index = usuario.listadoCarrito.findIndex((producto) => producto.idProducto === idProducto);
-    
-        // Si se encuentra el producto, eliminarlo
-        if (index !== -1) {
-            const nuevoListado = [...usuario.listadoCarrito];
-            nuevoListado.splice(index, 1);
-    
-            setUsuario({
-                ...usuario,
-                listadoCarrito: nuevoListado
-            });
-        }
-    }
     const comprarProducosDelCarrito = async () => {
         procesarCarrito();
         setUsuario({ 
@@ -108,8 +83,6 @@ function UserContextCompo({ children }) {
             value={{
                 usuario,
                 setUsuario,
-                agregarProductoListadoCarrito,
-                eliminarProductoListadoCarrito,
                 comprarProducosDelCarrito,
             }}
         >

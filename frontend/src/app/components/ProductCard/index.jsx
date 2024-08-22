@@ -19,43 +19,100 @@ import { SERVICE_URL } from '@/app/constants/global';
 
 function ProductCard({
     producto,
-    tipoDeCartaProducto,
+    tipoDeCartaProducto = '',
     compraId = 0,
-    restablecerListadoProductos
+    restablecerListado
 }) {
-    const {
-        usuario,
-        agregarProductoListadoCarrito,
-        eliminarProductoListadoCarrito,
-    } = useContext(userContext);
+    const { usuario } = useContext(userContext);
+    const [cantidadComprada, setCantidadComprada] = useState(0);
     const [showProductModal, setShowProductModal] = useState(false);
     const [showMessageModal, setShowMessageModal] = useState(false);
 
-    const alAgregarProductosAlCarrito = () => {
-        setShowProductModal(false);
-        setShowMessageModal(false);
-        if (usuario.nombreUsuario === '') {
-            toast.error('¡Error!', { description: '¡Inicie Sesión o Registrese primero!' });
-        }
-        else if (producto.cantidadDisponible === 0) {
-            toast.error('¡Error!', { description: `¡No hay más de este producto disponible!` });
-        }
-        else {
-            agregarProductoListadoCarrito(producto);
-            toast.success('¡Exito!', { description: '¡Se ha agregado correctamente el producto al carrito!' })
+    const alAgregarProductosAlCarrito = async () => {
+        if (esValidaInfoProducto() && await agregarProductoCarritoRequest()) {
+            toast.success('¡Exito!', { description: '¡Se ha agregado correctamente el producto al carrito!' });
+            setShowProductModal(false);
+            setShowMessageModal(false);
         }
     }
 
-    const alElliminarProductosDelCarrito = () => {
-        setShowProductModal(false);
-        setShowMessageModal(false);
+    const esValidaInfoProducto = () => {
+        console.log(cantidadComprada)
+        if (usuario.nombreUsuario === '') {
+            toast.error('¡Error!', { description: '¡Inicie Sesión o Registrese primero!' });
+            return false;
+        }
+        else if (producto.cantidadDisponible === 0) {
+            toast.error('¡Error!', { description: `¡No hay más de este producto disponible!` });
+            return false;
+        }
+        else if (cantidadComprada === 0) {
+            toast.error('¡Error!', { description: `¡Ingrese una cantidad superior a cero!` });
+            return false;
+        }
+        else if (producto.cantidadDisponible - cantidadComprada < 0) {
+            toast.error('¡Error!', { description: `¡No hay suficientes productos, ingrese una cantidad inferior!` });
+            return false;
+        }
+        return true;
+    }
+
+    const agregarProductoCarritoRequest = async () => {
+        console.log({
+            nombreUsuario: usuario.nombreUsuario,
+            idProducto: producto.idProducto,
+            cantidadComprada: cantidadComprada,
+        })
+        const response = await fetch(`${SERVICE_URL}/carritoUsuario/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                nombreUsuario: usuario.nombreUsuario,
+                idProducto: producto.idProducto,
+                cantidadComprado: cantidadComprada,
+            })
+        });
+
+        const result = await response.json();
+        if (!response.ok) {
+            toast.error('¡Error!', { description: `¡${result.error}!` });
+            return false;
+        }
+        return true;
+    }
+
+    const alElliminarProductosDelCarrito = async () => {
+        if (esValidoEliminarProducto() && await eliminarProductoCarritoRequest()) {
+            restablecerListado();
+            toast.success('¡Exito!', { description: '¡Se ha eliminado correctamente el producto del carrito!' });
+            setShowProductModal(false);
+            setShowMessageModal(false);
+        }
+    }
+
+    const esValidoEliminarProducto = () => {
         if (usuario.nombreUsuario === '') {
             toast.error('¡Error!', { description: '¡Inicie Sesión o Registrese primero!' })
+            return false;
         }
-        else {
-            eliminarProductoListadoCarrito(producto.idProducto);
-            toast.success('¡Exito!', { description: '¡Se ha eliminado correctamente el producto del carrito!' })
+        return true;
+    }
+
+    const eliminarProductoCarritoRequest = async () => {
+        const response = await fetch(`${SERVICE_URL}/carritoUsuario/${compraId}/`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }); 
+
+        if (!response.ok) {
+            toast.error('¡Error!', { description: `¡No se ha podido eliminar correctamente!` });
+            return false;
         }
+        return true;
     }
 
     const alElliminarProductosDelHistorial = async () => {
@@ -66,7 +123,7 @@ function ProductCard({
             return
         }
         if (await eliminarProductoHistorialRequest()) {
-            restablecerListadoProductos();
+            restablecerListado();
             toast.success('¡Exito!', {
                 description: '¡Se ha eliminado correctamente el producto del historial!'
             });
@@ -130,19 +187,12 @@ function ProductCard({
             <MessageModal
                 showModal={showMessageModal}
                 setShowModal={setShowMessageModal}
-                modalTitulo={tipoDeCartaProducto === 'carrrito' ? (
+                tituloModal={tipoDeCartaProducto === 'carrrito' ? (
                     ELIMINAR_PRODUCTO_MODAL_TITULO
                 ) : tipoDeCartaProducto === 'historial' ? (
                     ELIMINAR_PRODUCTO_HISTORIAL_MODAL_TITULO
                 ) : (
                     AGREGAR_PRODUCTO_CARRITO_MODAL_TITULO
-                )}
-                modalMensaje={tipoDeCartaProducto === 'carrrito' ? (
-                    ELIMINAR_PRODUCTO_MODAL_CUERPO
-                ) : tipoDeCartaProducto === 'historial' ? (
-                    ELIMINAR_PRODUCTO_HISTORIAL_MODAL_CUERPO
-                ) : (
-                    AGREGAR_PRODUCTO_CARRITO_MODAL_CUERPO
                 )}
                 accionAceptar={tipoDeCartaProducto === 'carrito' ? (
                     () => alElliminarProductosDelCarrito()
@@ -151,8 +201,32 @@ function ProductCard({
                 ) : (
                     () => alAgregarProductosAlCarrito()
                 )}
-            />
-        </div>
+            >
+                <div className='bg-white p-5'>
+                    <p>
+                        {tipoDeCartaProducto === 'carrrito' ? (
+                            ELIMINAR_PRODUCTO_MODAL_CUERPO
+                        ) : tipoDeCartaProducto === 'historial' ? (
+                            ELIMINAR_PRODUCTO_HISTORIAL_MODAL_CUERPO
+                        ) : (
+                            AGREGAR_PRODUCTO_CARRITO_MODAL_CUERPO
+                        )}
+                    </p>
+                    {tipoDeCartaProducto === '' && (
+                        <form className='flex flex-col mt-3'>
+                            <p> Si es el caso, ingrese la cantidad que desea ingresar al carrito: </p>
+                            <input
+                                type='number'
+                                className='bg-[#333] text-white p-3 w-full rounded mt-3'
+                                placeholder='Cantidad a Comprar'
+                                name='cantidadComprado'
+                                onChange={(e) => setCantidadComprada(parseInt(e.target.value, 10))}
+                            />
+                        </form>
+                    )}
+                </div>
+            </MessageModal >
+        </div >
     )
 }
 

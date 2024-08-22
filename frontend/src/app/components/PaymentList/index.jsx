@@ -5,17 +5,19 @@ import { userContext } from '@/app/context/userContext';
 import { toast } from 'sonner';
 import { REALIZAR_COMPRA_MODAL_CUERPO, REALIZAR_COMPRA_MODAL_TITULO } from '@/app/constants/mensajes';
 
-function PaymentList({ listadoProductos }) {
+function PaymentList({ listadoCompra }) {
     const { comprarProducosDelCarrito } = useContext(userContext);
     const [totalPayment, setTotalPayment] = useState(0);
     const [showMessageModal, setShowMessageModal] = useState(false);
 
     useEffect(() => {
-        const total = listadoProductos ? listadoProductos.reduce((accumulator, currentProduct) => {
-            return accumulator + currentProduct.precioProducto;
+        const total = listadoCompra ? listadoCompra.reduce((accumulator, registroActual) => {
+            const precioProducto = registroActual.producto.precioProducto;
+            const cantidadCompardo = registroActual.cantidadComprado;
+            return accumulator + (precioProducto * cantidadCompardo);
         }, 0) : 0;
         setTotalPayment(total);
-    }, [listadoProductos]);
+    }, [listadoCompra]);
 
     const alComprarProductos = () => {
         comprarProducosDelCarrito();
@@ -29,13 +31,14 @@ function PaymentList({ listadoProductos }) {
                 Lista de Compras
             </h5>
             <hr className='my-3' />
-            {listadoProductos && listadoProductos.length > 0 ? (
+            {listadoCompra && listadoCompra.length > 0 ? (
                 <>
                     <div className='flex flex-col gap-3 min-h-[40vh]'>
-                        {listadoProductos.map((producto, index) =>
+                        {listadoCompra.map((elemento, index) =>
                             <div className='flex justify-between' key={index}>
-                                <h5> {producto.nombreProducto} </h5>
-                                <h5> ₡{producto.precioProducto} </h5>
+                                <h5>{elemento.producto.nombreProducto}</h5>
+                                <h5> x{elemento.cantidadComprado}  </h5>
+                                <h5> ₡{elemento.producto.precioProducto * elemento.cantidadComprado} </h5>
                             </div>
                         )}
                     </div>
@@ -54,7 +57,7 @@ function PaymentList({ listadoProductos }) {
                     <MessageModal
                         showModal={showMessageModal}
                         setShowModal={setShowMessageModal}
-                        modalTitulo={REALIZAR_COMPRA_MODAL_TITULO}
+                        tituloModal={REALIZAR_COMPRA_MODAL_TITULO}
                         modalMensaje={REALIZAR_COMPRA_MODAL_CUERPO}
                         accionAceptar={alComprarProductos}
                     />

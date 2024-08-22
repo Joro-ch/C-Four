@@ -3,10 +3,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
-from django.contrib.auth.hashers import check_password, make_password
-from .models import Usuario, Empresa, Producto, HistorialCompraUsuario
+from .models import Usuario, Empresa, Producto, CarritoUsuario, HistorialCompraUsuario
 from .serializer import UsuarioSerializer, EmpresaSerializer, ProductoSerializer
-from .serializer import HistorialCompraUsuarioSerializer
+from .serializer import CarritoUsuarioSerializer, HistorialCompraUsuarioSerializer
 
 # Create your views here.
 
@@ -23,6 +22,11 @@ class EmpresaViewSet(viewsets.ModelViewSet):
 class ProductoViewSet(viewsets.ModelViewSet):
     queryset = Producto.objects.all()
     serializer_class = ProductoSerializer
+
+
+class CarritoUsuarioViewSet(viewsets.ModelViewSet):
+    queryset = CarritoUsuario.objects.all()
+    serializer_class = CarritoUsuarioSerializer
 
 
 class HistorialCompraUsuarioViewSet(viewsets.ModelViewSet):
@@ -140,6 +144,14 @@ class ProductosPorTipoView(generics.ListAPIView):
         tipoProducto = self.kwargs['tipoProducto']
         return Producto.objects.filter(tipoProducto=tipoProducto)
     
+
+class CarritoUsuarioPorNombreUsuarioView(generics.ListAPIView):
+    serializer_class = CarritoUsuarioSerializer
+
+    def get_queryset(self):
+        nombreUsuario = self.kwargs['nombreUsuario']
+        return CarritoUsuario.objects.filter(nombreUsuario=nombreUsuario)
+
     
 class HistorialCompraPorUsuarioView(generics.ListAPIView):
     serializer_class = HistorialCompraUsuarioSerializer

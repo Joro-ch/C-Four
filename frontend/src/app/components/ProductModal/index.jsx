@@ -77,7 +77,7 @@ function ProductModal({
             <MessageModal
                 showModal={showMessageModal}
                 setShowModal={setShowMessageModal}
-                modalTitulo={tipoDeCartaProducto === 'carrrito' ? (
+                tituloModal={tipoDeCartaProducto === 'carrrito' ? (
                     ELIMINAR_PRODUCTO_MODAL_TITULO
                 ) : tipoDeCartaProducto === 'historial' ? (
                     ELIMINAR_PRODUCTO_HISTORIAL_MODAL_TITULO

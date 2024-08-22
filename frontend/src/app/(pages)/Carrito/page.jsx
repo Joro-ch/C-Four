@@ -2,22 +2,51 @@
 import PaymentList from '@/app/components/PaymentList';
 import ProductCard from '@/app/components/ProductCard';
 import Link from 'next/link';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { userContext } from '@/app/context/userContext';
+import { SERVICE_URL } from '@/app/constants/global';
 
 function Carrito() {
   const { usuario } = useContext(userContext);
+  const [listadoCarrito, setListadoCarrito] = useState([]);
+
+  useEffect(() => {
+    restablecerListado();
+  }, [usuario]);
+
+  const obtenerListadoCarritoRequest = async () => {
+    const response = await fetch(`${SERVICE_URL}/carritoUsuario/usuario/${usuario.nombreUsuario}/`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const result = await response.json();
+    if (!response.ok) {
+      toast.error('¡Error!', { description: `¡${result.error}!` });
+      return [];
+    }
+    return result;
+  }
+
+  const restablecerListado = async () => {
+    const listado = await obtenerListadoCarritoRequest();
+    setListadoCarrito(listado);
+  }
 
   return (
     <main className='grow p-5 flex gap-5'>
-      <PaymentList listadoProductos={usuario.listadoCarrito} />
-      {usuario.listadoCarrito && usuario.listadoCarrito.length > 0 ? (
-        <div className='flex flex-wrap gap-4 justify-between'>
-          {usuario.listadoCarrito.map((producto, index) =>
+      <PaymentList listadoCompra={listadoCarrito} />
+      {listadoCarrito && listadoCarrito.length > 0 ? (
+        <div className='flex flex-wrap gap-4 justify-around'>
+          {listadoCarrito.map((elemento, index) =>
             <ProductCard
               key={index}
-              producto={producto}
+              producto={elemento.producto}
+              compraId={elemento.id}
               tipoDeCartaProducto={'carrito'}
+              restablecerListado={restablecerListado}
             />
           )}
         </div>

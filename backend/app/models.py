@@ -47,9 +47,16 @@ class Producto(models.Model):
     productoImagen = models.TextField()
 
 
+class CarritoUsuario(models.Model):
+    nombreUsuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    idProducto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidadComprado = models.IntegerField()
+
+
 class HistorialCompraUsuario(models.Model):
     nombreUsuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     idProducto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidadComprado = models.IntegerField()
 
     def save(self, *args, **kwargs):
         producto = self.idProducto

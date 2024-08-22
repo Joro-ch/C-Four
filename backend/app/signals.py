@@ -6,9 +6,8 @@ from .models import HistorialCompraUsuario
 @receiver(pre_save, sender=HistorialCompraUsuario)
 def update_product_quantity(sender, instance, **kwargs):
     producto = instance.idProducto
-    if producto.cantidadDisponible > 0:
-        producto.cantidadDisponible -= 1
+    if producto.cantidadDisponible >= instance.cantidadComprado:
+        producto.cantidadDisponible -= instance.cantidadComprado
         producto.save()
     else:
-        raise ValidationError(f"El producto {producto.nombreProducto} no tiene stock disponible.")
-
+        raise ValidationError(f"El producto {producto.nombreProducto} no tiene stock suficiente para la cantidad solicitada.")

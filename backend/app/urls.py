@@ -7,6 +7,7 @@ router=routers.DefaultRouter()
 router.register(r'usuarios', views.UsuarioViewSet)
 router.register(r'empresas', views.EmpresaViewSet)
 router.register(r'productos', views.ProductoViewSet)
+router.register(r'carritoUsuario', views.CarritoUsuarioViewSet)
 router.register(r'historialCompraUsuario', views.HistorialCompraUsuarioViewSet)
 
 urlpatterns=[
@@ -20,4 +21,7 @@ urlpatterns=[
     path('historialCompraUsuario/usuario/<str:nombreUsuario>/', 
          views.HistorialCompraPorUsuarioView.as_view(), 
          name='historial_compra_por_usuario'),
+    path('carritoUsuario/usuario/<str:nombreUsuario>/', 
+         views.CarritoUsuarioPorNombreUsuarioView.as_view(), 
+         name='carrito_por_usuario'),
 ]
