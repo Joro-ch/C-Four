@@ -15,6 +15,8 @@ function Carrito() {
   }, [usuario]);
 
   const obtenerListadoCarritoRequest = async () => {
+    if (usuario.nombreUsuario == '') return;
+
     const response = await fetch(`${SERVICE_URL}/carritoUsuario/usuario/${usuario.nombreUsuario}/`, {
       method: 'GET',
       headers: {
@@ -37,7 +39,7 @@ function Carrito() {
 
   return (
     <main className='grow p-5 flex gap-5'>
-      <PaymentList listadoCompra={listadoCarrito} />
+      <PaymentList listadoCompra={listadoCarrito} restablecerListado={restablecerListado} />
       {listadoCarrito && listadoCarrito.length > 0 ? (
         <div className='flex flex-wrap gap-4 justify-around'>
           {listadoCarrito.map((elemento, index) =>

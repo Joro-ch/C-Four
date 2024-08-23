@@ -24,4 +24,5 @@ urlpatterns=[
     path('carritoUsuario/usuario/<str:nombreUsuario>/', 
          views.CarritoUsuarioPorNombreUsuarioView.as_view(), 
          name='carrito_por_usuario'),
+     path('transferir-carrito/', views.TransferirCarritoAHistorialView.as_view(), name='transferir-carrito'),
 ]

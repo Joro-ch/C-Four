@@ -58,11 +58,6 @@ function ProductCard({
     }
 
     const agregarProductoCarritoRequest = async () => {
-        console.log({
-            nombreUsuario: usuario.nombreUsuario,
-            idProducto: producto.idProducto,
-            cantidadComprada: cantidadComprada,
-        })
         const response = await fetch(`${SERVICE_URL}/carritoUsuario/`, {
             method: 'POST',
             headers: {
@@ -187,7 +182,7 @@ function ProductCard({
             <MessageModal
                 showModal={showMessageModal}
                 setShowModal={setShowMessageModal}
-                tituloModal={tipoDeCartaProducto === 'carrrito' ? (
+                tituloModal={tipoDeCartaProducto === 'carrito' ? (
                     ELIMINAR_PRODUCTO_MODAL_TITULO
                 ) : tipoDeCartaProducto === 'historial' ? (
                     ELIMINAR_PRODUCTO_HISTORIAL_MODAL_TITULO
@@ -204,7 +199,7 @@ function ProductCard({
             >
                 <div className='bg-white p-5'>
                     <p>
-                        {tipoDeCartaProducto === 'carrrito' ? (
+                        {tipoDeCartaProducto === 'carrito' ? (
                             ELIMINAR_PRODUCTO_MODAL_CUERPO
                         ) : tipoDeCartaProducto === 'historial' ? (
                             ELIMINAR_PRODUCTO_HISTORIAL_MODAL_CUERPO

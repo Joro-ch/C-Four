@@ -4,9 +4,10 @@ import MessageModal from '../MessageModal';
 import { userContext } from '@/app/context/userContext';
 import { toast } from 'sonner';
 import { REALIZAR_COMPRA_MODAL_CUERPO, REALIZAR_COMPRA_MODAL_TITULO } from '@/app/constants/mensajes';
+import { SERVICE_URL } from '@/app/constants/global';
 
-function PaymentList({ listadoCompra }) {
-    const { comprarProducosDelCarrito } = useContext(userContext);
+function PaymentList({ listadoCompra, restablecerListado }) {
+    const { usuario } = useContext(userContext);
     const [totalPayment, setTotalPayment] = useState(0);
     const [showMessageModal, setShowMessageModal] = useState(false);
 
@@ -19,10 +20,31 @@ function PaymentList({ listadoCompra }) {
         setTotalPayment(total);
     }, [listadoCompra]);
 
-    const alComprarProductos = () => {
-        comprarProducosDelCarrito();
-        setShowMessageModal(false);
-        toast.success('¡Exito!', { description: '¡Se compraron los productos correctamente!' })
+    const alComprarProductos = async () => {
+        if (await realizarCompraRequest()) {
+            restablecerListado();
+            setShowMessageModal(false);
+            toast.success('¡Exito!', { description: '¡Se compraron los productos correctamente!' });
+        }
+    }
+
+    const realizarCompraRequest = async () => {
+        if (usuario.nombreUsuario == '') return;
+
+        const response = await fetch(`${SERVICE_URL}/transferir-carrito/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ nombreUsuario: usuario.nombreUsuario })
+        });
+
+        const result = await response.json();
+        if (!response.ok) {
+            toast.error('¡Error!', { description: `¡${result.error}!` });
+            return false;
+        }
+        return true;
     }
 
     return (
@@ -58,9 +80,12 @@ function PaymentList({ listadoCompra }) {
                         showModal={showMessageModal}
                         setShowModal={setShowMessageModal}
                         tituloModal={REALIZAR_COMPRA_MODAL_TITULO}
-                        modalMensaje={REALIZAR_COMPRA_MODAL_CUERPO}
                         accionAceptar={alComprarProductos}
-                    />
+                    >
+                        <p className='p-5 bg-white'>
+                            {REALIZAR_COMPRA_MODAL_CUERPO}
+                        </p>
+                    </MessageModal>
                 </>
             ) : (
                 <div className='flex justify-center items-center bg-gray-100 p-5 text-center h-[40vh]'>

@@ -84,13 +84,6 @@ function ProductModal({
                 ) : (
                     AGREGAR_PRODUCTO_CARRITO_MODAL_TITULO
                 )}
-                modalMensaje={tipoDeCartaProducto === 'carrrito' ? (
-                    ELIMINAR_PRODUCTO_MODAL_CUERPO
-                ) : tipoDeCartaProducto === 'historial' ? (
-                    ELIMINAR_PRODUCTO_HISTORIAL_MODAL_CUERPO
-                ) : (
-                    AGREGAR_PRODUCTO_CARRITO_MODAL_CUERPO
-                )}
                 accionAceptar={tipoDeCartaProducto === 'carrito' ? (
                     () => alElliminarProductosDelCarrito()
                 ) : tipoDeCartaProducto === 'historial' ? (
@@ -98,7 +91,31 @@ function ProductModal({
                 ) : (
                     () => alAgregarProductosAlCarrito()
                 )}
-            />
+            >
+                <div className='bg-white p-5'>
+                    <p>
+                        {tipoDeCartaProducto === 'carrrito' ? (
+                            ELIMINAR_PRODUCTO_MODAL_CUERPO
+                        ) : tipoDeCartaProducto === 'historial' ? (
+                            ELIMINAR_PRODUCTO_HISTORIAL_MODAL_CUERPO
+                        ) : (
+                            AGREGAR_PRODUCTO_CARRITO_MODAL_CUERPO
+                        )}
+                    </p>
+                    {tipoDeCartaProducto === '' && (
+                        <form className='flex flex-col mt-3'>
+                            <p> Si es el caso, ingrese la cantidad que desea ingresar al carrito: </p>
+                            <input
+                                type='number'
+                                className='bg-[#333] text-white p-3 w-full rounded mt-3'
+                                placeholder='Cantidad a Comprar'
+                                name='cantidadComprado'
+                                onChange={(e) => setCantidadComprada(parseInt(e.target.value, 10))}
+                            />
+                        </form>
+                    )}
+                </div>
+            </MessageModal>
         </>
     ) : null;
 

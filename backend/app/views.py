@@ -3,9 +3,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
+from django.core.exceptions import ValidationError
 from .models import Usuario, Empresa, Producto, CarritoUsuario, HistorialCompraUsuario
 from .serializer import UsuarioSerializer, EmpresaSerializer, ProductoSerializer
 from .serializer import CarritoUsuarioSerializer, HistorialCompraUsuarioSerializer
+from .serializer import TransferirCarritoAHistorialSerializer
 
 # Create your views here.
 
@@ -159,3 +161,17 @@ class HistorialCompraPorUsuarioView(generics.ListAPIView):
     def get_queryset(self):
         nombreUsuario = self.kwargs['nombreUsuario']
         return HistorialCompraUsuario.objects.filter(nombreUsuario=nombreUsuario)
+    
+
+class TransferirCarritoAHistorialView(APIView):
+    def post(self, request, *args, **kwargs):
+        serializer = TransferirCarritoAHistorialSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            try:
+                serializer.save()
+                return Response({"detail": "Productos transferidos al historial de compra exitosamente."}, status=status.HTTP_200_OK)
+            except ValidationError as e:
+                return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
