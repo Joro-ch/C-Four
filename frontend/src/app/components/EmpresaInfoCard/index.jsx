@@ -14,7 +14,8 @@ function EmpresaInfoCard() {
         passwordNueva: '',
     });
 
-    const onLogOut = () => {
+    const onLogOut = (e) => {
+        e.preventDefault();
         setEmpresa({
             nombreMarca: '',
             correoMarca: '',
@@ -64,82 +65,80 @@ function EmpresaInfoCard() {
     }
 
     return (
-        <div className='w-[25vw] min-w-[250px] shadow flex flex-col p-5'>
+        <form className='w-[25vw] min-w-[250px] shadow flex flex-col p-5 gap-2'>
             <h5 className='text-6xl bg-[#333] rounded-full text-center px-8 py-5 text-white shadow self-center'>
                 {empresa.nombreMarca[0]}
             </h5>
             <hr className='my-2' />
-            <div className='flex flex-col gap-2'>
-                <span className='flex flex-col gap-2'>
-                    <h5> Nombre de la Marca </h5>
-                    <input
-                        className='bg-[#333] px-5 py-2 text-white'
-                        value={empresa.nombreMarca}
-                        placeholder='Nombre de Usuario'
-                        name='nombreUsuario'
-                        disabled
-                    />
-                </span>
-                <span className='flex flex-col gap-2'>
-                    <h5> Correo </h5>
-                    <input
-                        className='bg-[#333] px-5 py-2 text-white mb-5'
-                        value={empresa.correoMarca}
-                        placeholder='Correo'
-                        type='email'
-                        name='correoUsuario'
-                        disabled
-                    />
-                </span>
-                <form className='flex flex-col gap-2'>
-                    <h5> Cambio de Contraseña </h5>
-                    <hr className='my-1' />
-                    <span className='flex flex-col gap-2'>
-                        <h5> Constraseña Actual </h5>
-                        <input
-                            className='bg-[#333] px-5 py-2 text-white'
-                            placeholder='Constraseña Actual'
-                            type='password'
-                            onChange={(e) => setPasswordFormData({
-                                ...passwordFormData,
-                                passwordActual: e.target.value
-                            })}
-                            value={passwordFormData.passwordActual}
-                            name='passwordActual'
-                            autoComplete='current-password'
-                        />
-                    </span>
-                    <span className='flex flex-col gap-2'>
-                        <h5> Constraseña Nueva </h5>
-                        <input
-                            className='bg-[#333] px-5 py-2 text-white'
-                            placeholder='Constraseña Nueva'
-                            type='password'
-                            onChange={(e) => setPasswordFormData({
-                                ...passwordFormData,
-                                passwordNueva: e.target.value
-                            })}
-                            value={passwordFormData.passwordNueva}
-                            name='passwordNueva'
-                            autoComplete='newPassword'
-                        />
-                    </span>
-                    <button
-                        className='bg-green-400 rounded text-white py-2 hover:bg-green-500'
-                        onClick={alCambiarPassword}
-                    >
-                        Cambiar Contraseña
-                    </button>
-                </form>
-                <hr className='my-1' />
-                <button
-                    className='bg-red-400 rounded text-white py-2 hover:bg-red-500'
-                    onClick={onLogOut}
-                >
-                    Cerrar Sesión
-                </button>
-            </div>
-        </div>
+            <span className='flex flex-col gap-2'>
+                <h5> Nombre de la Marca </h5>
+                <input
+                    className='bg-[#333] px-5 py-2 text-white'
+                    value={empresa.nombreMarca}
+                    placeholder='Nombre de Usuario'
+                    name='nombreUsuario'
+                    disabled
+                    autoComplete='username'
+                />
+            </span>
+            <span className='flex flex-col gap-2'>
+                <h5> Correo </h5>
+                <input
+                    className='bg-[#333] px-5 py-2 text-white mb-5'
+                    value={empresa.correoMarca}
+                    placeholder='Correo'
+                    type='email'
+                    name='correoUsuario'
+                    disabled
+                    autoComplete='email'
+                />
+            </span>
+            <h5> Cambio de Contraseña </h5>
+            <hr className='my-1' />
+            <span className='flex flex-col gap-2'>
+                <h5> Constraseña Actual </h5>
+                <input
+                    className='bg-[#333] px-5 py-2 text-white'
+                    placeholder='Constraseña Actual'
+                    type='password'
+                    onChange={(e) => setPasswordFormData({
+                        ...passwordFormData,
+                        passwordActual: e.target.value
+                    })}
+                    value={passwordFormData.passwordActual}
+                    name='passwordActual'
+                    autoComplete='current-password'
+                />
+            </span>
+            <span className='flex flex-col gap-2'>
+                <h5> Constraseña Nueva </h5>
+                <input
+                    className='bg-[#333] px-5 py-2 text-white'
+                    placeholder='Constraseña Nueva'
+                    type='password'
+                    onChange={(e) => setPasswordFormData({
+                        ...passwordFormData,
+                        passwordNueva: e.target.value
+                    })}
+                    value={passwordFormData.passwordNueva}
+                    name='passwordNueva'
+                    autoComplete='newPassword'
+                />
+            </span>
+            <button
+                className='bg-green-400 rounded text-white py-2 hover:bg-green-500'
+                onClick={alCambiarPassword}
+            >
+                Cambiar Contraseña
+            </button>
+            <hr className='my-1' />
+            <button
+                className='bg-red-400 rounded text-white py-2 hover:bg-red-500'
+                onClick={onLogOut}
+            >
+                Cerrar Sesión
+            </button>
+        </form>
     )
 }
 
