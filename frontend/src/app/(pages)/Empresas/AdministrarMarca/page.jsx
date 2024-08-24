@@ -2,7 +2,7 @@
 import EmpresaInfoCard from '@/app/components/EmpresaInfoCard'
 import ProductsList from '@/app/components/ProductsList'
 import ToolBar from '@/app/components/ToolBar'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { SERVICE_URL } from '@/app/constants/global';
 import { empresaContext } from '@/app/context/empresaContext';
 import { toast } from 'sonner';
@@ -12,11 +12,7 @@ function AdministrarMarca() {
   const [listadoProductos, setListadoProductos] = useState([]);
   const [listadoProductosMostrados, setListadoProductosMostrados] = useState(listadoProductos);
 
-  useEffect(() => {
-    restablecerListadoProductos();
-  }, [empresa]);
-
-  const obtenerListadoProductosRequest = async () => {
+  const obtenerListadoProductosRequest = useCallback(async () => {
     const response = await fetch(`${SERVICE_URL}/productos/marca/${empresa.nombreMarca}`, {
       method: 'GET',
       headers: {
@@ -30,15 +26,19 @@ function AdministrarMarca() {
       return null;
     }
     return result;
-  }
+  }, [empresa]);
 
-  const restablecerListadoProductos = async () => {
+  const restablecerListadoProductos = useCallback(async () => {
     if (empresa.nombreMarca !== '') {
       const nuevoListadoProductos = await obtenerListadoProductosRequest();
       setListadoProductos(nuevoListadoProductos);
       setListadoProductosMostrados(nuevoListadoProductos);
     }
-  }
+  }, [empresa, obtenerListadoProductosRequest]);
+
+  useEffect(() => {
+    restablecerListadoProductos();
+  }, [empresa, restablecerListadoProductos]);
 
   const buscarProducto = (nombreProducto) => {
     setListadoProductosMostrados(listadoProductos.filter(
@@ -66,4 +66,4 @@ function AdministrarMarca() {
   )
 }
 
-export default AdministrarMarca
+export default AdministrarMarca;

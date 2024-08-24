@@ -1,5 +1,5 @@
 'use client';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import PaymentList from '@/app/components/PaymentList';
 import ProductCard from '@/app/components/ProductCard';
 import Link from 'next/link';
@@ -16,11 +16,7 @@ function Carrito() {
   const [showProductModal, setShowProductModal] = useState(false);
   const [showMessageModal, setShowMessageModal] = useState(false);
 
-  useEffect(() => {
-    restablecerListado();
-  }, [usuario]);
-
-  const obtenerListadoCarritoRequest = async () => {
+  const obtenerListadoCarritoRequest = useCallback(async () => {
     if (usuario.nombreUsuario == '') return;
 
     const response = await fetch(`${SERVICE_URL}/carritoUsuario/usuario/${usuario.nombreUsuario}/`, {
@@ -36,12 +32,16 @@ function Carrito() {
       return [];
     }
     return result;
-  }
+  }, [usuario]);
 
-  const restablecerListado = async () => {
+  const restablecerListado = useCallback(async () => {
     const listado = await obtenerListadoCarritoRequest();
     setListadoCarrito(listado);
-  }
+  }, [obtenerListadoCarritoRequest, setListadoCarrito]);
+
+  useEffect(() => {
+    restablecerListado();
+  }, [usuario, restablecerListado]);
 
   const alElliminarProductosDelCarrito = async (compraId) => {
     if (esValidoEliminarProducto() && await eliminarProductoCarritoRequest(compraId)) {

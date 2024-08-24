@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import MessageModal from '@/app/components/MessageModal';
 import ProductCard from '@/app/components/ProductCard';
 import ProductModal from '@/app/components/ProductModal';
@@ -16,11 +16,7 @@ function CuentaUsuario() {
   const [showProductModal, setShowProductModal] = useState(false);
   const [showMessageModal, setShowMessageModal] = useState(false);
 
-  useEffect(() => {
-    restablecerListado();
-  }, [usuario]);
-
-  const obtenerListadoCompraUsuarioRequest = async () => {
+  const obtenerListadoCompraUsuarioRequest = useCallback(async () => {
     const response = await fetch(`${SERVICE_URL}/historialCompraUsuario/usuario/${usuario.nombreUsuario}/`, {
       method: 'GET',
       headers: {
@@ -34,7 +30,18 @@ function CuentaUsuario() {
       return [];
     }
     return result;
-  }
+  }, [usuario]);
+
+  const restablecerListado = useCallback(async () => {
+    if (usuario.nombreUsuario != '') {
+      const listado = await obtenerListadoCompraUsuarioRequest();
+      setListadoCompraUsuario(listado);
+    }
+  }, [usuario, obtenerListadoCompraUsuarioRequest]);
+
+  useEffect(() => {
+    restablecerListado();
+  }, [usuario, restablecerListado]);
 
   const alElliminarProductosDelHistorial = async (compraId) => {
     setShowProductModal(false);
@@ -64,13 +71,6 @@ function CuentaUsuario() {
       return false;
     }
     return true;
-  }
-
-  const restablecerListado = async () => {
-    if (usuario.nombreUsuario != '') {
-      const listado = await obtenerListadoCompraUsuarioRequest();
-      setListadoCompraUsuario(listado);
-    }
   }
 
   return (

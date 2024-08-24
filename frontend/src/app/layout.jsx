@@ -1,18 +1,18 @@
 "use client";
-import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
+import { Toaster } from "sonner";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-import "./styles/globals.css";
-import { Toaster } from "sonner";
 import UserContextCompo from "./context/UserContextCompo";
 import EmpresaContextCompo from "./context/EmpresaContextCompo";
+import "./styles/globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const montserrat = Montserrat({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className + "h-screen"}>
+      <body className={montserrat.className + " h-screen"}>
         <UserContextCompo>
           <EmpresaContextCompo>
             <div className="flex flex-col h-full">

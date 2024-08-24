@@ -1,5 +1,5 @@
 'use client';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import ProductsFilters from '@/app/components/ProductsFilters';
 import ProductCard from '@/app/components/ProductCard';
 import Link from 'next/link';
@@ -18,17 +18,7 @@ function Producto({ params }) {
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [cantidadComprada, setCantidadComprada] = useState(0);
 
-  useEffect(() => {
-    const getProductos = async () => {
-      const listado = await obtenerListadoProductosRequest();
-      setListadoProductos(listado);
-      setListadoMostrado(listado);
-    }
-
-    getProductos();
-  }, [params]);
-
-  const obtenerListadoProductosRequest = async () => {
+  const obtenerListadoProductosRequest = useCallback(async () => {
     const response = await fetch(`${SERVICE_URL}/productos/tipo/${params.producto}/`, {
       method: 'GET',
       headers: {
@@ -42,7 +32,17 @@ function Producto({ params }) {
       return [];
     }
     return result;
-  }
+  }, [params]);
+
+  const restablecerListado = useCallback(async () => {
+    const listado = await obtenerListadoProductosRequest();
+    setListadoProductos(listado);
+    setListadoMostrado(listado);
+  }, [obtenerListadoProductosRequest]);
+
+  useEffect(() => {
+    restablecerListado();
+  }, [params, restablecerListado]);
 
   const alAgregarProductosAlCarrito = async (producto) => {
     if (esValidaInfoProducto(producto) && await agregarProductoCarritoRequest(producto)) {
