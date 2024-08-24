@@ -8,7 +8,13 @@ import { toast } from 'sonner';
 
 const SELECT_DEFAULT_VALUE = 'Seleccionar Tipo';
 
-function EditProductModal({ showModal, setShowModal, infoProducto, restablecerListadoProductos }) {
+function EditProductModal({ 
+    showModal, 
+    setShowModal, 
+    infoProducto,
+    idProductoSeleccionado,
+    restablecerListadoProductos
+}) {
     const { isBrowser } = useIsBrowser();
     const [nuevoProductoFormData, setNuevoProductoFormData] = useState(infoProducto);
 
@@ -102,7 +108,7 @@ function EditProductModal({ showModal, setShowModal, infoProducto, restablecerLi
         return true;
     }
 
-    const MODAL = showModal ? (
+    const MODAL = showModal && infoProducto.idProducto === idProductoSeleccionado ? (
         <div className='flex flex-col fixed top-0 left-1/2 transform -translate-x-1/2 min-w-[400px] w-[40vw] bg-[#333] shadow rounded-xl mt-5'>
             <div className='p-5 text-xl text-white flex justify-between'>
                 <h5> Editar el Producto </h5>

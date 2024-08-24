@@ -7,6 +7,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function ProductsList({ listadoProductos, restablecerListadoProductos }) {
     const [showEditProductModal, setShowEditProductModal] = useState(false);
+    const [idProductoSeleccionado, setIdProductoSeleccionado] = useState('');
+
+    const alPresionarEditar = (idProductoSeleccionado) => {
+        setShowEditProductModal(true);
+        setIdProductoSeleccionado(idProductoSeleccionado);
+    }
 
     return (
         <table className='w-full'>
@@ -58,13 +64,14 @@ function ProductsList({ listadoProductos, restablecerListadoProductos }) {
                             ₡{producto.precioProducto}
                         </td>
                         <td className='p-2 text-center'>
-                            <button onClick={() => setShowEditProductModal(true)}>
+                            <button onClick={() => alPresionarEditar(producto.idProducto)}>
                                 <FontAwesomeIcon icon={faTools} className='w-[20px]' />
                             </button>
                             <EditProductModal
                                 showModal={showEditProductModal}
                                 setShowModal={setShowEditProductModal}
                                 infoProducto={producto}
+                                idProductoSeleccionado={idProductoSeleccionado}
                                 restablecerListadoProductos={restablecerListadoProductos}
                             />
                         </td>

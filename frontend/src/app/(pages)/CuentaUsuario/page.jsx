@@ -92,6 +92,7 @@ function CuentaUsuario() {
                     alPresionarIcono={() => setShowMessageModal(true)}
                     alPresionarImagen={() => setShowProductModal(true)}
                     elIconoEsDeCompra={false}
+                    cantidadComprado={compra.cantidadComprado}
                   />
                   <ProductModal
                     producto={compra.producto}

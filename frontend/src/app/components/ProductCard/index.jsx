@@ -9,6 +9,7 @@ function ProductCard({
     alPresionarIcono,
     alPresionarImagen,
     elIconoEsDeCompra = true,
+    cantidadComprado = 0,
 }) {
     return (
         <div className='bg-[#333] min-w-[260px] w-[15vw] max-h-[350px] rounded shadow-xl'>
@@ -24,12 +25,25 @@ function ProductCard({
             </button>
             <div className='flex justify-between p-5 '>
                 <div className='text-white'>
-                    <h5>
-                        ₡{producto.precioProducto}
-                    </h5>
-                    <h5 className='text-xs'>
-                        {producto.nombreProducto} - {producto.nombreMarca}
-                    </h5>
+                    {cantidadComprado > 0 ? (
+                        <>
+                            <h5>
+                                ₡{producto.precioProducto * cantidadComprado}
+                            </h5>
+                            <h5 className='text-xs'>
+                                {producto.nombreProducto} x{cantidadComprado} - {producto.nombreMarca}
+                            </h5>
+                        </>
+                    ) : (
+                        <>
+                            <h5>
+                                ₡{producto.precioProducto}
+                            </h5>
+                            <h5 className='text-xs'>
+                                {producto.nombreProducto} - {producto.nombreMarca}
+                            </h5>
+                        </>
+                    )}
                 </div>
                 <button onClick={alPresionarIcono}>
                     {elIconoEsDeCompra ? (

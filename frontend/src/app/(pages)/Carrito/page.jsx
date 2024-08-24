@@ -88,6 +88,7 @@ function Carrito() {
                 alPresionarIcono={() => setShowMessageModal(true)}
                 alPresionarImagen={() => setShowProductModal(true)}
                 elIconoEsDeCompra={false}
+                cantidadComprado={elemento.cantidadComprado}
               />
               <ProductModal
                 producto={elemento.producto}
