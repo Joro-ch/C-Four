@@ -1,14 +1,20 @@
 'use client';
+import React, { useContext, useEffect, useState } from 'react';
 import PaymentList from '@/app/components/PaymentList';
 import ProductCard from '@/app/components/ProductCard';
 import Link from 'next/link';
-import React, { useContext, useEffect, useState } from 'react';
+import MessageModal from '@/app/components/MessageModal';
+import ProductModal from '@/app/components/ProductModal';
 import { userContext } from '@/app/context/userContext';
 import { SERVICE_URL } from '@/app/constants/global';
+import { ELIMINAR_PRODUCTO_MODAL_CUERPO, ELIMINAR_PRODUCTO_MODAL_TITULO } from '@/app/constants/mensajes';
+import { toast } from 'sonner';
 
 function Carrito() {
   const { usuario } = useContext(userContext);
   const [listadoCarrito, setListadoCarrito] = useState([]);
+  const [showProductModal, setShowProductModal] = useState(false);
+  const [showMessageModal, setShowMessageModal] = useState(false);
 
   useEffect(() => {
     restablecerListado();
@@ -37,19 +43,68 @@ function Carrito() {
     setListadoCarrito(listado);
   }
 
+  const alElliminarProductosDelCarrito = async (compraId) => {
+    if (esValidoEliminarProducto() && await eliminarProductoCarritoRequest(compraId)) {
+      restablecerListado();
+      toast.success('¡Exito!', { description: '¡Se ha eliminado correctamente el producto del carrito!' });
+      setShowProductModal(false);
+      setShowMessageModal(false);
+    }
+  }
+
+  const esValidoEliminarProducto = () => {
+    if (usuario.nombreUsuario === '') {
+      toast.error('¡Error!', { description: '¡Inicie Sesión o Registrese primero!' })
+      return false;
+    }
+    return true;
+  }
+
+  const eliminarProductoCarritoRequest = async (compraId) => {
+    const response = await fetch(`${SERVICE_URL}/carritoUsuario/${compraId}/`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      toast.error('¡Error!', { description: `¡No se ha podido eliminar correctamente!` });
+      return false;
+    }
+    return true;
+  }
+
   return (
     <main className='grow p-5 flex gap-5'>
       <PaymentList listadoCompra={listadoCarrito} restablecerListado={restablecerListado} />
       {listadoCarrito && listadoCarrito.length > 0 ? (
         <div className='flex flex-wrap gap-4 justify-around'>
           {listadoCarrito.map((elemento, index) =>
-            <ProductCard
-              key={index}
-              producto={elemento.producto}
-              compraId={elemento.id}
-              tipoDeCartaProducto={'carrito'}
-              restablecerListado={restablecerListado}
-            />
+            <>
+              <ProductCard
+                key={index}
+                producto={elemento.producto}
+                alPresionarIcono={() => setShowMessageModal(true)}
+                alPresionarImagen={() => setShowProductModal(true)}
+                elIconoEsDeCompra={false}
+              />
+              <ProductModal
+                producto={elemento.producto}
+                showModal={showProductModal}
+                setShowModal={setShowProductModal}
+                alPresionarBoton={() => setShowMessageModal(true)}
+                elBotonEsDeCompra={false}
+              >
+              </ProductModal>
+              <MessageModal
+                showModal={showMessageModal}
+                setShowModal={setShowMessageModal}
+                tituloModal={ELIMINAR_PRODUCTO_MODAL_TITULO}
+                cuerpoModal={ELIMINAR_PRODUCTO_MODAL_CUERPO}
+                accionAceptar={() => alElliminarProductosDelCarrito(elemento.id)}
+              />
+            </>
           )}
         </div>
       ) : (

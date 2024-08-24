@@ -1,17 +1,23 @@
 'use client';
-import ProductCard from '@/app/components/ProductCard';
-import UsuarioInfoCard from '@/app/components/UsuarioInfoCard';
-import { SERVICE_URL } from '@/app/constants/global';
-import { userContext } from '@/app/context/userContext';
 import Link from 'next/link';
 import React, { useContext, useEffect, useState } from 'react';
+import MessageModal from '@/app/components/MessageModal';
+import ProductCard from '@/app/components/ProductCard';
+import ProductModal from '@/app/components/ProductModal';
+import UsuarioInfoCard from '@/app/components/UsuarioInfoCard';
+import { SERVICE_URL } from '@/app/constants/global';
+import { ELIMINAR_PRODUCTO_HISTORIAL_MODAL_CUERPO, ELIMINAR_PRODUCTO_HISTORIAL_MODAL_TITULO } from '@/app/constants/mensajes';
+import { userContext } from '@/app/context/userContext';
+import { toast } from 'sonner';
 
 function CuentaUsuario() {
   const { usuario } = useContext(userContext);
   const [listadoCompraUsuario, setListadoCompraUsuario] = useState([]);
+  const [showProductModal, setShowProductModal] = useState(false);
+  const [showMessageModal, setShowMessageModal] = useState(false);
 
   useEffect(() => {
-    restablecerListadoProductos();
+    restablecerListado();
   }, [usuario]);
 
   const obtenerListadoCompraUsuarioRequest = async () => {
@@ -30,7 +36,37 @@ function CuentaUsuario() {
     return result;
   }
 
-  const restablecerListadoProductos = async () => {
+  const alElliminarProductosDelHistorial = async (compraId) => {
+    setShowProductModal(false);
+    setShowMessageModal(false);
+    if (usuario.nombreUsuario === '') {
+      toast.error('¡Error!', { description: '¡Inicie Sesión o Registrese primero!' })
+      return
+    }
+    if (await eliminarProductoHistorialRequest(compraId)) {
+      restablecerListado();
+      toast.success('¡Exito!', {
+        description: '¡Se ha eliminado correctamente el producto del historial!'
+      });
+    }
+  }
+
+  const eliminarProductoHistorialRequest = async (compraId) => {
+    const response = await fetch(`${SERVICE_URL}/historialCompraUsuario/${compraId}/`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      toast.error('¡Error!', { description: `¡No se pudo eliminar el producto del historial!` });
+      return false;
+    }
+    return true;
+  }
+
+  const restablecerListado = async () => {
     if (usuario.nombreUsuario != '') {
       const listado = await obtenerListadoCompraUsuarioRequest();
       setListadoCompraUsuario(listado);
@@ -49,13 +85,30 @@ function CuentaUsuario() {
           {listadoCompraUsuario && listadoCompraUsuario.length > 0 ? (
             <>
               {listadoCompraUsuario.map((compra, index) =>
-                <ProductCard
-                  key={index}
-                  producto={compra.producto}
-                  tipoDeCartaProducto={'historial'}
-                  compraId={compra.id}
-                  restablecerListadoProductos={restablecerListadoProductos}
-                />
+                <>
+                  <ProductCard
+                    key={index}
+                    producto={compra.producto}
+                    alPresionarIcono={() => setShowMessageModal(true)}
+                    alPresionarImagen={() => setShowProductModal(true)}
+                    elIconoEsDeCompra={false}
+                  />
+                  <ProductModal
+                    producto={compra.producto}
+                    showModal={showProductModal}
+                    setShowModal={setShowProductModal}
+                    alPresionarBoton={() => setShowMessageModal(true)}
+                    elBotonEsDeCompra={false}
+                  >
+                  </ProductModal>
+                  <MessageModal
+                    showModal={showMessageModal}
+                    setShowModal={setShowMessageModal}
+                    tituloModal={ELIMINAR_PRODUCTO_HISTORIAL_MODAL_TITULO}
+                    cuerpoModal={ELIMINAR_PRODUCTO_HISTORIAL_MODAL_CUERPO}
+                    accionAceptar={() => alElliminarProductosDelHistorial(compra.id)}
+                  />
+                </>
               )}
             </>
           ) : (

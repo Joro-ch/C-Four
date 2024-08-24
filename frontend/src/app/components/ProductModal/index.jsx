@@ -1,32 +1,24 @@
-"use client";
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import Image from 'next/image';
 import useIsBrowser from '@/app/hooks/useIsBrowser';
-import MessageModal from '../MessageModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { AGREGAR_PRODUCTO_CARRITO_MODAL_CUERPO, AGREGAR_PRODUCTO_CARRITO_MODAL_TITULO, ELIMINAR_PRODUCTO_HISTORIAL_MODAL_CUERPO, ELIMINAR_PRODUCTO_HISTORIAL_MODAL_TITULO, ELIMINAR_PRODUCTO_MODAL_CUERPO, ELIMINAR_PRODUCTO_MODAL_TITULO } from '@/app/constants/mensajes';
 
 function ProductModal({
     producto,
     showModal,
     setShowModal,
-    tipoDeCartaProducto,
-    alAgregarProductosAlCarrito,
-    alElliminarProductosDelCarrito,
-    alElliminarProductosDelHistorial,
+    alPresionarBoton,
+    elBotonEsDeCompra = true,
 }) {
     const { isBrowser } = useIsBrowser();
-    const [showMessageModal, setShowMessageModal] = useState(false);
-
-    const onClose = () => setShowModal(!showModal);
 
     const MODAL = showModal ? (
         <>
             <button
                 className='fixed top-0 left-0 bg-[#333] w-full h-full opacity-15'
-                onClick={onClose}
+                onClick={() => setShowModal(false)}
             />
             <div className='flex flex-col fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-[90vh] w-[60vw] bg-[#333] shadow rounded'>
                 <div className='h-[80%]'>
@@ -40,7 +32,7 @@ function ProductModal({
                     />
                     <button
                         className='fixed top-0 right-0 my-4 mx-5 text-xl shadow rounded-full w-[30px] h-[30px] bg-white'
-                        onClick={onClose}
+                        onClick={() => setShowModal(false)}
                     >
                         X
                     </button>
@@ -57,65 +49,23 @@ function ProductModal({
                     <div className='flex gap-5'>
                         <button
                             className='text-xl hover:opacity-85 w-[1/2]'
-                            onClick={() => setShowMessageModal(true)}
+                            onClick={alPresionarBoton}
                         >
-                            {tipoDeCartaProducto === 'carrito' || tipoDeCartaProducto === 'historial' ? (
-                                <div className='bg-red-400 rounded p-4 flex items-center gap-2'>
-                                    <FontAwesomeIcon icon={faXmark} />
-                                    Eliminar
-                                </div>
-                            ) : (
+                            {elBotonEsDeCompra ? (
                                 <div className='bg-green-400 rounded p-4 flex items-center gap-2'>
                                     <FontAwesomeIcon icon={faCartShopping} />
                                     Comprar
+                                </div>
+                            ) : (
+                                <div className='bg-red-400 rounded p-4 flex items-center gap-2'>
+                                    <FontAwesomeIcon icon={faXmark} />
+                                    Eliminar
                                 </div>
                             )}
                         </button>
                     </div>
                 </div>
             </div>
-            <MessageModal
-                showModal={showMessageModal}
-                setShowModal={setShowMessageModal}
-                tituloModal={tipoDeCartaProducto === 'carrrito' ? (
-                    ELIMINAR_PRODUCTO_MODAL_TITULO
-                ) : tipoDeCartaProducto === 'historial' ? (
-                    ELIMINAR_PRODUCTO_HISTORIAL_MODAL_TITULO
-                ) : (
-                    AGREGAR_PRODUCTO_CARRITO_MODAL_TITULO
-                )}
-                accionAceptar={tipoDeCartaProducto === 'carrito' ? (
-                    () => alElliminarProductosDelCarrito()
-                ) : tipoDeCartaProducto === 'historial' ? (
-                    () => alElliminarProductosDelHistorial()
-                ) : (
-                    () => alAgregarProductosAlCarrito()
-                )}
-            >
-                <div className='bg-white p-5'>
-                    <p>
-                        {tipoDeCartaProducto === 'carrrito' ? (
-                            ELIMINAR_PRODUCTO_MODAL_CUERPO
-                        ) : tipoDeCartaProducto === 'historial' ? (
-                            ELIMINAR_PRODUCTO_HISTORIAL_MODAL_CUERPO
-                        ) : (
-                            AGREGAR_PRODUCTO_CARRITO_MODAL_CUERPO
-                        )}
-                    </p>
-                    {tipoDeCartaProducto === '' && (
-                        <form className='flex flex-col mt-3'>
-                            <p> Si es el caso, ingrese la cantidad que desea ingresar al carrito: </p>
-                            <input
-                                type='number'
-                                className='bg-[#333] text-white p-3 w-full rounded mt-3'
-                                placeholder='Cantidad a Comprar'
-                                name='cantidadComprado'
-                                onChange={(e) => setCantidadComprada(parseInt(e.target.value, 10))}
-                            />
-                        </form>
-                    )}
-                </div>
-            </MessageModal>
         </>
     ) : null;
 
