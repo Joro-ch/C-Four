@@ -90,6 +90,7 @@ function Registrase() {
                             placeholder='Nombre de Usuario'
                             className='py-2 px-3 w-full rounded'
                             name='nombreUsuario'
+                            autoComplete='username'
                         />
                     </span>
                     <span className='flex flex-col gap-2'>
@@ -106,6 +107,7 @@ function Registrase() {
                             placeholder='Correo'
                             className='py-2 px-3 w-full rounded'
                             name='correoUsuario'
+                            autoComplete='user-email'
                         />
                     </span>
                     <span className='flex flex-col gap-2'>
@@ -122,6 +124,7 @@ function Registrase() {
                             placeholder='Contraseña'
                             className='py-2 px-3 w-full rounded'
                             name='passwordUsuario'
+                            autoComplete='current-password'
                         />
                     </span>
                     <button

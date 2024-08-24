@@ -101,49 +101,47 @@ function Producto({ params }) {
             listadoProductos={listadoProductos}
             setListadoMostrado={setListadoMostrado}
           />
-          <div className='flex flex-wrap gap-4 justify-between py-4 pr-3'>
-            {listadoMostrado.map((producto, index) =>
-              <>
-                <ProductCard
-                  key={index}
-                  producto={producto}
-                  alPresionarIcono={() => setShowMessageModal(true)}
-                  alPresionarImagen={() => setShowProductModal(true)}
-                  elIconoEsDeCompra={true}
-                />
-                <ProductModal
-                  producto={producto}
-                  showModal={showProductModal}
-                  setShowModal={setShowProductModal}
-                  alPresionarBoton={() => setShowMessageModal(true)}
-                  elBotonEsDeCompra={true}
-                >
-                </ProductModal>
-                <MessageModal
-                  showModal={showMessageModal}
-                  setShowModal={setShowMessageModal}
-                  tituloModal={AGREGAR_PRODUCTO_CARRITO_MODAL_TITULO}
-                  accionAceptar={() => alAgregarProductosAlCarrito(producto)}
-                >
-                  <div className='bg-white p-5'>
-                    <p>
-                      {AGREGAR_PRODUCTO_CARRITO_MODAL_CUERPO}
-                    </p>
-                    <form className='flex flex-col mt-3'>
-                      <p> Si es el caso, ingrese la cantidad que desea ingresar al carrito: </p>
-                      <input
-                        type='number'
-                        className='bg-[#333] text-white p-3 w-full rounded mt-3'
-                        placeholder='Cantidad a Comprar'
-                        name='cantidadComprado'
-                        onChange={(e) => setCantidadComprada(e.target.value)}
-                      />
-                    </form>
-                  </div>
-                </MessageModal >
-              </>
-            )}
-          </div>
+          {listadoMostrado.map((producto, index) =>
+            <div className='flex flex-wrap gap-4 justify-between py-4 pr-3' key={index}>
+              <ProductCard
+                key={index}
+                producto={producto}
+                alPresionarIcono={() => setShowMessageModal(true)}
+                alPresionarImagen={() => setShowProductModal(true)}
+                elIconoEsDeCompra={true}
+              />
+              <ProductModal
+                producto={producto}
+                showModal={showProductModal}
+                setShowModal={setShowProductModal}
+                alPresionarBoton={() => setShowMessageModal(true)}
+                elBotonEsDeCompra={true}
+              >
+              </ProductModal>
+              <MessageModal
+                showModal={showMessageModal}
+                setShowModal={setShowMessageModal}
+                tituloModal={AGREGAR_PRODUCTO_CARRITO_MODAL_TITULO}
+                accionAceptar={() => alAgregarProductosAlCarrito(producto)}
+              >
+                <div className='bg-white p-5'>
+                  <p>
+                    {AGREGAR_PRODUCTO_CARRITO_MODAL_CUERPO}
+                  </p>
+                  <form className='flex flex-col mt-3'>
+                    <p> Si es el caso, ingrese la cantidad que desea ingresar al carrito: </p>
+                    <input
+                      type='number'
+                      className='bg-[#333] text-white p-3 w-full rounded mt-3'
+                      placeholder='Cantidad a Comprar'
+                      name='cantidadComprado'
+                      onChange={(e) => setCantidadComprada(e.target.value)}
+                    />
+                  </form>
+                </div>
+              </MessageModal >
+            </div>
+          )}
         </>
       ) : (
         <div className='flex flex-col gap-5 justify-center items-center bg-gray-100 w-full h-[70vh]'>

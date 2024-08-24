@@ -81,55 +81,50 @@ function CuentaUsuario() {
           Historial de Productos Comprados
         </h5>
         <hr className='my-3' />
-        <div className='flex flex-wrap gap-4 justify-between'>
-          {listadoCompraUsuario && listadoCompraUsuario.length > 0 ? (
-            <>
-              {listadoCompraUsuario.map((compra, index) =>
-                <>
-                  <ProductCard
-                    key={index}
-                    producto={compra.producto}
-                    alPresionarIcono={() => setShowMessageModal(true)}
-                    alPresionarImagen={() => setShowProductModal(true)}
-                    elIconoEsDeCompra={false}
-                    cantidadComprado={compra.cantidadComprado}
-                  />
-                  <ProductModal
-                    producto={compra.producto}
-                    showModal={showProductModal}
-                    setShowModal={setShowProductModal}
-                    alPresionarBoton={() => setShowMessageModal(true)}
-                    elBotonEsDeCompra={false}
-                  >
-                  </ProductModal>
-                  <MessageModal
-                    showModal={showMessageModal}
-                    setShowModal={setShowMessageModal}
-                    tituloModal={ELIMINAR_PRODUCTO_HISTORIAL_MODAL_TITULO}
-                    cuerpoModal={ELIMINAR_PRODUCTO_HISTORIAL_MODAL_CUERPO}
-                    accionAceptar={() => alElliminarProductosDelHistorial(compra.id)}
-                  />
-                </>
-              )}
-            </>
-          ) : (
-            <div className='flex flex-col gap-5 justify-center items-center bg-gray-100 w-full p-5 min-h-[600px] '>
-              No hay productos en el historial.
-              <Link
-                href={'/RopaDeportiva'}
-                className='bg-green-400 py-1 px-2 rounded text-white hover:bg-green-500'
+        {listadoCompraUsuario && listadoCompraUsuario.length > 0 ? (
+          listadoCompraUsuario.map((compra, index) =>
+            <div className='flex flex-wrap gap-4 justify-between' key={index}>
+              <ProductCard
+                producto={compra.producto}
+                alPresionarIcono={() => setShowMessageModal(true)}
+                alPresionarImagen={() => setShowProductModal(true)}
+                elIconoEsDeCompra={false}
+                cantidadComprado={compra.cantidadComprado}
+              />
+              <ProductModal
+                producto={compra.producto}
+                showModal={showProductModal}
+                setShowModal={setShowProductModal}
+                alPresionarBoton={() => setShowMessageModal(true)}
+                elBotonEsDeCompra={false}
               >
-                Ir al catálogo de Ropa Deportiva
-              </Link>
-              <Link
-                href={'/ProductosDeportivos'}
-                className='bg-green-400 py-1 px-2 rounded text-white hover:bg-green-500'
-              >
-                Ir al catálogo de Productos Deportivos
-              </Link>
+              </ProductModal>
+              <MessageModal
+                showModal={showMessageModal}
+                setShowModal={setShowMessageModal}
+                tituloModal={ELIMINAR_PRODUCTO_HISTORIAL_MODAL_TITULO}
+                cuerpoModal={ELIMINAR_PRODUCTO_HISTORIAL_MODAL_CUERPO}
+                accionAceptar={() => alElliminarProductosDelHistorial(compra.id)}
+              />
             </div>
-          )}
-        </div>
+          )
+        ) : (
+          <div className='flex flex-col gap-5 justify-center items-center bg-gray-100 w-full p-5 min-h-[600px] '>
+            No hay productos en el historial.
+            <Link
+              href={'/RopaDeportiva'}
+              className='bg-green-400 py-1 px-2 rounded text-white hover:bg-green-500'
+            >
+              Ir al catálogo de Ropa Deportiva
+            </Link>
+            <Link
+              href={'/ProductosDeportivos'}
+              className='bg-green-400 py-1 px-2 rounded text-white hover:bg-green-500'
+            >
+              Ir al catálogo de Productos Deportivos
+            </Link>
+          </div>
+        )}
       </div>
     </main>
   )
