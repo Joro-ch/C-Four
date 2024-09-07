@@ -8,6 +8,7 @@ function ToolBar({ restablecerListadoProductos, buscarProducto }) {
     const [nombreProducto, setNombreProducto] = useState('');
     const [showAddProductModal, setShowAddProductModal] = useState(false);
 
+    
     return (
         <div className='flex items-center gap-5'>
             <button
