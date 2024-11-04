@@ -65,7 +65,7 @@ function EmpresaInfoCard() {
     }
 
     return (
-        <form className='w-[25vw] min-w-[250px] shadow flex flex-col p-5 gap-2'>
+        <form className='w-[25vw] min-w-[250px] shadow flex flex-col p-5 gap-2' onSubmit={(e) => e.preventDefault()}>
             <h5 className='text-6xl bg-[#333] rounded-full text-center px-8 py-5 text-white shadow self-center'>
                 {empresa.nombreMarca[0]}
             </h5>
