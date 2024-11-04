@@ -15,7 +15,8 @@ function ProductsFilters({ listadoProductos, setListadoMostrado }) {
             ]);
             const listadoPrecios = listadoProductos.map(
                 producto => producto.precioProducto
-            );
+            ).sort();
+            console.log(listadoPrecios);
             const u1 = listadoPrecios[Math.floor(listadoPrecios.length * 0.25)];
             const u2 = listadoPrecios[Math.floor(listadoPrecios.length * 0.50)];
             const u3 = listadoPrecios[Math.floor(listadoPrecios.length * 0.75)];
