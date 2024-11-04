@@ -11,10 +11,12 @@ function ProductModal({
     setShowModal,
     alPresionarBoton,
     elBotonEsDeCompra = true,
+    idProductoSeleccionado,
+    idIndexProducto,
 }) {
     const { isBrowser } = useIsBrowser();
 
-    const MODAL = showModal ? (
+    const MODAL = showModal && idProductoSeleccionado == idIndexProducto ? (
         <>
             <button
                 className='fixed top-0 left-0 bg-[#333] w-full h-full opacity-15'
