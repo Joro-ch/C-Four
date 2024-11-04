@@ -150,6 +150,7 @@ function Empresas() {
                   </h5>
                   <input
                     placeholder='Contraseña'
+                    type='password'
                     className='py-2 px-3 w-full rounded'
                     onChange={(e) => setNuevaEmpresaFormData({ ...nuevaEmpresaFormData, passwordMarca: e.target.value })}
                     name='passwordEmpresa'

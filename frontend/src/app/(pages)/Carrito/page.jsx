@@ -13,8 +13,19 @@ import { toast } from 'sonner';
 function Carrito() {
   const { usuario } = useContext(userContext);
   const [listadoCarrito, setListadoCarrito] = useState([]);
+  const [idProductoSeleccionado, setIdProductoSeleccionado] = useState(0);
   const [showProductModal, setShowProductModal] = useState(false);
   const [showMessageModal, setShowMessageModal] = useState(false);
+
+  const onSeleccionarProductoIcono = (idIndexProducto) => {
+    setShowMessageModal(true);
+    setIdProductoSeleccionado(idIndexProducto);
+  }
+
+  const onSeleccionarProductoImagen = (idIndexProducto) => {
+    setShowProductModal(true);
+    setIdProductoSeleccionado(idIndexProducto);
+  }
 
   const obtenerListadoCarritoRequest = useCallback(async () => {
     if (usuario.nombreUsuario == '') return;
@@ -84,8 +95,8 @@ function Carrito() {
             <div className="flex flex-wrap gap-4 justify-around" key={index}>
               <ProductCard
                 producto={elemento.producto}
-                alPresionarIcono={() => setShowMessageModal(true)}
-                alPresionarImagen={() => setShowProductModal(true)}
+                alPresionarIcono={() => onSeleccionarProductoIcono(index)}
+                alPresionarImagen={() => onSeleccionarProductoImagen(index)}
                 elIconoEsDeCompra={false}
                 cantidadComprado={elemento.cantidadComprado}
               />
@@ -95,6 +106,8 @@ function Carrito() {
                 setShowModal={setShowProductModal}
                 alPresionarBoton={() => setShowMessageModal(true)}
                 elBotonEsDeCompra={false}
+                idProductoSeleccionado={idProductoSeleccionado}
+                idIndexProducto={index}
               />
               <MessageModal
                 showModal={showMessageModal}
@@ -102,6 +115,8 @@ function Carrito() {
                 tituloModal={ELIMINAR_PRODUCTO_MODAL_TITULO}
                 cuerpoModal={ELIMINAR_PRODUCTO_MODAL_CUERPO}
                 accionAceptar={() => alElliminarProductosDelCarrito(elemento.id)}
+                idProductoSeleccionado={idProductoSeleccionado}
+                idIndexProducto={index}
               />
             </div>
           ))}

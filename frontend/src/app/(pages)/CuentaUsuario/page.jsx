@@ -13,8 +13,19 @@ import { toast } from 'sonner';
 function CuentaUsuario() {
   const { usuario } = useContext(userContext);
   const [listadoCompraUsuario, setListadoCompraUsuario] = useState([]);
+  const [idProductoSeleccionado, setIdProductoSeleccionado] = useState(0);
   const [showProductModal, setShowProductModal] = useState(false);
   const [showMessageModal, setShowMessageModal] = useState(false);
+
+  const onSeleccionarProductoIcono = (idIndexProducto) => {
+    setShowMessageModal(true);
+    setIdProductoSeleccionado(idIndexProducto);
+  }
+
+  const onSeleccionarProductoImagen = (idIndexProducto) => {
+    setShowProductModal(true);
+    setIdProductoSeleccionado(idIndexProducto);
+  }
 
   const obtenerListadoCompraUsuarioRequest = useCallback(async () => {
     const response = await fetch(`${SERVICE_URL}/historialCompraUsuario/usuario/${usuario.nombreUsuario}/`, {
@@ -87,8 +98,8 @@ function CuentaUsuario() {
               <div className="flex flex-wrap gap-4 justify-between" key={index}>
                 <ProductCard
                   producto={compra.producto}
-                  alPresionarIcono={() => setShowMessageModal(true)}
-                  alPresionarImagen={() => setShowProductModal(true)}
+                  alPresionarIcono={() => onSeleccionarProductoIcono(index)}
+                  alPresionarImagen={() => onSeleccionarProductoImagen(index)}
                   elIconoEsDeCompra={false}
                   cantidadComprado={compra.cantidadComprado}
                 />
@@ -98,6 +109,8 @@ function CuentaUsuario() {
                   setShowModal={setShowProductModal}
                   alPresionarBoton={() => setShowMessageModal(true)}
                   elBotonEsDeCompra={false}
+                  idProductoSeleccionado={idProductoSeleccionado}
+                  idIndexProducto={index}
                 />
                 <MessageModal
                   showModal={showMessageModal}
@@ -105,6 +118,8 @@ function CuentaUsuario() {
                   tituloModal={ELIMINAR_PRODUCTO_HISTORIAL_MODAL_TITULO}
                   cuerpoModal={ELIMINAR_PRODUCTO_HISTORIAL_MODAL_CUERPO}
                   accionAceptar={() => alElliminarProductosDelHistorial(compra.id)}
+                  idProductoSeleccionado={idProductoSeleccionado}
+                  idIndexProducto={index}
                 />
               </div>
             ))}

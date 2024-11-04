@@ -12,7 +12,7 @@ import { userContext } from '@/app/context/userContext';
 
 function Producto({ params }) {
   const { usuario } = useContext(userContext);
-  const [idProductoSeleccionado, setIdProductoSeleccionado] = useState();
+  const [idProductoSeleccionado, setIdProductoSeleccionado] = useState(0);
   const [showProductModal, setShowProductModal] = useState(false);
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [listadoProductos, setListadoProductos] = useState([]);
