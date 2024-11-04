@@ -65,9 +65,9 @@ function Footer() {
         <h5> Otro </h5>
         <hr className='my-2' />
         <ul className='flex flex-col'>
-          <Link href={'/SobreNosotros'} className='hover:underline hover:opacity-85 duration-500'>
+          {/* <Link href={'/SobreNosotros'} className='hover:underline hover:opacity-85 duration-500'>
             Sobre Nosotros
-          </Link>
+          </Link> */}
           {empresa.nombreMarca == '' && (
             <Link href={'/Empresas'} className='hover:underline hover:opacity-85 duration-500'>
               Empresas

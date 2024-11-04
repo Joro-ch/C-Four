@@ -64,9 +64,8 @@ function UsuarioInfoCard() {
         return true;
     }
 
-
     return (
-        <form className='flex flex-col p-5 gap-2 w-[25vw] min-w-[250px] shadow'>
+        <form className='flex flex-col p-5 gap-2 w-[25vw] min-w-[250px] shadow' onSubmit={(e) => e.preventDefault()}>
             <h5 className='text-6xl bg-[#333] rounded-full text-center px-8 py-5 text-white shadow self-center'>
                 {usuario.nombreUsuario[0]}
             </h5>
