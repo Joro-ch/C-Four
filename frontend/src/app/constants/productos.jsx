@@ -3,7 +3,7 @@ export const TIPOS_PRODUCTOS = {
     'Ropa Deportiva': [
         'Camisas',
         'Pantalones',
-        'Sueters',
+        'Suéters',
         'Zapatos',
         'Medias',
     ],
@@ -20,9 +20,9 @@ export const CATEGORIAS_ROPA_DEPORTIVA = [{
     srcImagen: "/images/CamisetasDeportivas.webp",
     hrefTema: "/RopaDeportiva/Camisetas",
 }, {
-    nombreCategoria: "Suéteres",
+    nombreCategoria: "Suéters",
     srcImagen: "/images/SuéteresDeportivos.webp",
-    hrefTema: "/RopaDeportiva/Suéteres",
+    hrefTema: "/RopaDeportiva/Suéters",
 }, {
     nombreCategoria: "Pantalones",
     srcImagen: "/images/PantalonesDeportivos.webp",
