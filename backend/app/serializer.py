@@ -60,6 +60,8 @@ class TransferirCarritoAHistorialSerializer(serializers.Serializer):
             historial_item.save()
 
             # Disminuir la cantidad disponible del producto
+            print(item.cantidadComprado)
+            print(item.idProducto)
             item.idProducto.cantidadDisponible -= item.cantidadComprado
             item.idProducto.save()
 
