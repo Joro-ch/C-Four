@@ -18,7 +18,7 @@ function ProductCard({
                     src={producto.productoImagen}
                     width={1500}
                     height={1500}
-                    className='w-full rounded-t'
+                    className='rounded-t'
                     alt=''
                     priority={true}
                 />

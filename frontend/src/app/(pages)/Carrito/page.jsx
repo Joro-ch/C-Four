@@ -79,32 +79,33 @@ function Carrito() {
     <main className='grow p-5 flex gap-5'>
       <PaymentList listadoCompra={listadoCarrito} restablecerListado={restablecerListado} />
       {listadoCarrito && listadoCarrito.length > 0 ? (
-        listadoCarrito.map((elemento, index) =>
-          <div className='flex flex-wrap gap-4 justify-around' key={index}>
-            <ProductCard
-              producto={elemento.producto}
-              alPresionarIcono={() => setShowMessageModal(true)}
-              alPresionarImagen={() => setShowProductModal(true)}
-              elIconoEsDeCompra={false}
-              cantidadComprado={elemento.cantidadComprado}
-            />
-            <ProductModal
-              producto={elemento.producto}
-              showModal={showProductModal}
-              setShowModal={setShowProductModal}
-              alPresionarBoton={() => setShowMessageModal(true)}
-              elBotonEsDeCompra={false}
-            >
-            </ProductModal>
-            <MessageModal
-              showModal={showMessageModal}
-              setShowModal={setShowMessageModal}
-              tituloModal={ELIMINAR_PRODUCTO_MODAL_TITULO}
-              cuerpoModal={ELIMINAR_PRODUCTO_MODAL_CUERPO}
-              accionAceptar={() => alElliminarProductosDelCarrito(elemento.id)}
-            />
-          </div>
-        )
+        <div className="flex flex-wrap justify-between gap-5">
+          {listadoCarrito.map((elemento, index) => (
+            <div className="flex flex-wrap gap-4 justify-around" key={index}>
+              <ProductCard
+                producto={elemento.producto}
+                alPresionarIcono={() => setShowMessageModal(true)}
+                alPresionarImagen={() => setShowProductModal(true)}
+                elIconoEsDeCompra={false}
+                cantidadComprado={elemento.cantidadComprado}
+              />
+              <ProductModal
+                producto={elemento.producto}
+                showModal={showProductModal}
+                setShowModal={setShowProductModal}
+                alPresionarBoton={() => setShowMessageModal(true)}
+                elBotonEsDeCompra={false}
+              />
+              <MessageModal
+                showModal={showMessageModal}
+                setShowModal={setShowMessageModal}
+                tituloModal={ELIMINAR_PRODUCTO_MODAL_TITULO}
+                cuerpoModal={ELIMINAR_PRODUCTO_MODAL_CUERPO}
+                accionAceptar={() => alElliminarProductosDelCarrito(elemento.id)}
+              />
+            </div>
+          ))}
+        </div>
       ) : (
         <div className='flex gap-5 flex-col w-full justify-center items-center bg-gray-100 p-5'>
           No hay productos en el carrito.
