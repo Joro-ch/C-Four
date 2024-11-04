@@ -9,7 +9,7 @@ function ProductCard({
     alPresionarIcono,
     alPresionarImagen,
     elIconoEsDeCompra = true,
-    cantidadComprado = 0,
+    cantidadComprado = 1,
 }) {
     return (
         <div className='bg-[#333] min-w-[260px] w-[15vw] max-h-[350px] rounded shadow-xl'>
@@ -25,7 +25,7 @@ function ProductCard({
             </button>
             <div className='flex justify-between p-5 '>
                 <div className='text-white'>
-                    {cantidadComprado > 0 ? (
+                    {cantidadComprado > 1 ? (
                         <>
                             <h5>
                                 ₡{producto.precioProducto * cantidadComprado}

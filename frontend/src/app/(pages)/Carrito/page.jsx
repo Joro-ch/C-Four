@@ -108,6 +108,7 @@ function Carrito() {
                 elBotonEsDeCompra={false}
                 idProductoSeleccionado={idProductoSeleccionado}
                 idIndexProducto={index}
+                cantidadComprado={elemento.cantidadComprado}
               />
               <MessageModal
                 showModal={showMessageModal}

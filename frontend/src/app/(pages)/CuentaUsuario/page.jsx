@@ -111,6 +111,7 @@ function CuentaUsuario() {
                   elBotonEsDeCompra={false}
                   idProductoSeleccionado={idProductoSeleccionado}
                   idIndexProducto={index}
+                  cantidadComprado={compra.cantidadComprado}
                 />
                 <MessageModal
                   showModal={showMessageModal}

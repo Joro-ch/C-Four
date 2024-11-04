@@ -13,6 +13,7 @@ function ProductModal({
     elBotonEsDeCompra = true,
     idProductoSeleccionado,
     idIndexProducto,
+    cantidadComprado = 1,
 }) {
     const { isBrowser } = useIsBrowser();
 
@@ -41,12 +42,25 @@ function ProductModal({
                 </div>
                 <div className='flex justify-between flex-wrap items-center text-white h-full px-10'>
                     <div>
-                        <h5 className='text-3xl'>
-                            ₡{producto.precioProducto}
-                        </h5>
-                        <h5 className='text-xl'>
-                            {producto.nombreProducto} - {producto.nombreMarca}
-                        </h5>
+                        {cantidadComprado > 1 ? (
+                            <>
+                                <h5 className='text-3xl'>
+                                    ₡{producto.precioProducto * cantidadComprado}
+                                </h5>
+                                <h5 className='text-xl'>
+                                    {producto.nombreProducto} x{cantidadComprado} - {producto.nombreMarca}
+                                </h5>
+                            </>
+                        ) : (
+                            <>
+                                <h5 className='text-3xl'>
+                                    ₡{producto.precioProducto * cantidadComprado}
+                                </h5>
+                                <h5 className='text-xl'>
+                                    {producto.nombreProducto} - {producto.nombreMarca}
+                                </h5>
+                            </>
+                        )}
                     </div>
                     <div className='flex gap-5'>
                         <button
