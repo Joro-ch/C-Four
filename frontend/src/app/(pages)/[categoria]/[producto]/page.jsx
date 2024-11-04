@@ -12,11 +12,22 @@ import { userContext } from '@/app/context/userContext';
 
 function Producto({ params }) {
   const { usuario } = useContext(userContext);
-  const [listadoProductos, setListadoProductos] = useState([]);
-  const [listadoMostrado, setListadoMostrado] = useState([]);
+  const [idProductoSeleccionado, setIdProductoSeleccionado] = useState();
   const [showProductModal, setShowProductModal] = useState(false);
   const [showMessageModal, setShowMessageModal] = useState(false);
+  const [listadoProductos, setListadoProductos] = useState([]);
+  const [listadoMostrado, setListadoMostrado] = useState([]);
   const [cantidadComprada, setCantidadComprada] = useState(0);
+
+  const onSeleccionarProductoIcono = (idIndexProducto) => {
+    setShowMessageModal(true);
+    setIdProductoSeleccionado(idIndexProducto);
+  }
+
+  const onSeleccionarProductoImagen = (idIndexProducto) => {
+    setShowProductModal(true);
+    setIdProductoSeleccionado(idIndexProducto);
+  }
 
   const obtenerListadoProductosRequest = useCallback(async () => {
     const response = await fetch(`${SERVICE_URL}/productos/tipo/${params.producto}/`, {
@@ -107,8 +118,8 @@ function Producto({ params }) {
                 <ProductCard
                   key={index}
                   producto={producto}
-                  alPresionarIcono={() => setShowMessageModal(true)}
-                  alPresionarImagen={() => setShowProductModal(true)}
+                  alPresionarIcono={() => onSeleccionarProductoIcono(index)}
+                  alPresionarImagen={() => onSeleccionarProductoImagen(index)}
                   elIconoEsDeCompra={true}
                 />
                 <ProductModal
@@ -117,17 +128,21 @@ function Producto({ params }) {
                   setShowModal={setShowProductModal}
                   alPresionarBoton={() => setShowMessageModal(true)}
                   elBotonEsDeCompra={true}
+                  idProductoSeleccionado={idProductoSeleccionado}
+                  idIndexProducto={index}
                 />
                 <MessageModal
                   showModal={showMessageModal}
                   setShowModal={setShowMessageModal}
                   tituloModal={AGREGAR_PRODUCTO_CARRITO_MODAL_TITULO}
                   accionAceptar={() => alAgregarProductosAlCarrito(producto)}
+                  idProductoSeleccionado={idProductoSeleccionado}
+                  idIndexProducto={index}
                 >
                   <div className="bg-white p-5">
                     <p>{AGREGAR_PRODUCTO_CARRITO_MODAL_CUERPO}</p>
                     <form className="flex flex-col mt-3">
-                      <p>Si es el caso, ingrese la cantidad que desea ingresar al carrito:</p>
+                      <p>Si es el caso, ingrese la cantidad de unidades de {producto.nombreProducto} que desea comprar:</p>
                       <input
                         type="number"
                         className="bg-[#333] text-white p-3 w-full rounded mt-3"
